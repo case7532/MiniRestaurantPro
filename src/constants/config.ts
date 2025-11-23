@@ -21,6 +21,7 @@ export const Config = {
   // Storage Keys
   STORAGE_KEYS: {
     AUTH_TOKEN: '@auth_token',
+    REFRESH_TOKEN: '@refresh_token',
     USER_DATA: '@user_data',
     THEME: '@theme',
     LANGUAGE: '@language',
