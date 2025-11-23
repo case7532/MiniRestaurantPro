@@ -7,8 +7,8 @@
 // - Error Handling
 // ============================================
 
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail as sendPasswordReset, updatePassword, reauthenticateWithCredential, EmailAuthProvider, signOut, onAuthStateChanged } from '@react-native-firebase/auth';
+import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, deleteDoc, writeBatch, serverTimestamp } from '@react-native-firebase/firestore';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import type { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import type { User, LoginCredentials, RegisterData } from '@/types/models';
@@ -24,7 +24,9 @@ export class FirebaseAuthService {
     credentials: LoginCredentials
   ): Promise<FirebaseAuthTypes.UserCredential> {
     try {
-      const userCredential = await auth().signInWithEmailAndPassword(
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
         credentials.email,
         credentials.password
       );
@@ -41,14 +43,16 @@ export class FirebaseAuthService {
     data: RegisterData
   ): Promise<FirebaseAuthTypes.UserCredential> {
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
         data.email,
         data.password
       );
 
       // Cập nhật display name
       if (data.name && userCredential.user) {
-        await userCredential.user.updateProfile({
+        await updateProfile(userCredential.user, {
           displayName: data.name,
         });
       }
@@ -67,7 +71,8 @@ export class FirebaseAuthService {
    */
   static async signOut(): Promise<void> {
     try {
-      await auth().signOut();
+      const auth = getAuth();
+      await signOut(auth);
     } catch (error) {
       throw this.handleAuthError(error);
     }
@@ -78,9 +83,10 @@ export class FirebaseAuthService {
    */
   static async sendVerificationEmail(): Promise<void> {
     try {
-      const user = auth().currentUser;
+      const auth = getAuth();
+      const user = auth.currentUser;
       if (user && !user.emailVerified) {
-        await user.sendEmailVerification();
+        await sendEmailVerification(user);
       }
     } catch (error) {
       throw this.handleAuthError(error);
@@ -92,7 +98,8 @@ export class FirebaseAuthService {
    */
   static async sendPasswordResetEmail(email: string): Promise<void> {
     try {
-      await auth().sendPasswordResetEmail(email);
+      const auth = getAuth();
+      await sendPasswordReset(auth, email);
     } catch (error) {
       throw this.handleAuthError(error);
     }
@@ -106,20 +113,21 @@ export class FirebaseAuthService {
     newPassword: string
   ): Promise<void> {
     try {
-      const user = auth().currentUser;
+      const auth = getAuth();
+      const user = auth.currentUser;
       if (!user || !user.email) {
         throw new Error('No user logged in');
       }
 
       // Re-authenticate user
-      const credential = auth.EmailAuthProvider.credential(
+      const credential = EmailAuthProvider.credential(
         user.email,
         currentPassword
       );
-      await user.reauthenticateWithCredential(credential);
+      await reauthenticateWithCredential(user, credential);
 
       // Update password
-      await user.updatePassword(newPassword);
+      await updatePassword(user, newPassword);
     } catch (error) {
       throw this.handleAuthError(error);
     }
@@ -133,11 +141,12 @@ export class FirebaseAuthService {
     photoURL?: string;
   }): Promise<void> {
     try {
-      const user = auth().currentUser;
+      const auth = getAuth();
+      const user = auth.currentUser;
       if (!user) {
         throw new Error('No user logged in');
       }
-      await user.updateProfile(data);
+      await updateProfile(user, data);
     } catch (error) {
       throw this.handleAuthError(error);
     }
@@ -147,7 +156,8 @@ export class FirebaseAuthService {
    * Lấy current user
    */
   static getCurrentUser(): FirebaseAuthTypes.User | null {
-    return auth().currentUser;
+    const auth = getAuth();
+    return auth.currentUser;
   }
 
   /**
@@ -156,7 +166,8 @@ export class FirebaseAuthService {
   static onAuthStateChanged(
     callback: (user: FirebaseAuthTypes.User | null) => void
   ): () => void {
-    return auth().onAuthStateChanged(callback);
+    const auth = getAuth();
+    return onAuthStateChanged(auth, callback);
   }
 
   /**
@@ -219,16 +230,16 @@ export class FirebaseFirestoreService {
     data: Partial<User>
   ): Promise<void> {
     try {
-      await firestore()
-        .collection(this.COLLECTIONS.USERS)
-        .doc(uid)
-        .set(
-          {
-            ...data,
-            updatedAt: firestore.FieldValue.serverTimestamp(),
-          },
-          { merge: true }
-        );
+      const db = getFirestore();
+      const userRef = doc(db, this.COLLECTIONS.USERS, uid);
+      await setDoc(
+        userRef,
+        {
+          ...data,
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
     } catch (error) {
       throw this.handleFirestoreError(error);
     }
@@ -239,16 +250,15 @@ export class FirebaseFirestoreService {
    */
   static async getUserDocument(uid: string): Promise<User | null> {
     try {
-      const doc = await firestore()
-        .collection(this.COLLECTIONS.USERS)
-        .doc(uid)
-        .get();
+      const db = getFirestore();
+      const userRef = doc(db, this.COLLECTIONS.USERS, uid);
+      const docSnap = await getDoc(userRef);
 
-      if (!doc.exists) {
+      if (!docSnap.exists()) {
         return null;
       }
 
-      return { id: doc.id, ...doc.data() } as User;
+      return { id: docSnap.id, ...docSnap.data() } as User;
     } catch (error) {
       throw this.handleFirestoreError(error);
     }
@@ -262,13 +272,12 @@ export class FirebaseFirestoreService {
     data: Partial<User>
   ): Promise<void> {
     try {
-      await firestore()
-        .collection(this.COLLECTIONS.USERS)
-        .doc(uid)
-        .update({
-          ...data,
-          updatedAt: firestore.FieldValue.serverTimestamp(),
-        });
+      const db = getFirestore();
+      const userRef = doc(db, this.COLLECTIONS.USERS, uid);
+      await updateDoc(userRef, {
+        ...data,
+        updatedAt: serverTimestamp(),
+      });
     } catch (error) {
       throw this.handleFirestoreError(error);
     }
@@ -278,11 +287,13 @@ export class FirebaseFirestoreService {
    * Xóa document
    */
   static async deleteDocument(
-    collection: string,
+    collectionName: string,
     docId: string
   ): Promise<void> {
     try {
-      await firestore().collection(collection).doc(docId).delete();
+      const db = getFirestore();
+      const docRef = doc(db, collectionName, docId);
+      await deleteDoc(docRef);
     } catch (error) {
       throw this.handleFirestoreError(error);
     }
@@ -294,21 +305,23 @@ export class FirebaseFirestoreService {
   static collection(
     name: string
   ): FirebaseFirestoreTypes.CollectionReference {
-    return firestore().collection(name);
+    const db = getFirestore();
+    return collection(db, name);
   }
 
   /**
    * Batch write
    */
   static batch(): FirebaseFirestoreTypes.WriteBatch {
-    return firestore().batch();
+    const db = getFirestore();
+    return writeBatch(db);
   }
 
   /**
    * Server timestamp
    */
   static get serverTimestamp(): FirebaseFirestoreTypes.FieldValue {
-    return firestore.FieldValue.serverTimestamp();
+    return serverTimestamp();
   }
 
   /**
