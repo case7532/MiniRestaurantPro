@@ -7,8 +7,10 @@
 // - Error Handling
 // ============================================
 
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import type { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import type { User, LoginCredentials, RegisterData } from '@/types/models';
 
 /**
