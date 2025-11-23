@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '@hooks/useAuth';
 import { useTranslation } from '@hooks/useTranslation';
 import { validateEmail } from '@utils/validation';
 import type { ForgotPasswordScreenNavigationProp } from '@navigation/types';
@@ -23,6 +24,7 @@ interface FormErrors {
 
 export const ForgotPasswordScreen: React.FC = () => {
   const { t } = useTranslation();
+  const { sendPasswordResetEmail } = useAuth();
   const navigation = useNavigation<ForgotPasswordScreenNavigationProp>();
 
   const [email, setEmail] = useState('');
@@ -50,15 +52,12 @@ export const ForgotPasswordScreen: React.FC = () => {
     setLoading(true);
 
     try {
-      // TODO: Call forgot password API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await sendPasswordResetEmail(email);
       
       setSent(true);
       Alert.alert(
         t('common.success'),
-        t('auth.reset_link_sent', {
-          defaultValue: 'Password reset link has been sent to your email',
-        })
+        'Email khôi phục mật khẩu đã được gửi.\n\nVui lòng kiểm tra hộp thư và làm theo hướng dẫn để đặt lại mật khẩu của bạn.'
       );
     } catch (error: any) {
       Alert.alert(

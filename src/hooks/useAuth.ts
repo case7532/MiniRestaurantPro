@@ -1,11 +1,11 @@
 // ============================================
-// Example Custom Hook: useAuth
+// useAuth Hook - Firebase Authentication
 // ============================================
 
 import { useState, useEffect, useCallback } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { User, LoginCredentials, AuthResponse } from '@types/models';
-import { Config } from '@constants/config';
+import { AuthService } from '@services/api/authFirebase';
+import { FirebaseAuthService } from '@services/firebase';
+import type { User, LoginCredentials, RegisterData } from '@/types/models';
 
 interface UseAuthReturn {
   user: User | null;
@@ -13,16 +13,19 @@ interface UseAuthReturn {
   error: string | null;
   isAuthenticated: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
+  register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
+  sendPasswordResetEmail: (email: string) => Promise<void>;
+  sendVerificationEmail: () => Promise<void>;
 }
 
 /**
- * Custom hook for authentication
+ * Custom hook for Firebase authentication
  * 
  * @example
  * ```tsx
- * const { user, loading, login, logout } = useAuth();
+ * const { user, loading, login, logout, register } = useAuth();
  * 
  * const handleLogin = async () => {
  *   await login({ email: 'user@example.com', password: 'password' });
@@ -34,62 +37,58 @@ export const useAuth = (): UseAuthReturn => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Check for existing session on mount
+  // Listen to Firebase auth state changes
   useEffect(() => {
-    checkExistingSession();
-  }, []);
-
-  const checkExistingSession = async () => {
-    try {
-      const token = await AsyncStorage.getItem(Config.STORAGE_KEYS.AUTH_TOKEN);
-      const userData = await AsyncStorage.getItem(Config.STORAGE_KEYS.USER_DATA);
-      
-      if (token && userData) {
-        setUser(JSON.parse(userData));
+    const unsubscribe = FirebaseAuthService.onAuthStateChanged(async (firebaseUser) => {
+      setLoading(true);
+      try {
+        if (firebaseUser) {
+          // User is signed in, get user data
+          const userData = await AuthService.getCurrentUser();
+          setUser(userData);
+        } else {
+          // User is signed out
+          setUser(null);
+        }
+      } catch (err) {
+        console.error('Error in auth state listener:', err);
+        setError(err instanceof Error ? err.message : 'Authentication error');
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error('Error checking session:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    });
+
+    // Cleanup subscription
+    return () => unsubscribe();
+  }, []);
 
   const login = useCallback(async (credentials: LoginCredentials) => {
     setLoading(true);
     setError(null);
 
     try {
-      // TODO: Replace with actual API call
-      // const response = await AuthService.login(credentials);
-      
-      // Mock response for example
-      const mockResponse: AuthResponse = {
-        user: {
-          id: '1',
-          email: credentials.email,
-          name: 'John Doe',
-          role: 'admin' as any,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        token: 'mock-jwt-token',
-        refreshToken: 'mock-refresh-token',
-      };
-
-      // Save to storage
-      await AsyncStorage.setItem(
-        Config.STORAGE_KEYS.AUTH_TOKEN,
-        mockResponse.token
-      );
-      await AsyncStorage.setItem(
-        Config.STORAGE_KEYS.USER_DATA,
-        JSON.stringify(mockResponse.user)
-      );
-
-      setUser(mockResponse.user);
+      const response = await AuthService.login(credentials);
+      setUser(response.user);
     } catch (err: any) {
-      setError(err.message || 'Login failed');
-      throw err;
+      const errorMessage = err.message || 'Đăng nhập thất bại';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const register = useCallback(async (data: RegisterData) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await AuthService.register(data);
+      setUser(response.user);
+    } catch (err: any) {
+      const errorMessage = err.message || 'Đăng ký thất bại';
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -97,19 +96,15 @@ export const useAuth = (): UseAuthReturn => {
 
   const logout = useCallback(async () => {
     setLoading(true);
+    setError(null);
 
     try {
-      // TODO: Call logout API if needed
-      // await AuthService.logout();
-
-      // Clear storage
-      await AsyncStorage.removeItem(Config.STORAGE_KEYS.AUTH_TOKEN);
-      await AsyncStorage.removeItem(Config.STORAGE_KEYS.USER_DATA);
-
+      await AuthService.logout();
       setUser(null);
     } catch (err: any) {
-      setError(err.message || 'Logout failed');
-      throw err;
+      const errorMessage = err.message || 'Đăng xuất thất bại';
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -117,13 +112,44 @@ export const useAuth = (): UseAuthReturn => {
 
   const refreshUser = useCallback(async () => {
     setLoading(true);
+    setError(null);
     
     try {
-      // TODO: Fetch user from API
-      // const userData = await UserService.getProfile();
-      // setUser(userData);
+      const userData = await AuthService.getProfile();
+      setUser(userData);
     } catch (err: any) {
-      setError(err.message || 'Failed to refresh user data');
+      const errorMessage = err.message || 'Không thể tải thông tin người dùng';
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const sendPasswordResetEmail = useCallback(async (email: string) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await AuthService.requestPasswordReset(email);
+    } catch (err: any) {
+      const errorMessage = err.message || 'Không thể gửi email khôi phục mật khẩu';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const sendVerificationEmail = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await AuthService.sendVerificationEmail();
+    } catch (err: any) {
+      const errorMessage = err.message || 'Không thể gửi email xác thực';
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -135,7 +161,10 @@ export const useAuth = (): UseAuthReturn => {
     error,
     isAuthenticated: !!user,
     login,
+    register,
     logout,
     refreshUser,
+    sendPasswordResetEmail,
+    sendVerificationEmail,
   };
 };

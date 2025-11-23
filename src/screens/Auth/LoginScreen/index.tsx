@@ -54,6 +54,7 @@ export const LoginScreen: React.FC = () => {
     try {
       const credentials: LoginCredentials = { email, password };
       await login(credentials);
+      // Navigation will be handled automatically by auth state change
     } catch (error: any) {
       Alert.alert(
         t('common.error'),

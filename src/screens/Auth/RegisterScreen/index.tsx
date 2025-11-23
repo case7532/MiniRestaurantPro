@@ -29,7 +29,7 @@ interface FormErrors {
 
 export const RegisterScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { loading } = useAuth();
+  const { register: registerUser, loading } = useAuth();
   const navigation = useNavigation<RegisterScreenNavigationProp>();
 
   const [name, setName] = useState('');
@@ -87,9 +87,20 @@ export const RegisterScreen: React.FC = () => {
         phone: phone || undefined,
       };
 
-      // TODO: Call register API
-      console.log('Register data:', data);
-      Alert.alert(t('common.success'), t('auth.register_success'));
+      await registerUser(data);
+      
+      // Show success message
+      Alert.alert(
+        t('common.success'),
+        t('auth.register_success') + '\n\n' + 
+        'Email xác thực đã được gửi. Vui lòng kiểm tra hộp thư của bạn.',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.navigate('Login'),
+          },
+        ]
+      );
     } catch (error: any) {
       Alert.alert(
         t('common.error'),
