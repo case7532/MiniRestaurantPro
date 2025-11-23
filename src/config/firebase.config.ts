@@ -5,6 +5,11 @@
 // Thay thế các giá trị bên dưới bằng config từ Firebase Console
 // ============================================
 
+import { initializeApp, getApps } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+
 export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY || 'YOUR_API_KEY',
   authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'YOUR_AUTH_DOMAIN',
@@ -15,6 +20,14 @@ export const firebaseConfig = {
   // Uncomment nếu sử dụng Analytics
   // measurementId: process.env.FIREBASE_MEASUREMENT_ID || 'YOUR_MEASUREMENT_ID',
 };
+
+// Initialize Firebase
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+
+// Export Firebase services
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 /**
  * HƯỚNG DẪN CẤU HÌNH:

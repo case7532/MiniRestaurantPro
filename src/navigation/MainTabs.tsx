@@ -6,6 +6,7 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from '@screens/Home/HomeScreen';
+import { MenuScreen } from '@screens/Menu/MenuScreen';
 import { useTranslation } from '@hooks/useTranslation';
 import { Colors, FontSizes } from '@styles/theme';
 import type { MainTabParamList } from './types';
@@ -13,7 +14,6 @@ import type { MainTabParamList } from './types';
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 // Placeholder screens
-const MenuScreen = () => null;
 const OrdersScreen = () => null;
 const SettingsScreen = () => null;
 
