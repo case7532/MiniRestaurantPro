@@ -39,7 +39,8 @@ export const NavigationService = {
     params?: RootStackParamList[RouteName],
   ) {
     if (navigationRef.isReady()) {
-      navigationRef.navigate(name as never, params as never);
+      // @ts-expect-error - React Navigation types are complex with generic constraints
+      navigationRef.navigate(name, params);
     }
   },
 
@@ -56,7 +57,7 @@ export const NavigationService = {
     if (navigationRef.isReady()) {
       navigationRef.reset({
         index: 0,
-        routes: [{ name: name as never, params: params as never }],
+        routes: [{ name, params }],
       });
     }
   },
@@ -101,7 +102,7 @@ export function useCurrentRouteName() {
   return route.name;
 }
 
-export function useRouteParams<T = any>(): T | undefined {
+export function useRouteParams<T = unknown>(): T | undefined {
   const route = useRoute();
   return route.params as T;
 }
