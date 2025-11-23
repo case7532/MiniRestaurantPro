@@ -10,16 +10,13 @@
 
 import { apiClient } from './client';
 import { API_ENDPOINTS } from '@constants/config';
-import type { 
+import type {
   Order,
   OrderStatus,
   PaginatedResponse,
   CreateOrderData,
 } from '@/types/models';
-import type { 
-  OrderListParams,
-  UpdateOrderStatusData,
-} from '@/types/api';
+import type { OrderListParams, UpdateOrderStatusData } from '@/types/api';
 
 /**
  * Orders Service
@@ -32,11 +29,13 @@ export class OrdersService {
   /**
    * Get all orders với pagination và filters
    */
-  static async getOrders(params?: OrderListParams): Promise<PaginatedResponse<Order>> {
+  static async getOrders(
+    params?: OrderListParams,
+  ): Promise<PaginatedResponse<Order>> {
     try {
       const response = await apiClient.get<PaginatedResponse<Order>>(
         API_ENDPOINTS.ORDERS_LIST,
-        { params }
+        { params },
       );
       return response;
     } catch (error) {
@@ -64,7 +63,7 @@ export class OrdersService {
     try {
       const response = await apiClient.post<Order>(
         API_ENDPOINTS.CREATE_ORDER,
-        data
+        data,
       );
       return response;
     } catch (error) {
@@ -77,7 +76,7 @@ export class OrdersService {
    */
   static async updateOrder(
     id: string,
-    data: Partial<CreateOrderData>
+    data: Partial<CreateOrderData>,
   ): Promise<Order> {
     try {
       const url = API_ENDPOINTS.UPDATE_ORDER.replace(':id', id);
@@ -94,7 +93,9 @@ export class OrdersService {
   static async cancelOrder(id: string, reason?: string): Promise<Order> {
     try {
       const url = API_ENDPOINTS.UPDATE_ORDER.replace(':id', id);
-      const response = await apiClient.patch<Order>(`${url}/cancel`, { reason });
+      const response = await apiClient.patch<Order>(`${url}/cancel`, {
+        reason,
+      });
       return response;
     } catch (error) {
       throw error;
@@ -110,7 +111,7 @@ export class OrdersService {
    */
   static async updateOrderStatus(
     id: string,
-    data: UpdateOrderStatusData
+    data: UpdateOrderStatusData,
   ): Promise<Order> {
     try {
       const url = API_ENDPOINTS.UPDATE_ORDER.replace(':id', id);
@@ -165,12 +166,12 @@ export class OrdersService {
    */
   static async getOrdersByStatus(
     status: OrderStatus,
-    params?: Omit<OrderListParams, 'status'>
+    params?: Omit<OrderListParams, 'status'>,
   ): Promise<PaginatedResponse<Order>> {
     try {
       const response = await apiClient.get<PaginatedResponse<Order>>(
         API_ENDPOINTS.ORDERS_LIST,
-        { params: { ...params, status } }
+        { params: { ...params, status } },
       );
       return response;
     } catch (error) {
@@ -182,7 +183,7 @@ export class OrdersService {
    * Get pending orders
    */
   static async getPendingOrders(
-    params?: Omit<OrderListParams, 'status'>
+    params?: Omit<OrderListParams, 'status'>,
   ): Promise<PaginatedResponse<Order>> {
     return this.getOrdersByStatus('pending', params);
   }
@@ -191,12 +192,12 @@ export class OrdersService {
    * Get active orders (confirmed, preparing, ready)
    */
   static async getActiveOrders(
-    params?: OrderListParams
+    params?: OrderListParams,
   ): Promise<PaginatedResponse<Order>> {
     try {
       const response = await apiClient.get<PaginatedResponse<Order>>(
         `${API_ENDPOINTS.ORDERS_LIST}/active`,
-        { params }
+        { params },
       );
       return response;
     } catch (error) {
@@ -208,12 +209,12 @@ export class OrdersService {
    * Get order history (completed/cancelled)
    */
   static async getOrderHistory(
-    params?: OrderListParams
+    params?: OrderListParams,
   ): Promise<PaginatedResponse<Order>> {
     try {
       const response = await apiClient.get<PaginatedResponse<Order>>(
         `${API_ENDPOINTS.ORDERS_LIST}/history`,
-        { params }
+        { params },
       );
       return response;
     } catch (error) {
@@ -226,7 +227,7 @@ export class OrdersService {
    */
   static async getCustomerOrders(
     customerId: string,
-    params?: Omit<OrderListParams, 'customerId'>
+    params?: Omit<OrderListParams, 'customerId'>,
   ): Promise<PaginatedResponse<Order>> {
     return this.getOrders({ ...params, customerId });
   }
@@ -235,7 +236,7 @@ export class OrdersService {
    * Get today's orders
    */
   static async getTodayOrders(
-    params?: OrderListParams
+    params?: OrderListParams,
   ): Promise<PaginatedResponse<Order>> {
     const today = new Date().toISOString().split('T')[0];
     return this.getOrders({
@@ -254,7 +255,7 @@ export class OrdersService {
    */
   static async getOrderStats(
     dateFrom?: string,
-    dateTo?: string
+    dateTo?: string,
   ): Promise<{
     total: number;
     pending: number;
@@ -267,9 +268,12 @@ export class OrdersService {
     totalRevenue: number;
   }> {
     try {
-      const response = await apiClient.get(`${API_ENDPOINTS.ORDERS_LIST}/stats`, {
-        params: { dateFrom, dateTo },
-      });
+      const response = await apiClient.get(
+        `${API_ENDPOINTS.ORDERS_LIST}/stats`,
+        {
+          params: { dateFrom, dateTo },
+        },
+      );
       return response;
     } catch (error) {
       throw error;
@@ -285,7 +289,7 @@ export class OrdersService {
    */
   static async addOrderItem(
     orderId: string,
-    item: { menuItemId: string; quantity: number; notes?: string }
+    item: { menuItemId: string; quantity: number; notes?: string },
   ): Promise<Order> {
     try {
       const url = API_ENDPOINTS.UPDATE_ORDER.replace(':id', orderId);
@@ -301,7 +305,7 @@ export class OrdersService {
    */
   static async removeOrderItem(
     orderId: string,
-    itemId: string
+    itemId: string,
   ): Promise<Order> {
     try {
       const url = API_ENDPOINTS.UPDATE_ORDER.replace(':id', orderId);
@@ -318,14 +322,13 @@ export class OrdersService {
   static async updateOrderItemQuantity(
     orderId: string,
     itemId: string,
-    quantity: number
+    quantity: number,
   ): Promise<Order> {
     try {
       const url = API_ENDPOINTS.UPDATE_ORDER.replace(':id', orderId);
-      const response = await apiClient.patch<Order>(
-        `${url}/items/${itemId}`,
-        { quantity }
-      );
+      const response = await apiClient.patch<Order>(`${url}/items/${itemId}`, {
+        quantity,
+      });
       return response;
     } catch (error) {
       throw error;
@@ -335,7 +338,7 @@ export class OrdersService {
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * 1. Create new order:
  * ```typescript
  * const order = await OrdersService.createOrder({
@@ -347,7 +350,7 @@ export class OrdersService {
  *   notes: 'Customer allergic to peanuts'
  * });
  * ```
- * 
+ *
  * 2. Get orders with filters:
  * ```typescript
  * const orders = await OrdersService.getOrders({
@@ -358,27 +361,27 @@ export class OrdersService {
  *   dateTo: '2025-01-31'
  * });
  * ```
- * 
+ *
  * 3. Update order status:
  * ```typescript
  * // Confirm order
  * await OrdersService.confirmOrder(orderId);
- * 
+ *
  * // Start preparing
  * await OrdersService.startPreparing(orderId);
- * 
+ *
  * // Mark as ready
  * await OrdersService.markAsReady(orderId);
- * 
+ *
  * // Complete order
  * await OrdersService.completeOrder(orderId);
  * ```
- * 
+ *
  * 4. Get active orders:
  * ```typescript
  * const activeOrders = await OrdersService.getActiveOrders();
  * ```
- * 
+ *
  * 5. Get order statistics:
  * ```typescript
  * const stats = await OrdersService.getOrderStats(
@@ -388,7 +391,7 @@ export class OrdersService {
  * console.log('Total revenue:', stats.totalRevenue);
  * console.log('Completed orders:', stats.completed);
  * ```
- * 
+ *
  * 6. Manage order items:
  * ```typescript
  * // Add item
@@ -397,10 +400,10 @@ export class OrdersService {
  *   quantity: 1,
  *   notes: 'Extra spicy'
  * });
- * 
+ *
  * // Update quantity
  * await OrdersService.updateOrderItemQuantity(orderId, itemId, 3);
- * 
+ *
  * // Remove item
  * await OrdersService.removeOrderItem(orderId, itemId);
  * ```

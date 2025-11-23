@@ -17,45 +17,41 @@ interface MenuListProps {
   onItemPress: (item: MenuItem) => void;
 }
 
-export const MenuList: React.FC<MenuListProps> = React.memo(({ 
-  items,
-  loading,
-  refreshing,
-  onRefresh,
-  onItemPress,
-}) => {
-  const renderItem = ({ item }: { item: MenuItem }) => (
-    <MenuItemCard item={item} onPress={onItemPress} />
-  );
+export const MenuList: React.FC<MenuListProps> = React.memo(
+  ({ items, loading, refreshing, onRefresh, onItemPress }) => {
+    const renderItem = ({ item }: { item: MenuItem }) => (
+      <MenuItemCard item={item} onPress={onItemPress} />
+    );
 
-  const keyExtractor = (item: MenuItem) => item.id;
+    const keyExtractor = (item: MenuItem) => item.id;
 
-  if (!loading && items.length === 0) {
-    return <MenuEmptyState />;
-  }
+    if (!loading && items.length === 0) {
+      return <MenuEmptyState />;
+    }
 
-  return (
-    <FlatList
-      data={items}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-      contentContainerStyle={styles.contentContainer}
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          colors={[Colors.primary]}
-          tintColor={Colors.primary}
-        />
-      }
-      removeClippedSubviews={true}
-      maxToRenderPerBatch={10}
-      windowSize={5}
-      initialNumToRender={5}
-    />
-  );
-});
+    return (
+      <FlatList
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[Colors.primary]}
+            tintColor={Colors.primary}
+          />
+        }
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={10}
+        windowSize={5}
+        initialNumToRender={5}
+      />
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   contentContainer: {

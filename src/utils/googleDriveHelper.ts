@@ -7,7 +7,8 @@
 import { Alert, Linking } from 'react-native';
 
 export class GoogleDriveImageHelper {
-  private static readonly DRIVE_FOLDER = 'https://drive.google.com/drive/folders/1d9xZEsRfglHSz_Xy0YDRHyvaYhWOROmx';
+  private static readonly DRIVE_FOLDER =
+    'https://drive.google.com/drive/folders/1d9xZEsRfglHSz_Xy0YDRHyvaYhWOROmx';
 
   /**
    * Show instructions for uploading to Google Drive
@@ -16,12 +17,12 @@ export class GoogleDriveImageHelper {
     Alert.alert(
       '📁 Hướng dẫn upload ảnh',
       `1. Nhấn "Mở Google Drive" để truy cập thư mục\n\n` +
-      `2. Upload ảnh món ăn vào thư mục\n\n` +
-      `3. Click chuột phải vào ảnh → "Get link"\n\n` +
-      `4. Chọn "Anyone with the link" → "Viewer"\n\n` +
-      `5. Copy link và paste vào ứng dụng\n\n` +
-      `Link format:\n` +
-      `https://drive.google.com/file/d/FILE_ID/view`,
+        `2. Upload ảnh món ăn vào thư mục\n\n` +
+        `3. Click chuột phải vào ảnh → "Get link"\n\n` +
+        `4. Chọn "Anyone with the link" → "Viewer"\n\n` +
+        `5. Copy link và paste vào ứng dụng\n\n` +
+        `Link format:\n` +
+        `https://drive.google.com/file/d/FILE_ID/view`,
       [
         {
           text: 'Đóng',
@@ -31,7 +32,7 @@ export class GoogleDriveImageHelper {
           text: 'Mở Google Drive',
           onPress: () => this.openDriveFolder(),
         },
-      ]
+      ],
     );
   }
 
@@ -56,8 +57,10 @@ export class GoogleDriveImageHelper {
    * Validate Google Drive URL format
    */
   static isValidGoogleDriveUrl(url: string): boolean {
-    if (!url) return false;
-    
+    if (!url) {
+      return false;
+    }
+
     const patterns = [
       /drive\.google\.com\/file\/d\/[a-zA-Z0-9_-]+/,
       /drive\.google\.com\/uc\?id=[a-zA-Z0-9_-]+/,
@@ -72,8 +75,10 @@ export class GoogleDriveImageHelper {
    */
   static convertToDirectUrl(url: string): string {
     // Already a direct link
-    if (url.includes('drive.google.com/uc?id=') || 
-        url.includes('drive.google.com/thumbnail?id=')) {
+    if (
+      url.includes('drive.google.com/uc?id=') ||
+      url.includes('drive.google.com/thumbnail?id=')
+    ) {
       return url;
     }
 
@@ -95,9 +100,9 @@ export class GoogleDriveImageHelper {
     Alert.alert(
       'URL không hợp lệ',
       'Vui lòng nhập URL Google Drive hợp lệ.\n\n' +
-      'Ví dụ:\n' +
-      'https://drive.google.com/file/d/1ABC123/view',
-      [{ text: 'OK' }]
+        'Ví dụ:\n' +
+        'https://drive.google.com/file/d/1ABC123/view',
+      [{ text: 'OK' }],
     );
   }
 
@@ -106,7 +111,7 @@ export class GoogleDriveImageHelper {
    */
   static promptForImageUrl(
     onSuccess: (url: string) => void,
-    currentUrl?: string
+    currentUrl?: string,
   ): void {
     Alert.prompt(
       '🖼️ Link ảnh Google Drive',
@@ -122,7 +127,7 @@ export class GoogleDriveImageHelper {
         },
         {
           text: 'Xác nhận',
-          onPress: (url) => {
+          onPress: url => {
             if (!url || !url.trim()) {
               return;
             }
@@ -139,7 +144,7 @@ export class GoogleDriveImageHelper {
       ],
       'plain-text',
       currentUrl || '',
-      'url'
+      'url',
     );
   }
 

@@ -25,70 +25,72 @@ interface LoginFormProps {
   onForgotPassword: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = React.memo(({
-  email,
-  password,
-  errors,
-  loading,
-  showPassword,
-  onEmailChange,
-  onPasswordChange,
-  onTogglePassword,
-  onLogin,
-  onForgotPassword,
-}) => {
-  const { t } = useTranslation();
+export const LoginForm: React.FC<LoginFormProps> = React.memo(
+  ({
+    email,
+    password,
+    errors,
+    loading,
+    showPassword,
+    onEmailChange,
+    onPasswordChange,
+    onTogglePassword,
+    onLogin,
+    onForgotPassword,
+  }) => {
+    const { t } = useTranslation();
 
-  return (
-    <View style={styles.form}>
-      <Input
-        label={t('auth.email')}
-        value={email}
-        onChangeText={onEmailChange}
-        placeholder={t('auth.email')}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoComplete="email"
-        error={errors.email}
-        editable={!loading}
-      />
+    return (
+      <View style={styles.form}>
+        <Input
+          label={t('auth.email')}
+          value={email}
+          onChangeText={onEmailChange}
+          placeholder={t('auth.email')}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoComplete="email"
+          error={errors.email}
+          editable={!loading}
+        />
 
-      <Input
-        label={t('auth.password')}
-        value={password}
-        onChangeText={onPasswordChange}
-        placeholder={t('auth.password')}
-        secureTextEntry={!showPassword}
-        autoCapitalize="none"
-        autoComplete="password"
-        error={errors.password}
-        editable={!loading}
-        rightIcon={
-          <Text style={styles.eyeIcon}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
-        }
-        onRightIconPress={onTogglePassword}
-      />
+        <Input
+          label={t('auth.password')}
+          value={password}
+          onChangeText={onPasswordChange}
+          placeholder={t('auth.password')}
+          secureTextEntry={!showPassword}
+          autoCapitalize="none"
+          autoComplete="password"
+          error={errors.password}
+          editable={!loading}
+          rightIcon={
+            <Text style={styles.eyeIcon}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+          }
+          onRightIconPress={onTogglePassword}
+        />
 
-      <TouchableOpacity
-        style={styles.forgotPassword}
-        onPress={onForgotPassword}
-        disabled={loading}
-      >
-        <Text style={styles.forgotPasswordText}>
-          {t('auth.forgot_password')}
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.forgotPassword}
+          onPress={onForgotPassword}
+          disabled={loading}
+        >
+          <Text style={styles.forgotPasswordText}>
+            {t('auth.forgot_password')}
+          </Text>
+        </TouchableOpacity>
 
-      <Button
-        title={t('auth.login')}
-        onPress={onLogin}
-        loading={loading}
-        disabled={loading}
-        size="large"
-        fullWidth
-      />
-    </View>
-  );
-});
+        <Button
+          title={t('auth.login')}
+          onPress={onLogin}
+          loading={loading}
+          disabled={loading}
+          size="large"
+          fullWidth
+        />
+      </View>
+    );
+  },
+);
 
 LoginForm.displayName = 'LoginForm';

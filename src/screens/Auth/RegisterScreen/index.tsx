@@ -3,7 +3,12 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '@hooks/useAuth';
@@ -88,23 +93,24 @@ export const RegisterScreen: React.FC = () => {
       };
 
       await registerUser(data);
-      
+
       // Show success message
       Alert.alert(
         t('common.success'),
-        t('auth.register_success') + '\n\n' + 
-        'Email xác thực đã được gửi. Vui lòng kiểm tra hộp thư của bạn.',
+        t('auth.register_success') +
+          '\n\n' +
+          'Email xác thực đã được gửi. Vui lòng kiểm tra hộp thư của bạn.',
         [
           {
             text: 'OK',
             onPress: () => navigation.navigate('Login'),
           },
-        ]
+        ],
       );
     } catch (error: any) {
       Alert.alert(
         t('common.error'),
-        error.message || t('errors.unknown_error')
+        error.message || t('errors.unknown_error'),
       );
     }
   };
@@ -142,7 +148,9 @@ export const RegisterScreen: React.FC = () => {
             onPasswordChange={setPassword}
             onConfirmPasswordChange={setConfirmPassword}
             onTogglePassword={() => setShowPassword(!showPassword)}
-            onToggleConfirmPassword={() => setShowConfirmPassword(!showConfirmPassword)}
+            onToggleConfirmPassword={() =>
+              setShowConfirmPassword(!showConfirmPassword)
+            }
             onRegister={handleRegister}
           />
 

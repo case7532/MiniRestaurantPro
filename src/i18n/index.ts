@@ -28,22 +28,20 @@ export const LANGUAGES = {
 };
 
 // i18n configuration
-i18n
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: { translation: en },
-      vi: { translation: vi },
-    },
-    lng: getDeviceLanguage(), // Default language
-    fallbackLng: 'vi', // Fallback language
-    compatibilityJSON: 'v4', // Use v4 for latest i18next
-    interpolation: {
-      escapeValue: false, // React already escapes values
-    },
-    react: {
-      useSuspense: false, // Disable suspense for React Native
-    },
-  });
+i18n.use(initReactI18next).init({
+  resources: {
+    en: { translation: en },
+    vi: { translation: vi },
+  },
+  lng: getDeviceLanguage(), // Default language
+  fallbackLng: 'vi', // Fallback language
+  compatibilityJSON: 'v4', // Use v4 for latest i18next
+  interpolation: {
+    escapeValue: false, // React already escapes values
+  },
+  react: {
+    useSuspense: false, // Disable suspense for React Native
+  },
+});
 
 export default i18n;

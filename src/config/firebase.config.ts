@@ -15,14 +15,16 @@ export const firebaseConfig = {
   authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'YOUR_AUTH_DOMAIN',
   projectId: process.env.FIREBASE_PROJECT_ID || 'YOUR_PROJECT_ID',
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET || 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || 'YOUR_MESSAGING_SENDER_ID',
+  messagingSenderId:
+    process.env.FIREBASE_MESSAGING_SENDER_ID || 'YOUR_MESSAGING_SENDER_ID',
   appId: process.env.FIREBASE_APP_ID || 'YOUR_APP_ID',
   // Uncomment nếu sử dụng Analytics
   // measurementId: process.env.FIREBASE_MEASUREMENT_ID || 'YOUR_MEASUREMENT_ID',
 };
 
 // Initialize Firebase
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app =
+  getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 // Export Firebase services
 export const auth = getAuth(app);
@@ -31,7 +33,7 @@ export const storage = getStorage(app);
 
 /**
  * HƯỚNG DẪN CẤU HÌNH:
- * 
+ *
  * 1. Truy cập Firebase Console: https://console.firebase.google.com/
  * 2. Tạo project mới hoặc chọn project có sẵn
  * 3. Thêm iOS app:
@@ -43,7 +45,7 @@ export const storage = getStorage(app);
  *    - Download google-services.json
  *    - Copy vào android/app/
  * 5. Cập nhật các giá trị trong file này
- * 
+ *
  * LƯU Ý:
  * - Có thể tạo file .env để quản lý các giá trị config
  * - Không commit file chứa API keys thật lên Git

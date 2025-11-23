@@ -8,13 +8,13 @@
 // - Image upload to Firebase Storage
 // ============================================
 
-import { 
-  collection, 
-  doc, 
-  getDocs, 
-  getDoc, 
-  addDoc, 
-  updateDoc, 
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
   deleteDoc,
   query,
   where,
@@ -25,7 +25,8 @@ import { db } from '@/config/firebase.config';
 import type { MenuItem, MenuCategory } from '@/types/models';
 
 const MENU_COLLECTION = 'menuItems';
-const GOOGLE_DRIVE_FOLDER = 'https://drive.google.com/drive/folders/1d9xZEsRfglHSz_Xy0YDRHyvaYhWOROmx';
+// Google Drive folder for menu images
+// const GOOGLE_DRIVE_FOLDER = 'https://drive.google.com/drive/folders/1d9xZEsRfglHSz_Xy0YDRHyvaYhWOROmx';
 
 /**
  * Menu Service - Firebase Firestore Implementation
@@ -43,13 +44,16 @@ export class MenuService {
       const menuRef = collection(db, MENU_COLLECTION);
       const q = query(menuRef, orderBy('createdAt', 'desc'));
       const snapshot = await getDocs(q);
-      
-      return snapshot.docs.map(docSnap => ({
-        id: docSnap.id,
-        ...docSnap.data(),
-        createdAt: docSnap.data().createdAt?.toDate().toISOString(),
-        updatedAt: docSnap.data().updatedAt?.toDate().toISOString(),
-      } as MenuItem));
+
+      return snapshot.docs.map(
+        docSnap =>
+          ({
+            id: docSnap.id,
+            ...docSnap.data(),
+            createdAt: docSnap.data().createdAt?.toDate().toISOString(),
+            updatedAt: docSnap.data().updatedAt?.toDate().toISOString(),
+          } as MenuItem),
+      );
     } catch (error) {
       console.error('Error getting menu items:', error);
       throw new Error('Không thể tải danh sách món ăn');
@@ -63,11 +67,11 @@ export class MenuService {
     try {
       const docRef = doc(db, MENU_COLLECTION, id);
       const docSnap = await getDoc(docRef);
-      
+
       if (!docSnap.exists()) {
         throw new Error('Không tìm thấy món ăn');
       }
-      
+
       return {
         id: docSnap.id,
         ...docSnap.data(),
@@ -83,17 +87,19 @@ export class MenuService {
   /**
    * Create new menu item
    */
-  static async createMenuItem(data: Omit<MenuItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<MenuItem> {
+  static async createMenuItem(
+    data: Omit<MenuItem, 'id' | 'createdAt' | 'updatedAt'>,
+  ): Promise<MenuItem> {
     try {
       const menuRef = collection(db, MENU_COLLECTION);
       const now = Timestamp.now();
-      
+
       const docRef = await addDoc(menuRef, {
         ...data,
         createdAt: now,
         updatedAt: now,
       });
-      
+
       return await this.getMenuItem(docRef.id);
     } catch (error) {
       console.error('Error creating menu item:', error);
@@ -104,19 +110,22 @@ export class MenuService {
   /**
    * Update existing menu item
    */
-  static async updateMenuItem(id: string, data: Partial<MenuItem>): Promise<MenuItem> {
+  static async updateMenuItem(
+    id: string,
+    data: Partial<MenuItem>,
+  ): Promise<MenuItem> {
     try {
       const docRef = doc(db, MENU_COLLECTION, id);
-      
+
       // Remove fields that shouldn't be updated
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       const { id: _id, createdAt: _createdAt, ...updateData } = data;
-      
+
       await updateDoc(docRef, {
         ...updateData,
         updatedAt: Timestamp.now(),
       });
-      
+
       return await this.getMenuItem(id);
     } catch (error) {
       console.error('Error updating menu item:', error);
@@ -131,7 +140,7 @@ export class MenuService {
     try {
       // Note: Images on Google Drive are not deleted automatically
       // Admin needs to manually delete them from the Drive folder if needed
-      
+
       const docRef = doc(db, MENU_COLLECTION, id);
       await deleteDoc(docRef);
     } catch (error) {
@@ -168,16 +177,19 @@ export class MenuService {
       const q = query(
         menuRef,
         where('category', '==', category),
-        orderBy('createdAt', 'desc')
+        orderBy('createdAt', 'desc'),
       );
       const snapshot = await getDocs(q);
-      
-      return snapshot.docs.map(docSnap => ({
-        id: docSnap.id,
-        ...docSnap.data(),
-        createdAt: docSnap.data().createdAt?.toDate().toISOString(),
-        updatedAt: docSnap.data().updatedAt?.toDate().toISOString(),
-      } as MenuItem));
+
+      return snapshot.docs.map(
+        docSnap =>
+          ({
+            id: docSnap.id,
+            ...docSnap.data(),
+            createdAt: docSnap.data().createdAt?.toDate().toISOString(),
+            updatedAt: docSnap.data().updatedAt?.toDate().toISOString(),
+          } as MenuItem),
+      );
     } catch (error) {
       console.error('Error getting menu items by category:', error);
       throw new Error('Không thể tải danh sách món ăn theo danh mục');
@@ -195,10 +207,11 @@ export class MenuService {
     try {
       const items = await this.getMenuItems();
       const lowerSearch = searchTerm.toLowerCase();
-      
-      return items.filter(item =>
-        item.name.toLowerCase().includes(lowerSearch) ||
-        item.description.toLowerCase().includes(lowerSearch)
+
+      return items.filter(
+        item =>
+          item.name.toLowerCase().includes(lowerSearch) ||
+          item.description.toLowerCase().includes(lowerSearch),
       );
     } catch (error) {
       console.error('Error searching menu items:', error);
@@ -225,7 +238,7 @@ export class MenuService {
 
   /**
    * Validate and convert Google Drive URL to direct image URL
-   * Accepts: 
+   * Accepts:
    * - Shareable link: https://drive.google.com/file/d/{FILE_ID}/view
    * - Direct link: https://drive.google.com/uc?id={FILE_ID}
    * - Thumbnail: https://drive.google.com/thumbnail?id={FILE_ID}
@@ -233,8 +246,10 @@ export class MenuService {
   static convertGoogleDriveUrl(url: string): string {
     try {
       // Already a direct link
-      if (url.includes('drive.google.com/uc?id=') || 
-          url.includes('drive.google.com/thumbnail?id=')) {
+      if (
+        url.includes('drive.google.com/uc?id=') ||
+        url.includes('drive.google.com/thumbnail?id=')
+      ) {
         return url;
       }
 
@@ -295,20 +310,20 @@ Link format: https://drive.google.com/file/d/FILE_ID/view
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * 1. Get all menu items:
  * ```typescript
  * const items = await MenuService.getMenuItems();
  * ```
- * 
+ *
  * 2. Create new item with Google Drive image:
  * ```typescript
  * // Upload ảnh lên Google Drive folder trước
  * // Folder: https://drive.google.com/drive/folders/1d9xZEsRfglHSz_Xy0YDRHyvaYhWOROmx
- * 
+ *
  * const googleDriveUrl = 'https://drive.google.com/file/d/FILE_ID/view';
  * const imageUrl = MenuService.convertGoogleDriveUrl(googleDriveUrl);
- * 
+ *
  * const newItem = await MenuService.createMenuItem({
  *   name: 'Phở Bò',
  *   description: 'Traditional Vietnamese beef noodle soup',
@@ -320,30 +335,30 @@ Link format: https://drive.google.com/file/d/FILE_ID/view
  *   ingredients: ['beef', 'rice noodles', 'herbs']
  * });
  * ```
- * 
+ *
  * 3. Search items:
  * ```typescript
  * const results = await MenuService.searchMenuItems('phở');
  * ```
- * 
+ *
  * 4. Convert Google Drive URL:
  * ```typescript
  * const shareableUrl = 'https://drive.google.com/file/d/1ABC123/view';
  * const directUrl = MenuService.convertGoogleDriveUrl(shareableUrl);
  * // Returns: 'https://drive.google.com/uc?export=view&id=1ABC123'
  * ```
- * 
+ *
  * 5. Get upload instructions:
  * ```typescript
  * const instructions = MenuService.getGoogleDriveUploadInstructions();
  * console.log(instructions);
  * ```
- * 
+ *
  * 6. Get items by category:
  * ```typescript
  * const appetizers = await MenuService.getItemsByCategory(MenuCategory.APPETIZER);
  * ```
- * 
+ *
  * GOOGLE DRIVE SETUP:
  * - Folder: ${GOOGLE_DRIVE_FOLDER}
  * - Quyền: Anyone with the link can view

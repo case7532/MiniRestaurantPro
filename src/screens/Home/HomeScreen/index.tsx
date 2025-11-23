@@ -3,19 +3,32 @@
 // ============================================
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { Alert, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useAuth } from '@hooks/useAuth';
 import { useTranslation } from '@hooks/useTranslation';
 import type { MainTabParamList } from '@navigation/types';
-import { HomeHeader, StatsCards, QuickActions, RecentActivity } from './components';
+import {
+  HomeHeader,
+  StatsCards,
+  QuickActions,
+  RecentActivity,
+} from './components';
 import { styles } from './styles';
 import { View } from 'react-native';
 import { Colors } from '@styles/theme';
 
-type HomeScreenNavigationProp = BottomTabNavigationProp<MainTabParamList, 'Home'>;
+type HomeScreenNavigationProp = BottomTabNavigationProp<
+  MainTabParamList,
+  'Home'
+>;
 
 interface Stats {
   totalOrders: number;
@@ -28,7 +41,7 @@ export const HomeScreen: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  
+
   const [stats, setStats] = useState<Stats>({
     totalOrders: 0,
     todayRevenue: 0,
@@ -41,8 +54,8 @@ export const HomeScreen: React.FC = () => {
   const fetchStats = useCallback(async () => {
     try {
       // TODO: Fetch real stats from API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       setStats({
         totalOrders: 156,
         todayRevenue: 12450000, // VND
@@ -52,7 +65,7 @@ export const HomeScreen: React.FC = () => {
     } catch (error: any) {
       Alert.alert(
         t('common.error'),
-        error.message || t('errors.unknown_error')
+        error.message || t('errors.unknown_error'),
       );
     } finally {
       setLoading(false);

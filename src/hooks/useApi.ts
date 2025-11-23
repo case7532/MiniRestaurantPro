@@ -44,17 +44,17 @@ export interface UseApiReturn<T, P extends any[]> extends UseApiState<T> {
 
 /**
  * Universal API hook
- * 
+ *
  * @example
  * ```typescript
  * // Basic usage
  * const { data, loading, error, execute } = useApi(
  *   async (id: string) => await MenuService.getMenuItem(id)
  * );
- * 
+ *
  * // Execute manually
  * await execute('123');
- * 
+ *
  * // Auto-execute on mount
  * const { data, loading } = useApi(
  *   async () => await MenuService.getMenuItems(),
@@ -64,7 +64,7 @@ export interface UseApiReturn<T, P extends any[]> extends UseApiState<T> {
  */
 export function useApi<T, P extends any[] = []>(
   apiFunction: (...params: P) => Promise<T>,
-  options: UseApiOptions = {}
+  options: UseApiOptions = {},
 ): UseApiReturn<T, P> {
   const {
     immediate = false,
@@ -107,7 +107,7 @@ export function useApi<T, P extends any[] = []>(
 
       const attemptRequest = async (): Promise<T | null> => {
         try {
-          setState((prev) => ({
+          setState(prev => ({
             ...prev,
             loading: true,
             error: null,
@@ -116,7 +116,9 @@ export function useApi<T, P extends any[] = []>(
 
           const result = await apiFunction(...params);
 
-          if (!isMountedRef.current) return null;
+          if (!isMountedRef.current) {
+            return null;
+          }
 
           setState({
             data: result,
@@ -128,26 +130,22 @@ export function useApi<T, P extends any[] = []>(
           onSuccess?.(result);
           return result;
         } catch (error: any) {
-          if (!isMountedRef.current) return null;
+          if (!isMountedRef.current) {
+            return null;
+          }
 
           // Check if should retry
-          if (
-            retryCountRef.current < retry &&
-            error.name !== 'AbortError'
-          ) {
+          if (retryCountRef.current < retry && error.name !== 'AbortError') {
             retryCountRef.current++;
-            
+
             // Wait before retry
-            await new Promise((resolve) =>
-              setTimeout(resolve, retryDelay)
-            );
+            await new Promise(resolve => setTimeout(resolve, retryDelay));
 
             // Retry request
             return attemptRequest();
           }
 
-          const errorMessage =
-            error.message || 'An unexpected error occurred';
+          const errorMessage = error.message || 'An unexpected error occurred';
 
           setState({
             data: null,
@@ -163,7 +161,7 @@ export function useApi<T, P extends any[] = []>(
 
       return attemptRequest();
     },
-    [apiFunction, onSuccess, onError, retry, retryDelay]
+    [apiFunction, onSuccess, onError, retry, retryDelay],
   );
 
   /**
@@ -183,7 +181,7 @@ export function useApi<T, P extends any[] = []>(
    */
   const cancel = useCallback(() => {
     abortControllerRef.current?.abort();
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       loading: false,
     }));
@@ -194,6 +192,7 @@ export function useApi<T, P extends any[] = []>(
     if (immediate) {
       execute(...([] as unknown as P));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [immediate]); // Only run on mount
 
   return {
@@ -206,22 +205,22 @@ export function useApi<T, P extends any[] = []>(
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * 1. Basic usage - Manual execution:
  * ```typescript
  * const LoginScreen = () => {
  *   const { data, loading, error, execute } = useApi(
- *     async (credentials: LoginCredentials) => 
+ *     async (credentials: LoginCredentials) =>
  *       await AuthService.login(credentials)
  *   );
- * 
+ *
  *   const handleLogin = async () => {
  *     const result = await execute({ email, password });
  *     if (result) {
  *       navigation.navigate('Home');
  *     }
  *   };
- * 
+ *
  *   return (
  *     <View>
  *       {error && <Text>{error}</Text>}
@@ -230,7 +229,7 @@ export function useApi<T, P extends any[] = []>(
  *   );
  * };
  * ```
- * 
+ *
  * 2. Auto-execute on mount:
  * ```typescript
  * const MenuScreen = () => {
@@ -238,13 +237,13 @@ export function useApi<T, P extends any[] = []>(
  *     async () => await MenuService.getMenuItems(),
  *     { immediate: true }
  *   );
- * 
+ *
  *   if (loading) return <LoadingSpinner />;
- *   
+ *
  *   return <FlatList data={menuItems?.data} />;
  * };
  * ```
- * 
+ *
  * 3. With callbacks:
  * ```typescript
  * const { execute } = useApi(
@@ -259,29 +258,29 @@ export function useApi<T, P extends any[] = []>(
  *   }
  * );
  * ```
- * 
+ *
  * 4. With retry:
  * ```typescript
  * const { data, execute } = useApi(
  *   async () => await MenuService.getMenuItems(),
- *   { 
+ *   {
  *     retry: 3,
- *     retryDelay: 2000 
+ *     retryDelay: 2000
  *   }
  * );
  * ```
- * 
+ *
  * 5. Request cancellation:
  * ```typescript
  * const { execute, cancel } = useApi(
  *   async (query: string) => await MenuService.searchMenuItems(query)
  * );
- * 
+ *
  * useEffect(() => {
  *   const timer = setTimeout(() => {
  *     execute(searchQuery);
  *   }, 500);
- *   
+ *
  *   return () => {
  *     clearTimeout(timer);
  *     cancel(); // Cancel ongoing request

@@ -11,7 +11,13 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { Colors, Spacing, BorderRadius, FontSizes, Shadows } from '@styles/theme';
+import {
+  Colors,
+  Spacing,
+  BorderRadius,
+  FontSizes,
+  Shadows,
+} from '@styles/theme';
 
 interface ButtonProps {
   title: string;
@@ -28,7 +34,7 @@ interface ButtonProps {
 
 /**
  * Reusable Button Component
- * 
+ *
  * @example
  * ```tsx
  * <Button
@@ -40,54 +46,56 @@ interface ButtonProps {
  * />
  * ```
  */
-export const Button: React.FC<ButtonProps> = React.memo(({
-  title,
-  onPress,
-  variant = 'primary',
-  size = 'medium',
-  disabled = false,
-  loading = false,
-  fullWidth = false,
-  icon,
-  style,
-  textStyle,
-}) => {
-  const buttonStyles: ViewStyle[] = [
-    styles.base,
-    styles[variant],
-    styles[`size_${size}`],
-    fullWidth && styles.fullWidth,
-    (disabled || loading) && styles.disabled,
+export const Button: React.FC<ButtonProps> = React.memo(
+  ({
+    title,
+    onPress,
+    variant = 'primary',
+    size = 'medium',
+    disabled = false,
+    loading = false,
+    fullWidth = false,
+    icon,
     style,
-  ].filter(Boolean) as ViewStyle[];
-
-  const textStyles: TextStyle[] = [
-    styles.text,
-    styles[`text_${variant}`],
-    styles[`text_${size}`],
     textStyle,
-  ].filter(Boolean) as TextStyle[];
+  }) => {
+    const buttonStyles: ViewStyle[] = [
+      styles.base,
+      styles[variant],
+      styles[`size_${size}`],
+      fullWidth && styles.fullWidth,
+      (disabled || loading) && styles.disabled,
+      style,
+    ].filter(Boolean) as ViewStyle[];
 
-  return (
-    <TouchableOpacity
-      style={buttonStyles}
-      onPress={onPress}
-      disabled={disabled || loading}
-      activeOpacity={0.7}
-    >
-      {loading ? (
-        <ActivityIndicator 
-          color={variant === 'outline' ? Colors.primary : Colors.white} 
-        />
-      ) : (
-        <>
-          {icon && icon}
-          <Text style={textStyles}>{title}</Text>
-        </>
-      )}
-    </TouchableOpacity>
-  );
-});
+    const textStyles: TextStyle[] = [
+      styles.text,
+      styles[`text_${variant}`],
+      styles[`text_${size}`],
+      textStyle,
+    ].filter(Boolean) as TextStyle[];
+
+    return (
+      <TouchableOpacity
+        style={buttonStyles}
+        onPress={onPress}
+        disabled={disabled || loading}
+        activeOpacity={0.7}
+      >
+        {loading ? (
+          <ActivityIndicator
+            color={variant === 'outline' ? Colors.primary : Colors.white}
+          />
+        ) : (
+          <>
+            {icon && icon}
+            <Text style={textStyles}>{title}</Text>
+          </>
+        )}
+      </TouchableOpacity>
+    );
+  },
+);
 
 Button.displayName = 'Button';
 
@@ -100,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.md,
     ...Shadows.small,
   },
-  
+
   // Variants
   primary: {
     backgroundColor: Colors.primary,
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
   ghost: {
     backgroundColor: 'transparent',
   },
-  
+
   // Sizes
   size_small: {
     paddingVertical: Spacing.xs,
@@ -133,7 +141,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.xl,
     minHeight: 52,
   },
-  
+
   // Text styles
   text: {
     fontWeight: '600',
@@ -160,7 +168,7 @@ const styles = StyleSheet.create({
   text_large: {
     fontSize: FontSizes.lg,
   },
-  
+
   // States
   disabled: {
     opacity: 0.5,

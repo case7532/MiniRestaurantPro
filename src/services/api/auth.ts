@@ -11,9 +11,9 @@
 import { apiClient } from './client';
 import { StorageService } from '../storage/asyncStorage';
 import { API_ENDPOINTS } from '@constants/config';
-import type { 
-  LoginCredentials, 
-  RegisterData, 
+import type {
+  LoginCredentials,
+  RegisterData,
   AuthResponse,
   User,
 } from '@/types/models';
@@ -35,7 +35,7 @@ export class AuthService {
       const response = await apiClient.post<AuthResponse>(
         API_ENDPOINTS.LOGIN,
         credentials,
-        { skipAuth: true }
+        { skipAuth: true },
       );
 
       // Save tokens and user data
@@ -57,7 +57,7 @@ export class AuthService {
       const response = await apiClient.post<AuthResponse>(
         API_ENDPOINTS.REGISTER,
         data,
-        { skipAuth: true }
+        { skipAuth: true },
       );
 
       // Save tokens and user data
@@ -98,7 +98,7 @@ export class AuthService {
       const response = await apiClient.post<AuthResponse>(
         API_ENDPOINTS.REFRESH_TOKEN,
         { refreshToken },
-        { skipAuth: true }
+        { skipAuth: true },
       );
 
       // Save new tokens
@@ -140,7 +140,7 @@ export class AuthService {
       await apiClient.post(
         '/auth/forgot-password',
         { email },
-        { skipAuth: true }
+        { skipAuth: true },
       );
     } catch (error) {
       throw error;
@@ -152,13 +152,13 @@ export class AuthService {
    */
   static async resetPassword(
     token: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     try {
       await apiClient.post(
         '/auth/reset-password',
         { token, password: newPassword },
-        { skipAuth: true }
+        { skipAuth: true },
       );
     } catch (error) {
       throw error;
@@ -196,11 +196,7 @@ export class AuthService {
    */
   static async verifyEmail(token: string): Promise<void> {
     try {
-      await apiClient.post(
-        '/auth/verify-email',
-        { token },
-        { skipAuth: true }
-      );
+      await apiClient.post('/auth/verify-email', { token }, { skipAuth: true });
     } catch (error) {
       throw error;
     }
@@ -216,10 +212,10 @@ export class AuthService {
   static async getProfile(): Promise<User> {
     try {
       const user = await apiClient.get<User>(API_ENDPOINTS.USER_PROFILE);
-      
+
       // Update cached user data
       await StorageService.saveUserData(user);
-      
+
       return user;
     } catch (error) {
       throw error;
@@ -233,12 +229,12 @@ export class AuthService {
     try {
       const user = await apiClient.put<User>(
         API_ENDPOINTS.UPDATE_PROFILE,
-        data
+        data,
       );
-      
+
       // Update cached user data
       await StorageService.saveUserData(user);
-      
+
       return user;
     } catch (error) {
       throw error;
@@ -248,7 +244,7 @@ export class AuthService {
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * 1. Login:
  * ```typescript
  * const response = await AuthService.login({
@@ -257,7 +253,7 @@ export class AuthService {
  * });
  * console.log('Logged in:', response.user);
  * ```
- * 
+ *
  * 2. Register:
  * ```typescript
  * const response = await AuthService.register({
@@ -267,7 +263,7 @@ export class AuthService {
  *   phone: '+1234567890'
  * });
  * ```
- * 
+ *
  * 3. Check authentication:
  * ```typescript
  * const isAuth = await AuthService.isAuthenticated();
@@ -275,17 +271,17 @@ export class AuthService {
  *   const user = await AuthService.getCurrentUser();
  * }
  * ```
- * 
+ *
  * 4. Password reset flow:
  * ```typescript
  * // Step 1: Request reset
  * await AuthService.requestPasswordReset('user@example.com');
- * 
+ *
  * // Step 2: User receives email with token
  * // Step 3: Reset with token
  * await AuthService.resetPassword(token, 'newPassword123');
  * ```
- * 
+ *
  * 5. Update profile:
  * ```typescript
  * const updatedUser = await AuthService.updateProfile({

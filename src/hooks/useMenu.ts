@@ -15,7 +15,9 @@ interface UseMenuReturn {
   searchQuery: string;
   fetchItems: () => Promise<void>;
   getItemById: (id: string) => Promise<MenuItem>;
-  createItem: (data: Omit<MenuItem, 'id' | 'createdAt' | 'updatedAt'>) => Promise<MenuItem>;
+  createItem: (
+    data: Omit<MenuItem, 'id' | 'createdAt' | 'updatedAt'>,
+  ) => Promise<MenuItem>;
   updateItem: (id: string, data: Partial<MenuItem>) => Promise<MenuItem>;
   deleteItem: (id: string) => Promise<void>;
   toggleAvailability: (id: string) => Promise<void>;
@@ -28,26 +30,26 @@ interface UseMenuReturn {
 
 /**
  * Custom hook for menu management
- * 
+ *
  * @example
  * ```tsx
- * const { 
- *   items, 
- *   loading, 
- *   fetchItems, 
+ * const {
+ *   items,
+ *   loading,
+ *   fetchItems,
  *   createItem,
  *   filterByCategory,
- *   searchItems 
+ *   searchItems
  * } = useMenu();
- * 
+ *
  * // Fetch all items on mount
  * useEffect(() => {
  *   fetchItems();
  * }, []);
- * 
+ *
  * // Filter by category
  * filterByCategory(MenuCategory.MAIN_COURSE);
- * 
+ *
  * // Search items
  * searchItems('phở');
  * ```
@@ -57,7 +59,9 @@ export const useMenu = (): UseMenuReturn => {
   const [filteredItems, setFilteredItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<MenuCategory | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<MenuCategory | null>(
+    null,
+  );
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Fetch all menu items
@@ -96,53 +100,56 @@ export const useMenu = (): UseMenuReturn => {
   }, []);
 
   // Create new menu item
-  const createItem = useCallback(async (
-    data: Omit<MenuItem, 'id' | 'createdAt' | 'updatedAt'>
-  ): Promise<MenuItem> => {
-    setLoading(true);
-    setError(null);
+  const createItem = useCallback(
+    async (
+      data: Omit<MenuItem, 'id' | 'createdAt' | 'updatedAt'>,
+    ): Promise<MenuItem> => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const newItem = await MenuService.createMenuItem(data);
-      setItems(prev => [newItem, ...prev]);
-      setFilteredItems(prev => [newItem, ...prev]);
-      return newItem;
-    } catch (err: any) {
-      const errorMessage = err.message || 'Không thể tạo món ăn mới';
-      setError(errorMessage);
-      throw new Error(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      try {
+        const newItem = await MenuService.createMenuItem(data);
+        setItems(prev => [newItem, ...prev]);
+        setFilteredItems(prev => [newItem, ...prev]);
+        return newItem;
+      } catch (err: any) {
+        const errorMessage = err.message || 'Không thể tạo món ăn mới';
+        setError(errorMessage);
+        throw new Error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
   // Update menu item
-  const updateItem = useCallback(async (
-    id: string,
-    data: Partial<MenuItem>
-  ): Promise<MenuItem> => {
-    setLoading(true);
-    setError(null);
+  const updateItem = useCallback(
+    async (id: string, data: Partial<MenuItem>): Promise<MenuItem> => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const updatedItem = await MenuService.updateMenuItem(id, data);
-      
-      setItems(prev =>
-        prev.map(item => (item.id === id ? updatedItem : item))
-      );
-      setFilteredItems(prev =>
-        prev.map(item => (item.id === id ? updatedItem : item))
-      );
-      
-      return updatedItem;
-    } catch (err: any) {
-      const errorMessage = err.message || 'Không thể cập nhật món ăn';
-      setError(errorMessage);
-      throw new Error(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      try {
+        const updatedItem = await MenuService.updateMenuItem(id, data);
+
+        setItems(prev =>
+          prev.map(item => (item.id === id ? updatedItem : item)),
+        );
+        setFilteredItems(prev =>
+          prev.map(item => (item.id === id ? updatedItem : item)),
+        );
+
+        return updatedItem;
+      } catch (err: any) {
+        const errorMessage = err.message || 'Không thể cập nhật món ăn';
+        setError(errorMessage);
+        throw new Error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
   // Delete menu item
   const deleteItem = useCallback(async (id: string): Promise<void> => {
@@ -169,15 +176,14 @@ export const useMenu = (): UseMenuReturn => {
 
     try {
       const updatedItem = await MenuService.toggleAvailability(id);
-      
-      setItems(prev =>
-        prev.map(item => (item.id === id ? updatedItem : item))
-      );
+
+      setItems(prev => prev.map(item => (item.id === id ? updatedItem : item)));
       setFilteredItems(prev =>
-        prev.map(item => (item.id === id ? updatedItem : item))
+        prev.map(item => (item.id === id ? updatedItem : item)),
       );
     } catch (err: any) {
-      const errorMessage = err.message || 'Không thể thay đổi trạng thái món ăn';
+      const errorMessage =
+        err.message || 'Không thể thay đổi trạng thái món ăn';
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -186,44 +192,51 @@ export const useMenu = (): UseMenuReturn => {
   }, []);
 
   // Filter by category
-  const filterByCategory = useCallback((category: MenuCategory | null) => {
-    setSelectedCategory(category);
-    
-    if (!category) {
-      setFilteredItems(items);
-      return;
-    }
-    
-    const filtered = items.filter(item => item.category === category);
-    setFilteredItems(filtered);
-  }, [items]);
+  const filterByCategory = useCallback(
+    (category: MenuCategory | null) => {
+      setSelectedCategory(category);
+
+      if (!category) {
+        setFilteredItems(items);
+        return;
+      }
+
+      const filtered = items.filter(item => item.category === category);
+      setFilteredItems(filtered);
+    },
+    [items],
+  );
 
   // Search items
-  const searchItems = useCallback((query: string) => {
-    setSearchQuery(query);
-    
-    if (!query.trim()) {
-      if (selectedCategory) {
-        filterByCategory(selectedCategory);
-      } else {
-        setFilteredItems(items);
+  const searchItems = useCallback(
+    (query: string) => {
+      setSearchQuery(query);
+
+      if (!query.trim()) {
+        if (selectedCategory) {
+          filterByCategory(selectedCategory);
+        } else {
+          setFilteredItems(items);
+        }
+        return;
       }
-      return;
-    }
-    
-    const lowerQuery = query.toLowerCase();
-    let filtered = items.filter(item =>
-      item.name.toLowerCase().includes(lowerQuery) ||
-      item.description.toLowerCase().includes(lowerQuery)
-    );
-    
-    // Apply category filter if selected
-    if (selectedCategory) {
-      filtered = filtered.filter(item => item.category === selectedCategory);
-    }
-    
-    setFilteredItems(filtered);
-  }, [items, selectedCategory, filterByCategory]);
+
+      const lowerQuery = query.toLowerCase();
+      let filtered = items.filter(
+        item =>
+          item.name.toLowerCase().includes(lowerQuery) ||
+          item.description.toLowerCase().includes(lowerQuery),
+      );
+
+      // Apply category filter if selected
+      if (selectedCategory) {
+        filtered = filtered.filter(item => item.category === selectedCategory);
+      }
+
+      setFilteredItems(filtered);
+    },
+    [items, selectedCategory, filterByCategory],
+  );
 
   // Convert Google Drive URL
   const convertGoogleDriveUrl = useCallback((url: string): string => {
@@ -231,9 +244,12 @@ export const useMenu = (): UseMenuReturn => {
   }, []);
 
   // Validate image URL
-  const validateImageUrl = useCallback(async (url: string): Promise<boolean> => {
-    return await MenuService.validateImageUrl(url);
-  }, []);
+  const validateImageUrl = useCallback(
+    async (url: string): Promise<boolean> => {
+      return await MenuService.validateImageUrl(url);
+    },
+    [],
+  );
 
   // Get upload instructions
   const getUploadInstructions = useCallback((): string => {

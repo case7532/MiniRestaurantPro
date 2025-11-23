@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+build/
+dist/
+*.log
+.expo/
+.expo-shared/
+
+# Native
+android/
+ios/
+Pods/
+
+# Coverage
+coverage/
+*.lcov
+
+# Config files
+*.config.js
+babel.config.js
+metro.config.js
+jest.config.js
+
+# Environment
+.env
+.env.*
+
+# Cache
+.cache/
+.eslintcache
+
+# OS
+.DS_Store
+Thumbs.db

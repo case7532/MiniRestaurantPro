@@ -2,7 +2,9 @@
 
 ## 📋 Giới thiệu
 
-**MiniRestaurantPro** là ứng dụng quản lý cửa hàng/nhà hàng toàn diện, được xây dựng bằng React Native với TypeScript và Firebase. Ứng dụng cung cấp giải pháp quản lý hoàn chỉnh cho các cửa hàng nhỏ và vừa, giúp tối ưu hóa quy trình vận hành và nâng cao hiệu suất kinh doanh.
+**MiniRestaurantPro** là ứng dụng quản lý cửa hàng/nhà hàng toàn diện, được xây dựng bằng React
+Native với TypeScript và Firebase. Ứng dụng cung cấp giải pháp quản lý hoàn chỉnh cho các cửa hàng
+nhỏ và vừa, giúp tối ưu hóa quy trình vận hành và nâng cao hiệu suất kinh doanh.
 
 ## 🎯 Mục tiêu Dự án
 
@@ -16,6 +18,7 @@
 ## 🌟 Tính năng Nổi bật
 
 ### 1. 📝 Quản lý Hóa đơn (Invoicing)
+
 - Tạo hóa đơn bán hàng nhanh chóng
 - Quản lý đơn hàng theo trạng thái (Pending, Confirmed, Completed, Cancelled)
 - In hóa đơn và gửi qua email
@@ -27,6 +30,7 @@
 **Chi tiết:** [INVOICING.md](./INVOICING.md)
 
 ### 2. 📦 Quản lý Tồn kho (Inventory Management)
+
 - Theo dõi số lượng hàng hóa real-time
 - Cảnh báo hàng sắp hết/hết hàng
 - Quản lý nhập/xuất kho
@@ -39,6 +43,7 @@
 **Chi tiết:** [INVENTORY.md](./INVENTORY.md)
 
 ### 3. 💰 Quản lý Bán hàng (Sales Management)
+
 - POS (Point of Sale) interface thân thiện
 - Quản lý menu/sản phẩm
 - Tính năng tìm kiếm nhanh sản phẩm
@@ -51,6 +56,7 @@
 **Chi tiết:** [SALES.md](./SALES.md)
 
 ### 4. 👥 Quản lý Nhân sự (Staff Management)
+
 - Quản lý thông tin nhân viên
 - Phân quyền theo vai trò (Admin, Manager, Staff, Cashier)
 - Chấm công và tính lương
@@ -62,6 +68,7 @@
 **Chi tiết:** [STAFF_MANAGEMENT.md](./STAFF_MANAGEMENT.md)
 
 ### 5. 📊 Báo cáo và Thống kê (Reports & Analytics)
+
 - Dashboard tổng quan kinh doanh
 - Báo cáo doanh thu theo ngày/tháng/năm
 - Thống kê sản phẩm bán chạy
@@ -76,6 +83,7 @@
 ## 🏗️ Kiến trúc Hệ thống
 
 ### Tech Stack
+
 - **Frontend:** React Native 0.82.1 + TypeScript 5.8.3
 - **State Management:** Context API / Redux Toolkit
 - **Navigation:** React Navigation v6
@@ -85,6 +93,7 @@
 - **Internationalization:** i18next (English, Vietnamese)
 
 ### Kiến trúc
+
 ```
 ┌─────────────────────────────────────────────┐
 │         Presentation Layer                  │
@@ -109,18 +118,21 @@
 ### Vai trò trong Hệ thống
 
 1. **👑 Admin (Quản trị viên)**
+
    - Toàn quyền quản lý hệ thống
    - Quản lý nhân viên và phân quyền
    - Xem tất cả báo cáo và thống kê
    - Cấu hình hệ thống
 
 2. **👔 Manager (Quản lý)**
+
    - Quản lý vận hành cửa hàng
    - Quản lý tồn kho và menu
    - Xem báo cáo kinh doanh
    - Quản lý ca làm việc
 
 3. **👤 Staff (Nhân viên)**
+
    - Nhận và xử lý đơn hàng
    - Cập nhật trạng thái đơn hàng
    - Xem menu và tồn kho
@@ -141,6 +153,7 @@
 ## 🗺️ Roadmap
 
 ### Phase 1: MVP (Q4 2025) ✅ COMPLETED
+
 - ✅ Authentication (Login/Register/Forgot Password)
 - ✅ Home Dashboard
 - ✅ Menu Management
@@ -149,6 +162,7 @@
 - ✅ Multi-language Support (EN/VI)
 
 ### Phase 2: Core Features (Q1 2026) 🚧 IN PROGRESS
+
 - 🚧 Order Management
 - 🚧 Invoice Generation
 - 🚧 Basic Inventory Tracking
@@ -156,6 +170,7 @@
 - 📅 Payment Integration
 
 ### Phase 3: Advanced Features (Q2 2026)
+
 - 📅 Advanced Inventory Management
 - 📅 Comprehensive Reports & Analytics
 - 📅 Customer Management (CRM)
@@ -163,6 +178,7 @@
 - 📅 Multi-branch Support
 
 ### Phase 4: Optimization (Q3 2026)
+
 - 📅 Performance Optimization
 - 📅 Offline Mode
 - 📅 Advanced Analytics & AI Insights
@@ -181,7 +197,9 @@
 ## 💰 Model Kinh doanh
 
 ### Freemium Model
+
 - **Free Tier:**
+
   - 1 cửa hàng/chi nhánh
   - Tối đa 5 nhân viên
   - 100 sản phẩm
@@ -189,6 +207,7 @@
   - 1GB storage
 
 - **Pro Tier** ($29/tháng):
+
   - 3 chi nhánh
   - Không giới hạn nhân viên
   - 1000 sản phẩm
@@ -206,6 +225,7 @@
 ## 📊 Metrics & KPIs
 
 ### Business Metrics
+
 - Monthly Active Users (MAU)
 - Daily Active Users (DAU)
 - Customer Acquisition Cost (CAC)
@@ -214,6 +234,7 @@
 - Net Promoter Score (NPS)
 
 ### Technical Metrics
+
 - App Performance (Load time, Response time)
 - Crash-free Rate
 - API Success Rate
@@ -222,6 +243,7 @@
 ## 🤝 Đóng góp
 
 Dự án hiện đang trong giai đoạn phát triển. Mọi đóng góp và góp ý xin vui lòng liên hệ qua:
+
 - Email: support@minirestaurantpro.com
 - GitHub Issues: [MiniRestaurantPro/issues](https://github.com/case7532/MiniRestaurantPro/issues)
 

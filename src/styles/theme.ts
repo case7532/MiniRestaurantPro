@@ -7,12 +7,12 @@ export const Colors = {
   primary: '#FF6B6B',
   primaryLight: '#FF8E8E',
   primaryDark: '#E55555',
-  
+
   // Secondary Colors
   secondary: '#4ECDC4',
   secondaryLight: '#7ED8D1',
   secondaryDark: '#3BB3AA',
-  
+
   // Neutral Colors
   white: '#FFFFFF',
   black: '#000000',
@@ -28,19 +28,19 @@ export const Colors = {
     800: '#1F2937',
     900: '#111827',
   },
-  
+
   // Status Colors
   success: '#10B981',
   warning: '#F59E0B',
   error: '#EF4444',
   info: '#3B82F6',
-  
+
   // Background Colors
   background: {
     light: '#FFFFFF',
     dark: '#1F2937',
   },
-  
+
   // Text Colors
   text: {
     primary: '#111827',
@@ -48,7 +48,7 @@ export const Colors = {
     disabled: '#9CA3AF',
     inverse: '#FFFFFF',
   },
-  
+
   // Border Colors
   border: {
     light: '#E5E7EB',
@@ -110,7 +110,7 @@ export const Shadows = {
   large: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.30,
+    shadowOpacity: 0.3,
     shadowRadius: 4.65,
     elevation: 8,
   },

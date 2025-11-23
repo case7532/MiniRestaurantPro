@@ -69,7 +69,10 @@ export class StorageService {
    */
   static async saveUserData(user: User): Promise<void> {
     try {
-      await AsyncStorage.setItem(Config.STORAGE_KEYS.USER_DATA, JSON.stringify(user));
+      await AsyncStorage.setItem(
+        Config.STORAGE_KEYS.USER_DATA,
+        JSON.stringify(user),
+      );
     } catch (error) {
       console.error('Error saving user data:', error);
       throw error;
@@ -249,20 +252,20 @@ export class StorageService {
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * 1. Auth storage:
  * ```typescript
  * await StorageService.saveAuthToken('token123');
  * const token = await StorageService.getAuthToken();
  * await StorageService.clearAuth();
  * ```
- * 
+ *
  * 2. User data:
  * ```typescript
  * await StorageService.saveUserData(user);
  * const user = await StorageService.getUserData();
  * ```
- * 
+ *
  * 3. Generic storage:
  * ```typescript
  * await StorageService.setObject('myKey', { data: 'value' });

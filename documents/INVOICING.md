@@ -2,13 +2,15 @@
 
 ## Tổng quan
 
-Module quản lý hóa đơn là một trong những tính năng cốt lõi của MiniRestaurantPro, giúp cửa hàng tạo, theo dõi và quản lý tất cả các hóa đơn bán hàng một cách hiệu quả và chính xác.
+Module quản lý hóa đơn là một trong những tính năng cốt lõi của MiniRestaurantPro, giúp cửa hàng
+tạo, theo dõi và quản lý tất cả các hóa đơn bán hàng một cách hiệu quả và chính xác.
 
 ## Tính năng Chính
 
 ### 1. Tạo Hóa đơn
 
 #### Quy trình
+
 1. Chọn sản phẩm/món ăn từ menu
 2. Thêm số lượng và ghi chú (nếu có)
 3. Áp dụng khuyến mãi/giảm giá
@@ -16,31 +18,32 @@ Module quản lý hóa đơn là một trong những tính năng cốt lõi củ
 5. Xác nhận và tạo hóa đơn
 
 #### Thông tin Hóa đơn
+
 ```typescript
 interface Invoice {
   id: string;
-  invoiceNumber: string;        // Mã hóa đơn tự động
-  orderNumber: string;           // Mã đơn hàng
-  customerId?: string;           // ID khách hàng (optional)
+  invoiceNumber: string; // Mã hóa đơn tự động
+  orderNumber: string; // Mã đơn hàng
+  customerId?: string; // ID khách hàng (optional)
   customerInfo?: {
     name: string;
     phone?: string;
     email?: string;
     address?: string;
   };
-  items: InvoiceItem[];          // Danh sách sản phẩm
-  subtotal: number;              // Tổng tiền trước thuế/giảm giá
-  discount: number;              // Giảm giá
-  tax: number;                   // Thuế VAT
-  total: number;                 // Tổng cộng
-  paymentMethod: PaymentMethod;  // Phương thức thanh toán
-  paymentStatus: PaymentStatus;  // Trạng thái thanh toán
-  notes?: string;                // Ghi chú
-  tableNumber?: string;          // Số bàn (cho nhà hàng)
-  staffId: string;               // ID nhân viên tạo hóa đơn
+  items: InvoiceItem[]; // Danh sách sản phẩm
+  subtotal: number; // Tổng tiền trước thuế/giảm giá
+  discount: number; // Giảm giá
+  tax: number; // Thuế VAT
+  total: number; // Tổng cộng
+  paymentMethod: PaymentMethod; // Phương thức thanh toán
+  paymentStatus: PaymentStatus; // Trạng thái thanh toán
+  notes?: string; // Ghi chú
+  tableNumber?: string; // Số bàn (cho nhà hàng)
+  staffId: string; // ID nhân viên tạo hóa đơn
   createdAt: string;
   updatedAt: string;
-  paidAt?: string;               // Thời gian thanh toán
+  paidAt?: string; // Thời gian thanh toán
 }
 
 interface InvoiceItem {
@@ -73,6 +76,7 @@ enum PaymentStatus {
 ### 2. Quản lý Hóa đơn
 
 #### Danh sách Hóa đơn
+
 - Hiển thị tất cả hóa đơn theo thứ tự thời gian
 - Lọc theo:
   - Trạng thái thanh toán
@@ -86,6 +90,7 @@ enum PaymentStatus {
   - Tên sản phẩm
 
 #### Chi tiết Hóa đơn
+
 - Xem đầy đủ thông tin hóa đơn
 - Lịch sử thay đổi
 - Thông tin nhân viên xử lý
@@ -94,12 +99,14 @@ enum PaymentStatus {
 ### 3. In và Xuất Hóa đơn
 
 #### In Hóa đơn
+
 - In hóa đơn nhiệt (thermal printer)
 - In hóa đơn A4 (laser printer)
 - Format chuẩn theo quy định pháp luật
 - Tùy chỉnh template
 
 #### Xuất Hóa đơn
+
 - Export PDF
 - Export Excel
 - Gửi qua email
@@ -108,27 +115,25 @@ enum PaymentStatus {
 ### 4. Thanh toán
 
 #### Phương thức Thanh toán
+
 1. **Tiền mặt (Cash)**
    - Nhập số tiền khách đưa
    - Tự động tính tiền thừa
-   
 2. **Thẻ (Card)**
    - Quẹt thẻ qua máy POS
    - Ghi nhận 4 số cuối thẻ
-   
 3. **Chuyển khoản (Bank Transfer)**
    - Hiển thị thông tin tài khoản
    - Xác nhận khi nhận được tiền
-   
 4. **QR Code**
    - Tạo QR code thanh toán
    - Tích hợp VNPay, MoMo, ZaloPay
-   
 5. **Ví điện tử (E-wallet)**
    - MoMo, ZaloPay, ViettelPay
    - Deep link vào app ví
 
 #### Xử lý Thanh toán
+
 ```typescript
 // Thanh toán đầy đủ
 await InvoiceService.processPayment(invoiceId, {
@@ -149,6 +154,7 @@ await InvoiceService.processPartialPayment(invoiceId, {
 ### 5. Hoàn tiền và Hủy
 
 #### Hoàn tiền (Refund)
+
 - Hoàn tiền toàn bộ
 - Hoàn tiền một phần
 - Lý do hoàn tiền
@@ -164,6 +170,7 @@ await InvoiceService.refund(invoiceId, {
 ```
 
 #### Hủy Hóa đơn
+
 - Chỉ hủy được hóa đơn chưa thanh toán
 - Ghi rõ lý do hủy
 - Cập nhật lại tồn kho
@@ -171,6 +178,7 @@ await InvoiceService.refund(invoiceId, {
 ### 6. Thuế và Giảm giá
 
 #### Tính Thuế VAT
+
 ```typescript
 const calculateTax = (subtotal: number, taxRate: number = 0.1) => {
   return subtotal * taxRate;
@@ -182,6 +190,7 @@ invoice.total = invoice.subtotal + invoice.tax - invoice.discount;
 ```
 
 #### Áp dụng Giảm giá
+
 - Giảm giá theo phần trăm (%)
 - Giảm giá theo số tiền cố định (VND)
 - Giảm giá cho từng sản phẩm
@@ -208,6 +217,7 @@ if (voucher.type === 'percent') {
 ## UI/UX Design
 
 ### Màn hình Danh sách Hóa đơn
+
 ```
 ┌─────────────────────────────────────┐
 │ 📝 Hóa đơn          🔍 [Search]    │
@@ -228,6 +238,7 @@ if (voucher.type === 'percent') {
 ```
 
 ### Màn hình Chi tiết Hóa đơn
+
 ```
 ┌─────────────────────────────────────┐
 │ ← Chi tiết hóa đơn     [⋮ Menu]    │
@@ -251,6 +262,7 @@ if (voucher.type === 'percent') {
 ```
 
 ### Màn hình Thanh toán
+
 ```
 ┌─────────────────────────────────────┐
 │ ← Thanh toán                        │
@@ -274,33 +286,34 @@ if (voucher.type === 'percent') {
 ## API Endpoints
 
 ### Invoice Service
+
 ```typescript
 class InvoiceService {
   // Create
   static async createInvoice(data: CreateInvoiceData): Promise<Invoice>;
-  
+
   // Read
   static async getInvoices(filters?: InvoiceFilters): Promise<Invoice[]>;
   static async getInvoiceById(id: string): Promise<Invoice>;
   static async getInvoiceByNumber(invoiceNumber: string): Promise<Invoice>;
-  
+
   // Update
   static async updateInvoice(id: string, data: Partial<Invoice>): Promise<Invoice>;
   static async addItemsToInvoice(id: string, items: InvoiceItem[]): Promise<Invoice>;
   static async removeItemsFromInvoice(id: string, itemIds: string[]): Promise<Invoice>;
-  
+
   // Payment
   static async processPayment(id: string, payment: PaymentData): Promise<Invoice>;
   static async processPartialPayment(id: string, payment: PartialPaymentData): Promise<Invoice>;
-  
+
   // Refund & Cancel
   static async refund(id: string, refundData: RefundData): Promise<Invoice>;
   static async cancelInvoice(id: string, reason: string): Promise<void>;
-  
+
   // Print & Export
   static async generatePDF(id: string): Promise<string>;
   static async sendEmail(id: string, email: string): Promise<void>;
-  
+
   // Statistics
   static async getTotalRevenue(dateRange: DateRange): Promise<number>;
   static async getInvoiceCount(dateRange: DateRange): Promise<number>;
@@ -311,6 +324,7 @@ class InvoiceService {
 ## Database Schema (Firestore)
 
 ### Collection: `invoices`
+
 ```typescript
 {
   id: string,
@@ -347,6 +361,7 @@ class InvoiceService {
 ```
 
 ### Indexes
+
 ```
 - invoiceNumber (ASC)
 - paymentStatus (ASC), createdAt (DESC)
@@ -357,24 +372,28 @@ class InvoiceService {
 ## Business Rules
 
 ### Quy tắc Tạo Hóa đơn
+
 1. Mã hóa đơn phải unique (auto-generate)
 2. Phải có ít nhất 1 sản phẩm
 3. Tổng tiền phải > 0
 4. Phải xác định nhân viên tạo hóa đơn
 
 ### Quy tắc Thanh toán
+
 1. Chỉ thanh toán hóa đơn có status = PENDING
 2. Số tiền thanh toán phải = tổng tiền
 3. Tiền thừa = Tiền khách đưa - Tổng tiền
 4. Sau khi thanh toán, cập nhật status = PAID
 
 ### Quy tắc Hoàn tiền
+
 1. Chỉ hoàn tiền hóa đơn đã thanh toán (status = PAID)
 2. Số tiền hoàn <= Tổng tiền
 3. Yêu cầu quyền Manager/Admin
 4. Hoàn lại tồn kho nếu hoàn sản phẩm
 
 ### Quy tắc Hủy
+
 1. Chỉ hủy hóa đơn chưa thanh toán (status = PENDING)
 2. Phải ghi rõ lý do
 3. Cập nhật lại tồn kho
@@ -384,20 +403,21 @@ class InvoiceService {
 
 ### Phân quyền
 
-| Action | Admin | Manager | Staff | Cashier |
-|--------|-------|---------|-------|---------|
-| Tạo hóa đơn | ✅ | ✅ | ✅ | ✅ |
-| Xem hóa đơn | ✅ | ✅ | ✅ | ✅ |
-| Sửa hóa đơn | ✅ | ✅ | ❌ | ❌ |
-| Xóa hóa đơn | ✅ | ✅ | ❌ | ❌ |
-| Thanh toán | ✅ | ✅ | ✅ | ✅ |
-| Hoàn tiền | ✅ | ✅ | ❌ | ❌ |
-| Hủy hóa đơn | ✅ | ✅ | ❌ | ❌ |
-| Xem báo cáo | ✅ | ✅ | ❌ | ❌ |
+| Action      | Admin | Manager | Staff | Cashier |
+| ----------- | ----- | ------- | ----- | ------- |
+| Tạo hóa đơn | ✅    | ✅      | ✅    | ✅      |
+| Xem hóa đơn | ✅    | ✅      | ✅    | ✅      |
+| Sửa hóa đơn | ✅    | ✅      | ❌    | ❌      |
+| Xóa hóa đơn | ✅    | ✅      | ❌    | ❌      |
+| Thanh toán  | ✅    | ✅      | ✅    | ✅      |
+| Hoàn tiền   | ✅    | ✅      | ❌    | ❌      |
+| Hủy hóa đơn | ✅    | ✅      | ❌    | ❌      |
+| Xem báo cáo | ✅    | ✅      | ❌    | ❌      |
 
 ## Testing
 
 ### Unit Tests
+
 - Tính toán tổng tiền
 - Tính thuế VAT
 - Tính giảm giá
@@ -405,12 +425,14 @@ class InvoiceService {
 - Validate payment amount
 
 ### Integration Tests
+
 - Tạo hóa đơn end-to-end
 - Thanh toán hóa đơn
 - Hoàn tiền
 - Hủy hóa đơn
 
 ### E2E Tests
+
 - User flow: Tạo đơn → Thanh toán → In hóa đơn
 - User flow: Tạo đơn → Hủy
 - User flow: Thanh toán → Hoàn tiền
@@ -418,12 +440,14 @@ class InvoiceService {
 ## Performance
 
 ### Optimization
+
 - Lazy load danh sách hóa đơn (pagination)
 - Cache frequently accessed invoices
 - Index database queries
 - Compress PDF exports
 
 ### Metrics
+
 - Invoice creation time: < 1s
 - Payment processing time: < 2s
 - PDF generation time: < 3s

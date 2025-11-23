@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from '@screens/Home/HomeScreen';
 import { MenuScreen } from '@screens/Menu/MenuScreen';
 import { useTranslation } from '@hooks/useTranslation';
-import { Colors, FontSizes } from '@styles/theme';
+import { tabBarOptions } from './config';
 import type { MainTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -33,25 +33,7 @@ export const MainTabs: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.text.secondary,
-        tabBarStyle: {
-          borderTopWidth: 1,
-          borderTopColor: Colors.border.light,
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: FontSizes.xs,
-          fontWeight: '600',
-        },
-      }}
-      initialRouteName="Home"
-    >
+    <Tab.Navigator screenOptions={tabBarOptions} initialRouteName="Home">
       <Tab.Screen
         name="Home"
         component={HomeScreen}

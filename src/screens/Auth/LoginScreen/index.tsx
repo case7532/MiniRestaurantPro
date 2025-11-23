@@ -3,7 +3,12 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '@hooks/useAuth';
@@ -23,7 +28,7 @@ export const LoginScreen: React.FC = () => {
   const { t } = useTranslation();
   const { login, loading } = useAuth();
   const navigation = useNavigation<LoginScreenNavigationProp>();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
@@ -58,7 +63,7 @@ export const LoginScreen: React.FC = () => {
     } catch (error: any) {
       Alert.alert(
         t('common.error'),
-        error.message || t('auth.invalid_credentials')
+        error.message || t('auth.invalid_credentials'),
       );
     }
   };

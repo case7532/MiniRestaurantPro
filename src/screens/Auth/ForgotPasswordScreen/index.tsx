@@ -3,7 +3,12 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '@hooks/useAuth';
@@ -53,16 +58,16 @@ export const ForgotPasswordScreen: React.FC = () => {
 
     try {
       await sendPasswordResetEmail(email);
-      
+
       setSent(true);
       Alert.alert(
         t('common.success'),
-        'Email khôi phục mật khẩu đã được gửi.\n\nVui lòng kiểm tra hộp thư và làm theo hướng dẫn để đặt lại mật khẩu của bạn.'
+        'Email khôi phục mật khẩu đã được gửi.\n\nVui lòng kiểm tra hộp thư và làm theo hướng dẫn để đặt lại mật khẩu của bạn.',
       );
     } catch (error: any) {
       Alert.alert(
         t('common.error'),
-        error.message || t('errors.unknown_error')
+        error.message || t('errors.unknown_error'),
       );
     } finally {
       setLoading(false);

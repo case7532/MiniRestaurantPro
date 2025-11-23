@@ -3,8 +3,20 @@
 // ============================================
 
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { Colors, BorderRadius, FontSizes, FontWeights, Spacing } from '@styles/theme';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import {
+  Colors,
+  BorderRadius,
+  FontSizes,
+  FontWeights,
+  Spacing,
+} from '@styles/theme';
 import { useTranslation } from '@hooks/useTranslation';
 import { MenuCategory } from '@/types/models';
 
@@ -22,41 +34,49 @@ const categories = [
   { id: MenuCategory.SIDE_DISH, key: 'side_dish' },
 ];
 
-export const CategoryFilter: React.FC<CategoryFilterProps> = React.memo(({ 
-  selectedCategory, 
-  onSelectCategory 
-}) => {
-  const { t } = useTranslation();
+export const CategoryFilter: React.FC<CategoryFilterProps> = React.memo(
+  ({ selectedCategory, onSelectCategory }) => {
+    const { t } = useTranslation();
 
-  return (
-    <View style={styles.container}>
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {categories.map((category) => {
-          const isSelected = selectedCategory === category.id;
-          const label = category.key === 'all' 
-            ? t('common.all') 
-            : t(`menu.categories.${category.key}`);
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {categories.map(category => {
+            const isSelected = selectedCategory === category.id;
+            const label =
+              category.key === 'all'
+                ? t('common.all')
+                : t(`menu.categories.${category.key}`);
 
-          return (
-            <TouchableOpacity
-              key={category.key}
-              style={[styles.categoryChip, isSelected && styles.categoryChipActive]}
-              onPress={() => onSelectCategory(category.id)}
-            >
-              <Text style={[styles.categoryText, isSelected && styles.categoryTextActive]}>
-                {label}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
-});
+            return (
+              <TouchableOpacity
+                key={category.key}
+                style={[
+                  styles.categoryChip,
+                  isSelected && styles.categoryChipActive,
+                ]}
+                onPress={() => onSelectCategory(category.id)}
+              >
+                <Text
+                  style={[
+                    styles.categoryText,
+                    isSelected && styles.categoryTextActive,
+                  ]}
+                >
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

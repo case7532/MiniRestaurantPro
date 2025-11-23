@@ -6,7 +6,13 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { StatusBar, useColorScheme, View, ActivityIndicator } from 'react-native';
+import {
+  StatusBar,
+  useColorScheme,
+  View,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { RootNavigator } from '@navigation';
@@ -24,7 +30,7 @@ function App(): React.JSX.Element {
     const initializeApp = async () => {
       try {
         // Firebase automatically initializes with google-services.json / GoogleService-Info.plist
-        
+
         // Optional: Listen to auth state changes
         // const unsubscribe = FirebaseAuthService.onAuthStateChanged((user) => {
         //   console.log('Auth state changed:', user?.email);
@@ -46,14 +52,14 @@ function App(): React.JSX.Element {
   // Show loading screen while initializing
   if (isInitializing) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#0066CC" />
       </View>
     );
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -64,5 +70,16 @@ function App(): React.JSX.Element {
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default App;

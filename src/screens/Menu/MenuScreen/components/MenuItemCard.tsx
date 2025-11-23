@@ -4,7 +4,14 @@
 
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Colors, BorderRadius, FontSizes, FontWeights, Spacing, Shadows } from '@styles/theme';
+import {
+  Colors,
+  BorderRadius,
+  FontSizes,
+  FontWeights,
+  Spacing,
+  Shadows,
+} from '@styles/theme';
 import { useTranslation } from '@hooks/useTranslation';
 import type { MenuItem } from '@/types/models';
 
@@ -13,65 +20,75 @@ interface MenuItemCardProps {
   onPress: (item: MenuItem) => void;
 }
 
-export const MenuItemCard: React.FC<MenuItemCardProps> = React.memo(({ item, onPress }) => {
-  const { t } = useTranslation();
+export const MenuItemCard: React.FC<MenuItemCardProps> = React.memo(
+  ({ item, onPress }) => {
+    const { t } = useTranslation();
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-    }).format(price);
-  };
+    const formatPrice = (price: number) => {
+      return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+      }).format(price);
+    };
 
-  return (
-    <TouchableOpacity 
-      style={styles.container} 
-      onPress={() => onPress(item)}
-      activeOpacity={0.7}
-    >
-      <View style={styles.imageContainer}>
-        {item.image ? (
-          <Image source={{ uri: item.image }} style={styles.image} resizeMode="cover" />
-        ) : (
-          <View style={styles.imagePlaceholder}>
-            <Text style={styles.placeholderText}>🍽️</Text>
-          </View>
-        )}
-        {!item.available && (
-          <View style={styles.unavailableBadge}>
-            <Text style={styles.unavailableText}>{t('menu.unavailable')}</Text>
-          </View>
-        )}
-      </View>
-
-      <View style={styles.contentContainer}>
-        <Text style={styles.name} numberOfLines={2}>
-          {item.name}
-        </Text>
-        
-        <Text style={styles.description} numberOfLines={2}>
-          {item.description}
-        </Text>
-
-        <View style={styles.footer}>
-          <Text style={styles.price}>{formatPrice(item.price)}</Text>
-          
-          {item.preparationTime && (
-            <View style={styles.timeContainer}>
-              <Text style={styles.timeText}>⏱ {item.preparationTime} phút</Text>
+    return (
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => onPress(item)}
+        activeOpacity={0.7}
+      >
+        <View style={styles.imageContainer}>
+          {item.image ? (
+            <Image
+              source={{ uri: item.image }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          ) : (
+            <View style={styles.imagePlaceholder}>
+              <Text style={styles.placeholderText}>🍽️</Text>
+            </View>
+          )}
+          {!item.available && (
+            <View style={styles.unavailableBadge}>
+              <Text style={styles.unavailableText}>
+                {t('menu.unavailable')}
+              </Text>
             </View>
           )}
         </View>
 
-        <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>
-            {t(`menu.categories.${item.category}`)}
+        <View style={styles.contentContainer}>
+          <Text style={styles.name} numberOfLines={2}>
+            {item.name}
           </Text>
+
+          <Text style={styles.description} numberOfLines={2}>
+            {item.description}
+          </Text>
+
+          <View style={styles.footer}>
+            <Text style={styles.price}>{formatPrice(item.price)}</Text>
+
+            {item.preparationTime && (
+              <View style={styles.timeContainer}>
+                <Text style={styles.timeText}>
+                  ⏱ {item.preparationTime} phút
+                </Text>
+              </View>
+            )}
+          </View>
+
+          <View style={styles.categoryBadge}>
+            <Text style={styles.categoryText}>
+              {t(`menu.categories.${item.category}`)}
+            </Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  );
-});
+      </TouchableOpacity>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

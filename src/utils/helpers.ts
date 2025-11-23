@@ -5,7 +5,10 @@
 /**
  * Format currency
  */
-export const formatCurrency = (amount: number, currency: string = 'VND'): string => {
+export const formatCurrency = (
+  amount: number,
+  currency: string = 'VND',
+): string => {
   return new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency,
@@ -15,9 +18,12 @@ export const formatCurrency = (amount: number, currency: string = 'VND'): string
 /**
  * Format date
  */
-export const formatDate = (date: string | Date, format: 'short' | 'long' = 'short'): string => {
+export const formatDate = (
+  date: string | Date,
+  format: 'short' | 'long' = 'short',
+): string => {
   const d = typeof date === 'string' ? new Date(date) : date;
-  
+
   if (format === 'long') {
     return new Intl.DateTimeFormat('vi-VN', {
       year: 'numeric',
@@ -27,7 +33,7 @@ export const formatDate = (date: string | Date, format: 'short' | 'long' = 'shor
       minute: '2-digit',
     }).format(d);
   }
-  
+
   return new Intl.DateTimeFormat('vi-VN', {
     year: 'numeric',
     month: '2-digit',
@@ -40,10 +46,10 @@ export const formatDate = (date: string | Date, format: 'short' | 'long' = 'shor
  */
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeoutId: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => func(...args), delay);
@@ -54,7 +60,9 @@ export const debounce = <T extends (...args: any[]) => any>(
  * Truncate text
  */
 export const truncate = (text: string, maxLength: number): string => {
-  if (text.length <= maxLength) return text;
+  if (text.length <= maxLength) {
+    return text;
+  }
   return text.substring(0, maxLength) + '...';
 };
 
@@ -76,9 +84,15 @@ export const deepClone = <T>(obj: T): T => {
  * Check if object is empty
  */
 export const isEmpty = (obj: any): boolean => {
-  if (obj == null) return true;
-  if (Array.isArray(obj) || typeof obj === 'string') return obj.length === 0;
-  if (typeof obj === 'object') return Object.keys(obj).length === 0;
+  if (obj === null || obj === undefined) {
+    return true;
+  }
+  if (Array.isArray(obj) || typeof obj === 'string') {
+    return obj.length === 0;
+  }
+  if (typeof obj === 'object') {
+    return Object.keys(obj).length === 0;
+  }
   return false;
 };
 
@@ -86,7 +100,9 @@ export const isEmpty = (obj: any): boolean => {
  * Capitalize first letter
  */
 export const capitalize = (str: string): string => {
-  if (!str) return '';
+  if (!str) {
+    return '';
+  }
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 

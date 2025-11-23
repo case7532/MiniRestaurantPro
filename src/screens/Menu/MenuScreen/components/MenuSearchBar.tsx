@@ -3,7 +3,13 @@
 // ============================================
 
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { Colors, BorderRadius, FontSizes, Spacing } from '@styles/theme';
 import { useTranslation } from '@hooks/useTranslation';
 
@@ -13,32 +19,30 @@ interface MenuSearchBarProps {
   onClear: () => void;
 }
 
-export const MenuSearchBar: React.FC<MenuSearchBarProps> = React.memo(({ 
-  value, 
-  onChangeText,
-  onClear,
-}) => {
-  const { t } = useTranslation();
+export const MenuSearchBar: React.FC<MenuSearchBarProps> = React.memo(
+  ({ value, onChangeText, onClear }) => {
+    const { t } = useTranslation();
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder={t('menu.search_placeholder')}
-          placeholderTextColor={Colors.text.disabled}
-          value={value}
-          onChangeText={onChangeText}
-        />
-        {value.length > 0 && (
-          <TouchableOpacity onPress={onClear} style={styles.clearButton}>
-            <Text style={styles.clearText}>✕</Text>
-          </TouchableOpacity>
-        )}
+    return (
+      <View style={styles.container}>
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder={t('menu.search_placeholder')}
+            placeholderTextColor={Colors.text.disabled}
+            value={value}
+            onChangeText={onChangeText}
+          />
+          {value.length > 0 && (
+            <TouchableOpacity onPress={onClear} style={styles.clearButton}>
+              <Text style={styles.clearText}>✕</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

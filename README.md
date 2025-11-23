@@ -4,7 +4,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue.svg)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Ứng dụng quản lý nhà hàng mini được xây dựng với React Native và TypeScript, tuân theo Clean Architecture và các best practices.
+Ứng dụng quản lý nhà hàng mini được xây dựng với React Native và TypeScript, tuân theo Clean
+Architecture và các best practices.
 
 ## 📋 Mục lục
 
@@ -38,12 +39,14 @@
 ## 🛠 Tech Stack
 
 ### Core
+
 - **React Native** 0.82.1 - Mobile framework
 - **TypeScript** 5.8.3 - Type-safe JavaScript
 - **React** 19.1.1 - UI library
 - **i18next** + **react-i18next** + **react-native-localize** - Internationalization (i18n)
 
 ### Development Tools
+
 - **Babel** - JavaScript compiler với module resolver
 - **Metro** - JavaScript bundler
 - **Jest** - Testing framework
@@ -51,6 +54,7 @@
 - **Prettier** - Code formatting
 
 ### Recommended Libraries (để install)
+
 ```bash
 # State Management
 npm install @reduxjs/toolkit react-redux
@@ -81,7 +85,8 @@ npm install react-hook-form yup
 
 - Node.js >= 20
 - npm hoặc yarn
-- React Native development environment ([Setup Guide](https://reactnative.dev/docs/environment-setup))
+- React Native development environment
+  ([Setup Guide](https://reactnative.dev/docs/environment-setup))
 - Xcode (macOS) cho iOS development
 - Android Studio cho Android development
 
@@ -147,6 +152,7 @@ import { useAuth } from '@hooks/useAuth';
 ```
 
 **Available aliases:**
+
 - `@/*` → `src/*`
 - `@components/*` → `src/components/*`
 - `@screens/*` → `src/screens/*`
@@ -167,20 +173,18 @@ import { useTranslation } from '@hooks/useTranslation';
 
 const MyComponent = () => {
   const { t, changeLanguage } = useTranslation();
-  
+
   return (
     <View>
       <Text>{t('common.welcome')}</Text>
-      <Button 
-        title="Switch to Vietnamese" 
-        onPress={() => changeLanguage('vi')} 
-      />
+      <Button title="Switch to Vietnamese" onPress={() => changeLanguage('vi')} />
     </View>
   );
 };
 ```
 
 **Supported Languages:**
+
 - 🇬🇧 English (en)
 - 🇻🇳 Tiếng Việt (vi)
 
@@ -230,16 +234,19 @@ npm run build:ios      # Build iOS app
 Dự án tuân theo **Clean Architecture** với 3 layers chính:
 
 ### 1. Presentation Layer
+
 - **Components**: UI components (dumb & smart)
 - **Screens**: Page-level components
 - **Hooks**: Custom React hooks cho logic tái sử dụng
 
 ### 2. Domain Layer
+
 - **Types**: TypeScript interfaces và types
 - **Models**: Business entities
 - **Use Cases**: Business logic
 
 ### 3. Data Layer
+
 - **Services**: API clients, storage services
 - **Repositories**: Data access patterns
 
@@ -271,18 +278,14 @@ import { Button } from '@components/common/Button';
 
 describe('Button Component', () => {
   it('renders correctly', () => {
-    const { getByText } = render(
-      <Button title="Click Me" onPress={() => {}} />
-    );
+    const { getByText } = render(<Button title="Click Me" onPress={() => {}} />);
     expect(getByText('Click Me')).toBeTruthy();
   });
 
   it('handles press events', () => {
     const onPressMock = jest.fn();
-    const { getByText } = render(
-      <Button title="Press" onPress={onPressMock} />
-    );
-    
+    const { getByText } = render(<Button title="Press" onPress={onPressMock} />);
+
     fireEvent.press(getByText('Press'));
     expect(onPressMock).toHaveBeenCalled();
   });
@@ -294,6 +297,7 @@ describe('Button Component', () => {
 ## 🎯 Best Practices
 
 ### Component Design
+
 ```typescript
 // ✅ Good: Typed props, memoization, single responsibility
 interface ButtonProps {
@@ -302,26 +306,25 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary';
 }
 
-export const Button: React.FC<ButtonProps> = React.memo(({ 
-  title, 
-  onPress, 
-  variant = 'primary' 
-}) => {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Text>{title}</Text>
-    </TouchableOpacity>
-  );
-});
+export const Button: React.FC<ButtonProps> = React.memo(
+  ({ title, onPress, variant = 'primary' }) => {
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <Text>{title}</Text>
+      </TouchableOpacity>
+    );
+  },
+);
 ```
 
 ### Custom Hooks
+
 ```typescript
 // ✅ Good: Reusable logic, clear interface
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
-  
+
   const login = async (credentials: Credentials) => {
     setLoading(true);
     try {
@@ -331,18 +334,19 @@ export const useAuth = () => {
       setLoading(false);
     }
   };
-  
+
   return { user, loading, login };
 };
 ```
 
 ### Performance Optimization
+
 ```typescript
 // ✅ Good: Optimized list rendering
 <FlatList
   data={items}
   renderItem={renderItem}
-  keyExtractor={(item) => item.id}
+  keyExtractor={item => item.id}
   removeClippedSubviews={true}
   maxToRenderPerBatch={10}
   windowSize={5}
@@ -401,11 +405,13 @@ cd android
 ### Common Issues
 
 **Metro bundler không start:**
+
 ```bash
 npm start -- --reset-cache
 ```
 
 **iOS build fails:**
+
 ```bash
 cd ios
 pod deintegrate
@@ -414,6 +420,7 @@ cd ..
 ```
 
 **Android build fails:**
+
 ```bash
 cd android
 ./gradlew clean
@@ -421,6 +428,7 @@ cd ..
 ```
 
 **TypeScript errors:**
+
 ```bash
 rm -rf node_modules
 npm install
@@ -457,13 +465,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Your Name - [@yourhandle](https://twitter.com/yourhandle)
 
-Project Link: [https://github.com/yourusername/MiniRestaurantPro](https://github.com/yourusername/MiniRestaurantPro)
+Project Link:
+[https://github.com/yourusername/MiniRestaurantPro](https://github.com/yourusername/MiniRestaurantPro)
 
 ---
 
 # Getting Started
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+> **Note**: Make sure you have completed the
+> [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before
+> proceeding.
 
 ## Step 1: Start Metro
 
@@ -481,7 +492,8 @@ yarn start
 
 ## Step 2: Build and run your app
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+With Metro running, open a new terminal window/pane from the root of your React Native project, and
+use one of the following commands to build and run your Android or iOS app:
 
 ### Android
 
@@ -495,7 +507,8 @@ yarn android
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or
+after updating native deps).
 
 The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
 
@@ -509,7 +522,8 @@ Then, and every time you update your native dependencies, run:
 bundle exec pod install
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+For more information, please visit
+[CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
 
 ```sh
 # Using npm
@@ -519,7 +533,8 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+If everything is set up correctly, you should see your new app running in the Android Emulator, iOS
+Simulator, or your connected device.
 
 This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
@@ -527,11 +542,16 @@ This is one way to run your app — you can also build it directly from Android 
 
 Now that you have successfully run the app, let's make changes!
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will
+automatically update and reflect these changes — this is powered by
+[Fast Refresh](https://reactnative.dev/docs/fast-refresh).
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+When you want to forcefully reload, for example to reset the state of your app, you can perform a
+full reload:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
+- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**,
+  accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd>
+  (macOS).
 - **iOS**: Press <kbd>R</kbd> in iOS Simulator.
 
 ## Congratulations! :tada:
@@ -540,19 +560,25 @@ You've successfully run and modified your React Native App. :partying_face:
 
 ### Now what?
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+- If you want to add this new React Native code to an existing application, check out the
+  [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the
+  [docs](https://reactnative.dev/docs/getting-started).
 
 # Troubleshooting
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+If you're having issues getting the above steps to work, see the
+[Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
 # Learn More
 
 To learn more about React Native, take a look at the following resources:
 
 - [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React
+  Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React
+  Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub
+  **repository** for React Native.

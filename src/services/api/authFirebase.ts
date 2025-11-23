@@ -7,9 +7,9 @@
 
 import { FirebaseAuthService, FirebaseFirestoreService } from '../firebase';
 import { StorageService } from '../storage/asyncStorage';
-import type { 
-  LoginCredentials, 
-  RegisterData, 
+import type {
+  LoginCredentials,
+  RegisterData,
   AuthResponse,
   User,
   UserRole,
@@ -30,11 +30,15 @@ export class AuthService {
   static async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
       // Đăng nhập với Firebase
-      const userCredential = await FirebaseAuthService.signInWithEmail(credentials);
+      const userCredential = await FirebaseAuthService.signInWithEmail(
+        credentials,
+      );
       const firebaseUser = userCredential.user;
 
       // Lấy user data từ Firestore
-      let userData = await FirebaseFirestoreService.getUserDocument(firebaseUser.uid);
+      let userData = await FirebaseFirestoreService.getUserDocument(
+        firebaseUser.uid,
+      );
 
       // Nếu chưa có user document, tạo mới
       if (!userData) {
@@ -50,7 +54,7 @@ export class AuthService {
 
         await FirebaseFirestoreService.setUserDocument(
           firebaseUser.uid,
-          newUserData
+          newUserData,
         );
 
         userData = newUserData as User;
@@ -62,7 +66,7 @@ export class AuthService {
       // Tạo response theo format cũ
       const response: AuthResponse = {
         user: userData,
-        token: token,
+        token,
         refreshToken: '', // Firebase manages refresh tokens internally
       };
 
@@ -99,7 +103,7 @@ export class AuthService {
 
       await FirebaseFirestoreService.setUserDocument(
         firebaseUser.uid,
-        userData
+        userData,
       );
 
       // Lấy ID token
@@ -108,7 +112,7 @@ export class AuthService {
       // Tạo response
       const response: AuthResponse = {
         user: userData as User,
-        token: token,
+        token,
         refreshToken: '', // Firebase manages refresh tokens internally
       };
 
@@ -144,7 +148,7 @@ export class AuthService {
   static async refreshToken(_refreshToken: string): Promise<AuthResponse> {
     try {
       const currentUser = FirebaseAuthService.getCurrentUser();
-      
+
       if (!currentUser) {
         throw new Error('No user logged in');
       }
@@ -153,7 +157,9 @@ export class AuthService {
       const token = await currentUser.getIdToken(true);
 
       // Lấy user data
-      const userData = await FirebaseFirestoreService.getUserDocument(currentUser.uid);
+      const userData = await FirebaseFirestoreService.getUserDocument(
+        currentUser.uid,
+      );
 
       if (!userData) {
         throw new Error('User data not found');
@@ -161,7 +167,7 @@ export class AuthService {
 
       const response: AuthResponse = {
         user: userData,
-        token: token,
+        token,
         refreshToken: '', // Firebase manages refresh tokens internally
       };
 
@@ -189,13 +195,15 @@ export class AuthService {
    */
   static async getCurrentUser(): Promise<User | null> {
     const firebaseUser = FirebaseAuthService.getCurrentUser();
-    
+
     if (!firebaseUser) {
       return null;
     }
 
     // Lấy full user data từ Firestore
-    const userData = await FirebaseFirestoreService.getUserDocument(firebaseUser.uid);
+    const userData = await FirebaseFirestoreService.getUserDocument(
+      firebaseUser.uid,
+    );
     return userData;
   }
 
@@ -219,7 +227,7 @@ export class AuthService {
    */
   static async resetPassword(
     _token: string,
-    _newPassword: string
+    _newPassword: string,
   ): Promise<void> {
     // Firebase xử lý reset password qua email link
     // Không cần implement method này
@@ -233,7 +241,7 @@ export class AuthService {
     try {
       await FirebaseAuthService.changePassword(
         data.currentPassword,
-        data.newPassword
+        data.newPassword,
       );
     } catch (error) {
       throw error;
@@ -274,20 +282,22 @@ export class AuthService {
   static async getProfile(): Promise<User> {
     try {
       const firebaseUser = FirebaseAuthService.getCurrentUser();
-      
+
       if (!firebaseUser) {
         throw new Error('No user logged in');
       }
 
-      const user = await FirebaseFirestoreService.getUserDocument(firebaseUser.uid);
-      
+      const user = await FirebaseFirestoreService.getUserDocument(
+        firebaseUser.uid,
+      );
+
       if (!user) {
         throw new Error('User data not found');
       }
 
       // Update cached user data
       await StorageService.saveUserData(user);
-      
+
       return user;
     } catch (error) {
       throw error;
@@ -300,7 +310,7 @@ export class AuthService {
   static async updateProfile(data: Partial<User>): Promise<User> {
     try {
       const firebaseUser = FirebaseAuthService.getCurrentUser();
-      
+
       if (!firebaseUser) {
         throw new Error('No user logged in');
       }
@@ -314,24 +324,23 @@ export class AuthService {
       }
 
       // Update Firestore document
-      await FirebaseFirestoreService.updateUserDocument(
-        firebaseUser.uid,
-        {
-          ...data,
-          updatedAt: new Date().toISOString(),
-        }
-      );
+      await FirebaseFirestoreService.updateUserDocument(firebaseUser.uid, {
+        ...data,
+        updatedAt: new Date().toISOString(),
+      });
 
       // Lấy updated user
-      const user = await FirebaseFirestoreService.getUserDocument(firebaseUser.uid);
-      
+      const user = await FirebaseFirestoreService.getUserDocument(
+        firebaseUser.uid,
+      );
+
       if (!user) {
         throw new Error('User data not found');
       }
 
       // Update cached user data
       await StorageService.saveUserData(user);
-      
+
       return user;
     } catch (error) {
       throw error;
@@ -341,7 +350,7 @@ export class AuthService {
 
 /**
  * USAGE EXAMPLES (giống như trước):
- * 
+ *
  * 1. Login:
  * ```typescript
  * const response = await AuthService.login({
@@ -350,7 +359,7 @@ export class AuthService {
  * });
  * console.log('Logged in:', response.user);
  * ```
- * 
+ *
  * 2. Register:
  * ```typescript
  * const response = await AuthService.register({
@@ -360,7 +369,7 @@ export class AuthService {
  *   phone: '+1234567890'
  * });
  * ```
- * 
+ *
  * 3. Check authentication:
  * ```typescript
  * const isAuth = await AuthService.isAuthenticated();

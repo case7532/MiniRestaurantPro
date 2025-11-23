@@ -7,8 +7,30 @@
 // - Error Handling
 // ============================================
 
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail as sendPasswordReset, updatePassword, reauthenticateWithCredential, EmailAuthProvider, signOut, onAuthStateChanged } from '@react-native-firebase/auth';
-import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, deleteDoc, writeBatch, serverTimestamp } from '@react-native-firebase/firestore';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+  sendPasswordResetEmail as sendPasswordReset,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  signOut,
+  onAuthStateChanged,
+} from '@react-native-firebase/auth';
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  writeBatch,
+  serverTimestamp,
+} from '@react-native-firebase/firestore';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import type { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import type { User, LoginCredentials, RegisterData } from '@/types/models';
@@ -21,14 +43,14 @@ export class FirebaseAuthService {
    * Đăng nhập bằng email và password
    */
   static async signInWithEmail(
-    credentials: LoginCredentials
+    credentials: LoginCredentials,
   ): Promise<FirebaseAuthTypes.UserCredential> {
     try {
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(
         auth,
         credentials.email,
-        credentials.password
+        credentials.password,
       );
       return userCredential;
     } catch (error) {
@@ -40,14 +62,14 @@ export class FirebaseAuthService {
    * Đăng ký tài khoản mới
    */
   static async signUpWithEmail(
-    data: RegisterData
+    data: RegisterData,
   ): Promise<FirebaseAuthTypes.UserCredential> {
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         data.email,
-        data.password
+        data.password,
       );
 
       // Cập nhật display name
@@ -110,7 +132,7 @@ export class FirebaseAuthService {
    */
   static async changePassword(
     currentPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     try {
       const auth = getAuth();
@@ -122,7 +144,7 @@ export class FirebaseAuthService {
       // Re-authenticate user
       const credential = EmailAuthProvider.credential(
         user.email,
-        currentPassword
+        currentPassword,
       );
       await reauthenticateWithCredential(user, credential);
 
@@ -164,7 +186,7 @@ export class FirebaseAuthService {
    * Lắng nghe thay đổi auth state
    */
   static onAuthStateChanged(
-    callback: (user: FirebaseAuthTypes.User | null) => void
+    callback: (user: FirebaseAuthTypes.User | null) => void,
   ): () => void {
     const auth = getAuth();
     return onAuthStateChanged(auth, callback);
@@ -227,7 +249,7 @@ export class FirebaseFirestoreService {
    */
   static async setUserDocument(
     uid: string,
-    data: Partial<User>
+    data: Partial<User>,
   ): Promise<void> {
     try {
       const db = getFirestore();
@@ -238,7 +260,7 @@ export class FirebaseFirestoreService {
           ...data,
           updatedAt: serverTimestamp(),
         },
-        { merge: true }
+        { merge: true },
       );
     } catch (error) {
       throw this.handleFirestoreError(error);
@@ -269,7 +291,7 @@ export class FirebaseFirestoreService {
    */
   static async updateUserDocument(
     uid: string,
-    data: Partial<User>
+    data: Partial<User>,
   ): Promise<void> {
     try {
       const db = getFirestore();
@@ -288,7 +310,7 @@ export class FirebaseFirestoreService {
    */
   static async deleteDocument(
     collectionName: string,
-    docId: string
+    docId: string,
   ): Promise<void> {
     try {
       const db = getFirestore();
@@ -302,9 +324,7 @@ export class FirebaseFirestoreService {
   /**
    * Lấy collection
    */
-  static collection(
-    name: string
-  ): FirebaseFirestoreTypes.CollectionReference {
+  static collection(name: string): FirebaseFirestoreTypes.CollectionReference {
     const db = getFirestore();
     return collection(db, name);
   }
@@ -373,16 +393,18 @@ export const FirebaseHelpers = {
    * Format Firestore timestamp
    */
   formatTimestamp(
-    timestamp: FirebaseFirestoreTypes.Timestamp | undefined
+    timestamp: FirebaseFirestoreTypes.Timestamp | undefined,
   ): string {
-    if (!timestamp) return '';
+    if (!timestamp) {
+      return '';
+    }
     return timestamp.toDate().toISOString();
   },
 };
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * 1. Authentication:
  * ```typescript
  * // Đăng ký
@@ -391,13 +413,13 @@ export const FirebaseHelpers = {
  *   password: 'password123',
  *   name: 'John Doe'
  * });
- * 
+ *
  * // Đăng nhập
  * const result = await FirebaseAuthService.signInWithEmail({
  *   email: 'user@example.com',
  *   password: 'password123'
  * });
- * 
+ *
  * // Lắng nghe auth state
  * const unsubscribe = FirebaseAuthService.onAuthStateChanged((user) => {
  *   if (user) {
@@ -407,7 +429,7 @@ export const FirebaseHelpers = {
  *   }
  * });
  * ```
- * 
+ *
  * 2. Firestore:
  * ```typescript
  * // Lưu user data
@@ -416,10 +438,10 @@ export const FirebaseHelpers = {
  *   email: 'john@example.com',
  *   role: 'admin'
  * });
- * 
+ *
  * // Lấy user data
  * const user = await FirebaseFirestoreService.getUserDocument(userId);
- * 
+ *
  * // Query collection
  * const restaurants = await FirebaseFirestoreService
  *   .collection('restaurants')

@@ -9,7 +9,13 @@
 // ============================================
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, ActivityIndicator, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import { Colors } from '@styles/theme';
 import { useMenu } from '@hooks/useMenu';
 import { useTranslation } from '@hooks/useTranslation';
@@ -24,7 +30,7 @@ import {
 
 export const MenuScreen: React.FC = () => {
   const { t } = useTranslation();
-  
+
   const {
     filteredItems,
     loading,
@@ -54,9 +60,12 @@ export const MenuScreen: React.FC = () => {
   }, [fetchItems]);
 
   // Handle search
-  const handleSearch = useCallback((query: string) => {
-    searchItems(query);
-  }, [searchItems]);
+  const handleSearch = useCallback(
+    (query: string) => {
+      searchItems(query);
+    },
+    [searchItems],
+  );
 
   // Handle clear search
   const handleClearSearch = useCallback(() => {
@@ -64,9 +73,12 @@ export const MenuScreen: React.FC = () => {
   }, [searchItems]);
 
   // Handle category selection
-  const handleCategorySelect = useCallback((category: MenuCategory | null) => {
-    filterByCategory(category);
-  }, [filterByCategory]);
+  const handleCategorySelect = useCallback(
+    (category: MenuCategory | null) => {
+      filterByCategory(category);
+    },
+    [filterByCategory],
+  );
 
   // Handle item press
   const handleItemPress = useCallback((item: MenuItem) => {
@@ -87,9 +99,7 @@ export const MenuScreen: React.FC = () => {
         <MenuHeader />
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={Colors.primary} />
-          <Text style={styles.loadingText}>
-            {t('common.loading')}
-          </Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -113,7 +123,7 @@ export const MenuScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MenuHeader />
-      
+
       <MenuSearchBar
         value={searchQuery}
         onChangeText={handleSearch}

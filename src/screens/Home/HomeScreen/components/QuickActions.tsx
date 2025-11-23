@@ -12,40 +12,39 @@ interface QuickActionsProps {
   onMenuPress: () => void;
 }
 
-export const QuickActions: React.FC<QuickActionsProps> = React.memo(({
-  onOrdersPress,
-  onMenuPress,
-}) => {
-  const { t } = useTranslation();
+export const QuickActions: React.FC<QuickActionsProps> = React.memo(
+  ({ onOrdersPress, onMenuPress }) => {
+    const { t } = useTranslation();
 
-  return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>
-        {t('home.quick_actions', { defaultValue: 'Quick Actions' })}
-      </Text>
-      <View style={styles.actionsContainer}>
-        <TouchableOpacity style={styles.actionCard} onPress={onOrdersPress}>
-          <View style={styles.actionIconContainer}>
-            <Text style={styles.actionIcon}>📦</Text>
-          </View>
-          <Text style={styles.actionTitle}>{t('navigation.orders')}</Text>
-          <Text style={styles.actionSubtitle}>
-            {t('home.manage_orders', { defaultValue: 'View & manage' })}
-          </Text>
-        </TouchableOpacity>
+    return (
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>
+          {t('home.quick_actions', { defaultValue: 'Quick Actions' })}
+        </Text>
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity style={styles.actionCard} onPress={onOrdersPress}>
+            <View style={styles.actionIconContainer}>
+              <Text style={styles.actionIcon}>📦</Text>
+            </View>
+            <Text style={styles.actionTitle}>{t('navigation.orders')}</Text>
+            <Text style={styles.actionSubtitle}>
+              {t('home.manage_orders', { defaultValue: 'View & manage' })}
+            </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionCard} onPress={onMenuPress}>
-          <View style={styles.actionIconContainer}>
-            <Text style={styles.actionIcon}>🍜</Text>
-          </View>
-          <Text style={styles.actionTitle}>{t('navigation.menu')}</Text>
-          <Text style={styles.actionSubtitle}>
-            {t('home.manage_menu', { defaultValue: 'Update items' })}
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.actionCard} onPress={onMenuPress}>
+            <View style={styles.actionIconContainer}>
+              <Text style={styles.actionIcon}>🍜</Text>
+            </View>
+            <Text style={styles.actionTitle}>{t('navigation.menu')}</Text>
+            <Text style={styles.actionSubtitle}>
+              {t('home.manage_menu', { defaultValue: 'Update items' })}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 QuickActions.displayName = 'QuickActions';

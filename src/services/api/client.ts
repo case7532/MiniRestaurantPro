@@ -10,9 +10,9 @@
 // - Request cancellation
 // ============================================
 
-import axios, { 
-  AxiosInstance, 
-  AxiosError, 
+import axios, {
+  AxiosInstance,
+  AxiosError,
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
   AxiosResponse,
@@ -74,8 +74,9 @@ class ApiClient {
     // Request interceptor
     this.instance.interceptors.request.use(
       async (config: InternalAxiosRequestConfig) => {
-        const customConfig = config as InternalAxiosRequestConfig & RequestConfig;
-        
+        const customConfig = config as InternalAxiosRequestConfig &
+          RequestConfig;
+
         // Add auth token if not skipped
         if (!customConfig.skipAuth) {
           const token = await StorageService.getAuthToken();
@@ -100,12 +101,12 @@ class ApiClient {
 
         return config;
       },
-      (error) => {
+      error => {
         if (__DEV__) {
           console.error('❌ Request Error:', error);
         }
         return Promise.reject(error);
-      }
+      },
     );
 
     // Response interceptor
@@ -122,7 +123,8 @@ class ApiClient {
         return response;
       },
       async (error: AxiosError<ApiError>) => {
-        const originalRequest = error.config as InternalAxiosRequestConfig & RequestConfig & { _retry?: boolean };
+        const originalRequest = error.config as InternalAxiosRequestConfig &
+          RequestConfig & { _retry?: boolean };
 
         // Handle 401 Unauthorized - Token expired
         if (error.response?.status === 401 && !originalRequest._retry) {
@@ -142,7 +144,7 @@ class ApiClient {
 
         // Handle other errors
         return Promise.reject(this.normalizeError(error));
-      }
+      },
     );
   }
 
@@ -152,7 +154,7 @@ class ApiClient {
   private async handleTokenRefresh(): Promise<string | null> {
     if (this.isRefreshing) {
       // Wait for the token to be refreshed
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         this.refreshSubscribers.push((token: string) => {
           resolve(token);
         });
@@ -168,11 +170,13 @@ class ApiClient {
       }
 
       // Call refresh token API (implement this in AuthService)
-      const response = await this.instance.post<ApiResponse<{ token: string; refreshToken: string }>(
-        '/auth/refresh',
-        { refreshToken },
-        { skipAuth: true } as RequestConfig
-      );
+      const response =
+        (await this.instance.post) <
+        ApiResponse<{ token: string; refreshToken: string }>(
+          '/auth/refresh',
+          { refreshToken },
+          { skipAuth: true } as RequestConfig,
+        );
 
       const { token, refreshToken: newRefreshToken } = response.data.data;
 
@@ -239,19 +243,16 @@ class ApiClient {
     };
 
     return new Error(
-      statusMessages[error.response.status] || 
-      error.message || 
-      'An unexpected error occurred'
+      statusMessages[error.response.status] ||
+        error.message ||
+        'An unexpected error occurred',
     );
   }
 
   /**
    * GET request
    */
-  async get<T = any>(
-    url: string, 
-    config?: RequestConfig
-  ): Promise<T> {
+  async get<T = any>(url: string, config?: RequestConfig): Promise<T> {
     const response = await this.instance.get<ApiResponse<T>>(url, config);
     return response.data.data;
   }
@@ -260,11 +261,15 @@ class ApiClient {
    * POST request
    */
   async post<T = any>(
-    url: string, 
-    data?: any, 
-    config?: RequestConfig
+    url: string,
+    data?: any,
+    config?: RequestConfig,
   ): Promise<T> {
-    const response = await this.instance.post<ApiResponse<T>>(url, data, config);
+    const response = await this.instance.post<ApiResponse<T>>(
+      url,
+      data,
+      config,
+    );
     return response.data.data;
   }
 
@@ -272,9 +277,9 @@ class ApiClient {
    * PUT request
    */
   async put<T = any>(
-    url: string, 
-    data?: any, 
-    config?: RequestConfig
+    url: string,
+    data?: any,
+    config?: RequestConfig,
   ): Promise<T> {
     const response = await this.instance.put<ApiResponse<T>>(url, data, config);
     return response.data.data;
@@ -284,21 +289,22 @@ class ApiClient {
    * PATCH request
    */
   async patch<T = any>(
-    url: string, 
-    data?: any, 
-    config?: RequestConfig
+    url: string,
+    data?: any,
+    config?: RequestConfig,
   ): Promise<T> {
-    const response = await this.instance.patch<ApiResponse<T>>(url, data, config);
+    const response = await this.instance.patch<ApiResponse<T>>(
+      url,
+      data,
+      config,
+    );
     return response.data.data;
   }
 
   /**
    * DELETE request
    */
-  async delete<T = any>(
-    url: string, 
-    config?: RequestConfig
-  ): Promise<T> {
+  async delete<T = any>(url: string, config?: RequestConfig): Promise<T> {
     const response = await this.instance.delete<ApiResponse<T>>(url, config);
     return response.data.data;
   }
@@ -310,7 +316,7 @@ class ApiClient {
     url: string,
     formData: FormData,
     onUploadProgress?: (progress: number) => void,
-    config?: RequestConfig
+    config?: RequestConfig,
   ): Promise<T> {
     const response = await this.instance.post<ApiResponse<T>>(url, formData, {
       ...config,
@@ -318,9 +324,11 @@ class ApiClient {
         'Content-Type': 'multipart/form-data',
         ...config?.customHeaders,
       },
-      onUploadProgress: (progressEvent) => {
+      onUploadProgress: progressEvent => {
         if (onUploadProgress && progressEvent.total) {
-          const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          const progress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total,
+          );
           onUploadProgress(progress);
         }
       },
@@ -351,36 +359,36 @@ export { ApiClient };
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * 1. Basic GET request:
  * ```typescript
  * const data = await apiClient.get<User[]>('/users');
  * ```
- * 
+ *
  * 2. POST with data:
  * ```typescript
  * const user = await apiClient.post<User>('/users', { name: 'John' });
  * ```
- * 
+ *
  * 3. Skip authentication:
  * ```typescript
  * const data = await apiClient.get('/public', { skipAuth: true });
  * ```
- * 
+ *
  * 4. Custom headers:
  * ```typescript
  * const data = await apiClient.get('/users', {
  *   customHeaders: { 'X-Custom': 'value' }
  * });
  * ```
- * 
+ *
  * 5. Request cancellation:
  * ```typescript
  * const controller = apiClient.createCancelToken();
  * apiClient.get('/users', { signal: controller.signal });
  * // Cancel: controller.abort();
  * ```
- * 
+ *
  * 6. File upload:
  * ```typescript
  * const formData = new FormData();

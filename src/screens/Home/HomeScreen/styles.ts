@@ -3,7 +3,13 @@
 // ============================================
 
 import { StyleSheet } from 'react-native';
-import { Colors, Spacing, BorderRadius, FontSizes, Shadows } from '@styles/theme';
+import {
+  Colors,
+  Spacing,
+  BorderRadius,
+  FontSizes,
+  Shadows,
+} from '@styles/theme';
 
 export const styles = StyleSheet.create({
   container: {

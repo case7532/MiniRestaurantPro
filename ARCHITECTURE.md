@@ -15,7 +15,8 @@
 
 ## 🎯 Tổng quan
 
-**MiniRestaurantPro** là ứng dụng quản lý nhà hàng mini được xây dựng trên React Native với TypeScript, tuân theo kiến trúc Clean Architecture và các best practices của React Native.
+**MiniRestaurantPro** là ứng dụng quản lý nhà hàng mini được xây dựng trên React Native với
+TypeScript, tuân theo kiến trúc Clean Architecture và các best practices của React Native.
 
 ### Tech Stack
 
@@ -255,23 +256,26 @@ MiniRestaurantPro/
 // babel.config.js
 module.exports = {
   plugins: [
-    ['module-resolver', {
-      alias: {
-        '@': './src',
-        '@components': './src/components',
-        '@screens': './src/screens',
-        '@navigation': './src/navigation',
-        '@utils': './src/utils',
-        '@services': './src/services',
-        '@types': './src/types',
-        '@hooks': './src/hooks',
-        '@constants': './src/constants',
-        '@assets': './src/assets',
-        '@styles': './src/styles',
-      }
-    }]
-  ]
-}
+    [
+      'module-resolver',
+      {
+        alias: {
+          '@': './src',
+          '@components': './src/components',
+          '@screens': './src/screens',
+          '@navigation': './src/navigation',
+          '@utils': './src/utils',
+          '@services': './src/services',
+          '@types': './src/types',
+          '@hooks': './src/hooks',
+          '@constants': './src/constants',
+          '@assets': './src/assets',
+          '@styles': './src/styles',
+        },
+      },
+    ],
+  ],
+};
 ```
 
 ---
@@ -294,12 +298,13 @@ ScreenName/
 ```
 
 **Example:**
+
 ```typescript
 // screens/Auth/LoginScreen/index.tsx (Container)
 export const LoginScreen: React.FC = () => {
   const { login, loading } = useAuth();
   const navigation = useNavigation<LoginScreenNavigationProp>();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -310,35 +315,28 @@ export const LoginScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <LoginHeader />
-      <LoginForm
-        email={email}
-        password={password}
-        loading={loading}
-        onLogin={handleLogin}
-      />
+      <LoginForm email={email} password={password} loading={loading} onLogin={handleLogin} />
       <LoginFooter />
     </SafeAreaView>
   );
 };
 
 // components/LoginForm.tsx (Presentational)
-export const LoginForm: React.FC<LoginFormProps> = React.memo(({
-  email,
-  password,
-  loading,
-  onLogin,
-}) => {
-  return (
-    <View style={styles.form}>
-      <Input value={email} />
-      <Input value={password} secureTextEntry />
-      <Button title="Login" onPress={onLogin} loading={loading} />
-    </View>
-  );
-});
+export const LoginForm: React.FC<LoginFormProps> = React.memo(
+  ({ email, password, loading, onLogin }) => {
+    return (
+      <View style={styles.form}>
+        <Input value={email} />
+        <Input value={password} secureTextEntry />
+        <Button title="Login" onPress={onLogin} loading={loading} />
+      </View>
+    );
+  },
+);
 ```
 
 **Benefits:**
+
 - Clear separation of logic and UI
 - Easy to test components in isolation
 - Reusable presentational components
@@ -352,11 +350,11 @@ export const LoginForm: React.FC<LoginFormProps> = React.memo(({
 export const useMenu = () => {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const fetchMenu = async () => {
     // Logic to fetch menu
   };
-  
+
   return { menu, loading, fetchMenu };
 };
 ```
@@ -367,12 +365,12 @@ export const useMenu = () => {
 // services/repositories/MenuRepository.ts
 export class MenuRepository {
   private api: ApiClient;
-  
+
   async getMenu(): Promise<MenuItem[]> {
     const response = await this.api.get('/menu');
     return response.data;
   }
-  
+
   async createItem(item: MenuItem): Promise<MenuItem> {
     const response = await this.api.post('/menu', item);
     return response.data;
@@ -385,9 +383,9 @@ export class MenuRepository {
 ```typescript
 // components/common/ButtonFactory.tsx
 export const ButtonFactory = {
-  primary: (props) => <Button {...props} variant="primary" />,
-  secondary: (props) => <Button {...props} variant="secondary" />,
-  danger: (props) => <Button {...props} variant="danger" />,
+  primary: props => <Button {...props} variant="primary" />,
+  secondary: props => <Button {...props} variant="secondary" />,
+  danger: props => <Button {...props} variant="danger" />,
 };
 ```
 
@@ -429,10 +427,10 @@ interface AuthState {
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>(set => ({
   user: null,
   isAuthenticated: false,
-  login: async (credentials) => {
+  login: async credentials => {
     // Login logic
     set({ user, isAuthenticated: true });
   },
@@ -444,125 +442,144 @@ export const useAuthStore = create<AuthState>((set) => ({
 
 ## 🧭 Navigation ✅
 
-### React Navigation v6 Implementation
+### Enhanced Navigation System v2.0 (Optimized)
 
-**Dependencies Installed:**
+**Hệ thống navigation được thiết kế để:**
+
+- ✅ **Dễ sử dụng**: Navigation Service cho phép navigate từ bất kỳ đâu
+- ✅ **Type-safe**: Hooks và types đầy đủ cho mọi screen
+- ✅ **Dễ mở rộng**: Cấu trúc modular, dễ thêm screens mới
+- ✅ **Gọn gàng**: Chỉ 7 files, tối ưu và dễ quản lý
+
+### Navigation Files Structure (Optimized)
+
+```
+src/navigation/
+├── types.ts          # Type definitions
+├── utils.ts          # ⭐ NavigationService + ROUTES constants
+├── config.ts         # ⭐ Hooks + Screen options (gộp)
+├── linking.ts        # ⭐ Deep linking configuration
+├── RootNavigator.tsx # Root navigator with linking
+├── AuthStack.tsx     # Auth stack navigator
+├── MainTabs.tsx      # Main tabs navigator
+├── index.ts          # Barrel exports
+└── README.md         # Quick guide
+```
+
+### Quick Start Examples
+
+#### 1. Navigate từ bất kỳ đâu (Navigation Service)
+
+```typescript
+import { NavigationService, ROUTES } from '@navigation';
+
+// Trong component, service, Redux action, v.v.
+NavigationService.navigate('Main');
+NavigationService.goBack();
+NavigationService.resetRoot('Auth');
+
+// Dùng constants
+NavigationService.navigate(ROUTES.AUTH.LOGIN);
+
+// Trong service layer
+class AuthService {
+  async logout() {
+    await clearToken();
+    NavigationService.resetRoot('Auth'); // ✅ Không cần useNavigation hook
+  }
+}
+```
+
+#### 2. Type-Safe Navigation Hooks
+
+```typescript
+import { useAuthNavigation, useMainNavigation } from '@navigation';
+
+// Auth Screen
+const LoginScreen = () => {
+  const navigation = useAuthNavigation();
+  navigation.navigate('Register'); // ✅ Type-safe!
+};
+
+// Main Screen
+const HomeScreen = () => {
+  const navigation = useMainNavigation();
+  navigation.navigate('Menu'); // ✅
+};
+```
+
+#### 3. Screen Options
+
+```typescript
+import { authScreenOptions, tabBarOptions } from '@navigation';
+
+// Trong Navigator
+<Stack.Navigator screenOptions={authScreenOptions}>
+<Tab.Navigator screenOptions={tabBarOptions}>
+```
+
+### Navigation Structure
+
+```typescript
+RootNavigator (with navigationRef & linking)
+├── If user === null
+│   └── Auth Stack (Native Stack)
+│       ├── LoginScreen
+│       ├── RegisterScreen
+│       └── ForgotPasswordScreen
+│
+└── If user !== null
+    └── Main Tabs (Bottom Tabs)
+        ├── HomeScreen
+        ├── MenuScreen
+        ├── OrdersScreen
+        └── SettingsScreen
+```
+
+### Thêm Screen Mới (3 bước đơn giản)
+
+```typescript
+// 1. types.ts - Thêm type
+export type AuthStackParamList = {
+  Login: undefined;
+  NewScreen: { userId: string }; // ← Add
+};
+
+// 2. AuthStack.tsx - Thêm screen
+<Stack.Screen name="NewScreen" component={NewScreen} />;
+
+// 3. utils.ts - Thêm constant (optional)
+export const ROUTES = {
+  AUTH: {
+    NEW_SCREEN: 'NewScreen' as const, // ← Add
+  },
+};
+
+// ✅ Done!
+NavigationService.navigate('NewScreen', { userId: '123' });
+```
+
+### Best Practices
+
+1. ✅ **Sử dụng Navigation Service** cho navigation từ non-component code
+2. ✅ **Sử dụng type-safe hooks** trong React components
+3. ✅ **Sử dụng ROUTES constants** thay vì hardcode strings
+4. ✅ **Type safety**: Luôn định nghĩa param types trong types.ts
+
+### Documentation
+
+- 📖 **Quick guide**: `src/navigation/README.md`
+- 🔍 **Type definitions**: `src/navigation/types.ts`
+- 🏗️ **Architecture**: This file
+
+**Dependencies:**
+
 - @react-navigation/native
-- @react-navigation/native-stack (for Auth Stack)
-- @react-navigation/bottom-tabs (for Main Tabs)
+- @react-navigation/native-stack
+- @react-navigation/bottom-tabs
 - react-native-screens
 - react-native-safe-area-context
 - react-native-gesture-handler
-
-**Navigation Structure:**
-```typescript
-// navigation/types.ts
-export type RootStackParamList = {
-  Auth: undefined;
-  Main: undefined;
-};
-
-export type AuthStackParamList = {
-  Login: undefined;
-  Register: undefined;
-  ForgotPassword: undefined;
-};
-
-export type MainTabParamList = {
-  Home: undefined;
-  Menu: undefined;
-  Orders: undefined;
-  Settings: undefined;
-};
-
-// navigation/RootNavigator.tsx
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useAuth } from '@hooks/useAuth';
-import { AuthStack } from './AuthStack';
-import { MainTabs } from './MainTabs';
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-export const RootNavigator: React.FC = () => {
-  const { user } = useAuth();
-  
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
-          <Stack.Screen name="Main" component={MainTabs} />
-        ) : (
-          <Stack.Screen name="Auth" component={AuthStack} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-// navigation/AuthStack.tsx
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen } from '@screens/Auth/LoginScreen';
-import { RegisterScreen } from '@screens/Auth/RegisterScreen';
-import { ForgotPasswordScreen } from '@screens/Auth/ForgotPasswordScreen';
-
-const Stack = createNativeStackNavigator<AuthStackParamList>();
-
-export const AuthStack: React.FC = () => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-    </Stack.Navigator>
-  );
-};
-
-// navigation/MainTabs.tsx
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen } from '@screens/Home/HomeScreen';
-
-const Tab = createBottomTabNavigator<MainTabParamList>();
-
-export const MainTabs: React.FC = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.text.secondary,
-      }}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Menu" component={MenuScreen} />
-      <Tab.Screen name="Orders" component={OrdersScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-    </Tab.Navigator>
-  );
-};
-```
-
-**Navigation Usage in Screens:**
-```typescript
-import { useNavigation } from '@react-navigation/native';
-import type { LoginScreenNavigationProp } from '@navigation/types';
-
-export const LoginScreen: React.FC = () => {
-  const navigation = useNavigation<LoginScreenNavigationProp>();
-
-  const handleForgotPassword = () => {
-    navigation.navigate('ForgotPassword');
-  };
-
-  const handleRegister = () => {
-    navigation.navigate('Register');
-  };
-  
-  return <View>...</View>;
-};
-```
 
 ---
 
@@ -592,18 +609,18 @@ UI Re-render
 // 1. Component
 const MenuScreen = () => {
   const { addMenuItem } = useMenu();
-  
+
   const handleAddItem = async (item: MenuItem) => {
     await addMenuItem(item);
   };
-  
+
   return <AddItemForm onSubmit={handleAddItem} />;
 };
 
 // 2. Custom Hook
 export const useMenu = () => {
   const dispatch = useDispatch();
-  
+
   const addMenuItem = async (item: MenuItem) => {
     try {
       dispatch(setLoading(true));
@@ -613,7 +630,7 @@ export const useMenu = () => {
       dispatch(setError(error.message));
     }
   };
-  
+
   return { addMenuItem };
 };
 
@@ -645,22 +662,19 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = React.memo(({
-  title,
-  onPress,
-  variant = 'primary',
-  disabled = false,
-}) => {
-  return (
-    <TouchableOpacity 
-      onPress={onPress}
-      disabled={disabled}
-      style={[styles.button, styles[variant]]}
-    >
-      <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
-  );
-});
+export const Button: React.FC<ButtonProps> = React.memo(
+  ({ title, onPress, variant = 'primary', disabled = false }) => {
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        disabled={disabled}
+        style={[styles.button, styles[variant]]}
+      >
+        <Text style={styles.text}>{title}</Text>
+      </TouchableOpacity>
+    );
+  },
+);
 ```
 
 ### 2. **Performance Optimization**
@@ -698,16 +712,16 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response?.status === 401) {
       // Handle unauthorized
       store.dispatch(logout());
     }
-    
+
     const message = error.response?.data?.message || 'Something went wrong';
     throw new Error(message);
-  }
+  },
 );
 ```
 
@@ -746,18 +760,14 @@ import { Button } from '@components/common/Button';
 
 describe('Button Component', () => {
   it('renders correctly', () => {
-    const { getByText } = render(
-      <Button title="Click Me" onPress={() => {}} />
-    );
+    const { getByText } = render(<Button title="Click Me" onPress={() => {}} />);
     expect(getByText('Click Me')).toBeTruthy();
   });
-  
+
   it('calls onPress when pressed', () => {
     const onPressMock = jest.fn();
-    const { getByText } = render(
-      <Button title="Click Me" onPress={onPressMock} />
-    );
-    
+    const { getByText } = render(<Button title="Click Me" onPress={onPressMock} />);
+
     fireEvent.press(getByText('Click Me'));
     expect(onPressMock).toHaveBeenCalledTimes(1);
   });
@@ -777,8 +787,12 @@ export { Card } from './Card';
 import { Button, Input, Card } from '@components/common';
 
 // ✅ Named exports over default exports
-export const useAuth = () => { /* ... */ };
-export const useMenu = () => { /* ... */ };
+export const useAuth = () => {
+  /* ... */
+};
+export const useMenu = () => {
+  /* ... */
+};
 ```
 
 ---
@@ -786,6 +800,7 @@ export const useMenu = () => { /* ... */ };
 ## 🚀 Recommended Libraries
 
 ### Essential
+
 - **React Navigation** - Navigation
 - **Redux Toolkit** hoặc **Zustand** - State Management
 - **React Query** - Server State Management
@@ -795,11 +810,13 @@ export const useMenu = () => { /* ... */ };
 - **i18next** + **react-i18next** + **react-native-localize** - Internationalization ✅ Installed
 
 ### UI Components
+
 - **React Native Elements** - UI Library
 - **React Native Paper** - Material Design
 - **Styled Components** / **Emotion** - Styling
 
 ### Utilities
+
 - **date-fns** - Date manipulation
 - **lodash** - Utility functions
 - **react-native-vector-icons** - Icons
@@ -807,6 +824,7 @@ export const useMenu = () => { /* ... */ };
 - **react-native-reanimated** - Animations
 
 ### Development
+
 - **Reactotron** - Debugging
 - **Flipper** - Native debugging
 - **ESLint** - Linting
@@ -863,6 +881,7 @@ const styles = StyleSheet.create({
 Dự án sử dụng **i18next** với **react-native-localize** để hỗ trợ đa ngôn ngữ.
 
 #### Supported Languages
+
 - 🇬🇧 English (en)
 - 🇻🇳 Tiếng Việt (vi)
 
@@ -877,42 +896,39 @@ import * as RNLocalize from 'react-native-localize';
 // Auto-detect device language
 const deviceLanguage = RNLocalize.getLocales()[0].languageCode;
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: { translation: require('./locales/en.json') },
-      vi: { translation: require('./locales/vi.json') },
-    },
-    lng: deviceLanguage,
-    fallbackLng: 'en',
-    interpolation: { escapeValue: false },
-  });
+i18n.use(initReactI18next).init({
+  resources: {
+    en: { translation: require('./locales/en.json') },
+    vi: { translation: require('./locales/vi.json') },
+  },
+  lng: deviceLanguage,
+  fallbackLng: 'en',
+  interpolation: { escapeValue: false },
+});
 ```
 
 ### Usage
 
 #### In Components
+
 ```typescript
 import { useTranslation } from '@hooks/useTranslation';
 
 const MyComponent = () => {
   const { t, changeLanguage, getCurrentLanguage } = useTranslation();
-  
+
   return (
     <View>
       <Text>{t('common.welcome')}</Text>
       <Text>{t('auth.login')}</Text>
-      <Button 
-        title={t('common.submit')} 
-        onPress={() => {}} 
-      />
+      <Button title={t('common.submit')} onPress={() => {}} />
     </View>
   );
 };
 ```
 
 #### With Parameters
+
 ```typescript
 // Translation: "order_number": "Order #{{number}}"
 <Text>{t('orders.order_number', { number: '123' })}</Text>
@@ -922,6 +938,7 @@ const MyComponent = () => {
 ```
 
 #### Change Language
+
 ```typescript
 const { changeLanguage } = useTranslation();
 
@@ -972,14 +989,14 @@ await changeLanguage('en');
 // src/hooks/useTranslation.ts
 export const useTranslation = () => {
   const { t, i18n } = useI18nTranslation();
-  
+
   const changeLanguage = async (lang: string) => {
     await i18n.changeLanguage(lang);
     // Optionally persist to AsyncStorage
   };
-  
+
   const getCurrentLanguage = () => i18n.language;
-  
+
   return { t, changeLanguage, getCurrentLanguage };
 };
 ```
@@ -1002,5 +1019,4 @@ Example implementation available at `src/screens/Settings/LanguageSettingsScreen
 
 ---
 
-**Last Updated**: November 23, 2025
-**Version**: 0.0.1
+**Last Updated**: November 23, 2025 **Version**: 0.0.1

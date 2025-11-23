@@ -2,7 +2,12 @@
 // Navigation Exports
 // ============================================
 
+// Root Navigator
 export { RootNavigator } from './RootNavigator';
-export { AuthStack } from './AuthStack';
-export { MainTabs } from './MainTabs';
-export * from './types';
+
+// Stack Navigators
+export { AuthStack } from './stacks/Auth';
+export { MainTabs } from './stacks/Main';
+
+// Utils (Types, NavigationService, ROUTES, Hooks)
+export * from './utils';

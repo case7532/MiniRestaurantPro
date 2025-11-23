@@ -13,33 +13,36 @@ interface HomeHeaderProps {
   onSettingsPress: () => void;
 }
 
-export const HomeHeader: React.FC<HomeHeaderProps> = React.memo(({
-  user,
-  onSettingsPress,
-}) => {
-  const { t } = useTranslation();
+export const HomeHeader: React.FC<HomeHeaderProps> = React.memo(
+  ({ user, onSettingsPress }) => {
+    const { t } = useTranslation();
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return t('home.good_morning', { defaultValue: 'Good Morning' });
-    if (hour < 18) return t('home.good_afternoon', { defaultValue: 'Good Afternoon' });
-    return t('home.good_evening', { defaultValue: 'Good Evening' });
-  };
+    const getGreeting = () => {
+      const hour = new Date().getHours();
+      if (hour < 12) {
+        return t('home.good_morning', { defaultValue: 'Good Morning' });
+      }
+      if (hour < 18) {
+        return t('home.good_afternoon', { defaultValue: 'Good Afternoon' });
+      }
+      return t('home.good_evening', { defaultValue: 'Good Evening' });
+    };
 
-  return (
-    <View style={styles.header}>
-      <View>
-        <Text style={styles.greeting}>{getGreeting()}</Text>
-        <Text style={styles.userName}>{user?.name || 'User'}</Text>
+    return (
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.greeting}>{getGreeting()}</Text>
+          <Text style={styles.userName}>{user?.name || 'User'}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.settingsButton}
+          onPress={onSettingsPress}
+        >
+          <Text style={styles.settingsIcon}>⚙️</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.settingsButton}
-        onPress={onSettingsPress}
-      >
-        <Text style={styles.settingsIcon}>⚙️</Text>
-      </TouchableOpacity>
-    </View>
-  );
-});
+    );
+  },
+);
 
 HomeHeader.displayName = 'HomeHeader';

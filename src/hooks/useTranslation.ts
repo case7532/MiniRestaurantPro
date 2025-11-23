@@ -23,7 +23,8 @@ export const useTranslation = () => {
 
   const getAvailableLanguages = () => Object.keys(LANGUAGES);
 
-  const getLanguageInfo = (code: string) => LANGUAGES[code as keyof typeof LANGUAGES];
+  const getLanguageInfo = (code: string) =>
+    LANGUAGES[code as keyof typeof LANGUAGES];
 
   return {
     t,
@@ -37,23 +38,23 @@ export const useTranslation = () => {
 
 /**
  * Usage example:
- * 
+ *
  * ```tsx
  * import { useTranslation } from '@hooks/useTranslation';
- * 
+ *
  * const MyComponent = () => {
  *   const { t, changeLanguage, getCurrentLanguage } = useTranslation();
- *   
+ *
  *   return (
  *     <View>
  *       <Text>{t('common.welcome')}</Text>
- *       <Button 
- *         title={t('auth.login')} 
- *         onPress={() => {}} 
+ *       <Button
+ *         title={t('auth.login')}
+ *         onPress={() => {}}
  *       />
- *       <Button 
- *         title="Switch to Vietnamese" 
- *         onPress={() => changeLanguage('vi')} 
+ *       <Button
+ *         title="Switch to Vietnamese"
+ *         onPress={() => changeLanguage('vi')}
  *       />
  *     </View>
  *   );

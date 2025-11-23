@@ -20,46 +20,41 @@ interface InputProps extends TextInputProps {
   onRightIconPress?: () => void;
 }
 
-export const Input: React.FC<InputProps> = React.memo(({
-  label,
-  error,
-  rightIcon,
-  onRightIconPress,
-  style,
-  ...props
-}) => {
-  const [isFocused, setIsFocused] = useState(false);
+export const Input: React.FC<InputProps> = React.memo(
+  ({ label, error, rightIcon, onRightIconPress, style, ...props }) => {
+    const [isFocused, setIsFocused] = useState(false);
 
-  return (
-    <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={[
-            styles.input,
-            isFocused && styles.inputFocused,
-            error && styles.inputError,
-            style,
-          ]}
-          placeholderTextColor={Colors.text.disabled}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          {...props}
-        />
-        {rightIcon && (
-          <TouchableOpacity
-            style={styles.rightIcon}
-            onPress={onRightIconPress}
-            disabled={!onRightIconPress}
-          >
-            {rightIcon}
-          </TouchableOpacity>
-        )}
+    return (
+      <View style={styles.container}>
+        {label && <Text style={styles.label}>{label}</Text>}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[
+              styles.input,
+              isFocused && styles.inputFocused,
+              error && styles.inputError,
+              style,
+            ]}
+            placeholderTextColor={Colors.text.disabled}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            {...props}
+          />
+          {rightIcon && (
+            <TouchableOpacity
+              style={styles.rightIcon}
+              onPress={onRightIconPress}
+              disabled={!onRightIconPress}
+            >
+              {rightIcon}
+            </TouchableOpacity>
+          )}
+        </View>
+        {error && <Text style={styles.error}>{error}</Text>}
       </View>
-      {error && <Text style={styles.error}>{error}</Text>}
-    </View>
-  );
-});
+    );
+  },
+);
 
 Input.displayName = 'Input';
 

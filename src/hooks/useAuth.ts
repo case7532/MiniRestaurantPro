@@ -22,11 +22,11 @@ interface UseAuthReturn {
 
 /**
  * Custom hook for Firebase authentication
- * 
+ *
  * @example
  * ```tsx
  * const { user, loading, login, logout, register } = useAuth();
- * 
+ *
  * const handleLogin = async () => {
  *   await login({ email: 'user@example.com', password: 'password' });
  * };
@@ -39,24 +39,26 @@ export const useAuth = (): UseAuthReturn => {
 
   // Listen to Firebase auth state changes
   useEffect(() => {
-    const unsubscribe = FirebaseAuthService.onAuthStateChanged(async (firebaseUser) => {
-      setLoading(true);
-      try {
-        if (firebaseUser) {
-          // User is signed in, get user data
-          const userData = await AuthService.getCurrentUser();
-          setUser(userData);
-        } else {
-          // User is signed out
-          setUser(null);
+    const unsubscribe = FirebaseAuthService.onAuthStateChanged(
+      async firebaseUser => {
+        setLoading(true);
+        try {
+          if (firebaseUser) {
+            // User is signed in, get user data
+            const userData = await AuthService.getCurrentUser();
+            setUser(userData);
+          } else {
+            // User is signed out
+            setUser(null);
+          }
+        } catch (err) {
+          console.error('Error in auth state listener:', err);
+          setError(err instanceof Error ? err.message : 'Authentication error');
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        console.error('Error in auth state listener:', err);
-        setError(err instanceof Error ? err.message : 'Authentication error');
-      } finally {
-        setLoading(false);
-      }
-    });
+      },
+    );
 
     // Cleanup subscription
     return () => unsubscribe();
@@ -113,7 +115,7 @@ export const useAuth = (): UseAuthReturn => {
   const refreshUser = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const userData = await AuthService.getProfile();
       setUser(userData);
@@ -132,7 +134,8 @@ export const useAuth = (): UseAuthReturn => {
     try {
       await AuthService.requestPasswordReset(email);
     } catch (err: any) {
-      const errorMessage = err.message || 'Không thể gửi email khôi phục mật khẩu';
+      const errorMessage =
+        err.message || 'Không thể gửi email khôi phục mật khẩu';
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
