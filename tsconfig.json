@@ -25,6 +25,7 @@
     "types": ["jest"],
     "lib": ["ES2022", "DOM"],
     "paths": {
+      "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@screens/*": ["./src/screens/*"],
       "@utils/*": ["./src/utils/*"],
@@ -36,7 +37,9 @@
       "@assets/*": ["./src/assets/*"],
       "@styles/*": ["./src/styles/*"],
       "@navigation": ["./src/navigation"],
-      "@navigation/*": ["./src/navigation/*"]
+      "@navigation/*": ["./src/navigation/*"],
+      "@config/*": ["./src/config/*"],
+      "@i18n/*": ["./src/i18n/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "src/**/*"],
