@@ -33,6 +33,17 @@ jobs:
       - name: Prettier format check
         run: npm run format:check
 
+      - name: Run Jest tests
+        run: npm test -- --ci --coverage
+
+      - name: Upload coverage report
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: coverage/lcov.info
+          retention-days: 7
+
   build-android:
     name: Build Android
     runs-on: ubuntu-latest

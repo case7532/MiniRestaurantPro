@@ -5,13 +5,7 @@
 
 import React, { createContext, useState, useCallback, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-  createUserWithEmailAndPassword,
-} from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -37,24 +31,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Check authentication status on mount
   useEffect(() => {
-    const authInstance = getAuth();
-    const unsubcribe = onAuthStateChanged(authInstance, user => {
-      if (user) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      setIsAuthenticated(!!user);
       setIsLoading(false);
     });
-
-    return () => unsubcribe();
+    return () => unsubscribe();
   }, []);
 
   const login = useCallback(async (userName: string, password: string) => {
     try {
-      const authInstance = getAuth();
-      const userCredential = await signInWithEmailAndPassword(
-        authInstance,
+      const userCredential = await auth().signInWithEmailAndPassword(
         userName,
         password,
       );
@@ -70,8 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       await AsyncStorage.removeItem(AUTH_STORAGE_KEY);
-      const authInstance = getAuth();
-      await signOut(authInstance);
+      await auth().signOut();
       setIsAuthenticated(false);
     } catch (error) {
       console.error('Failed to logout:', error);
@@ -81,9 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = useCallback(async (userName: string, password: string) => {
     try {
-      const authInstance = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(
-        authInstance,
+      const userCredential = await auth().createUserWithEmailAndPassword(
         userName,
         password,
       );
