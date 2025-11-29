@@ -1,28 +1,31 @@
-import { StyleSheet } from "react-native";
-import { Theme } from "@styles/theme";
+import { StyleSheet } from 'react-native';
+import { Theme } from '@styles/theme';
 
 export const homeStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: theme.colors.background,
-        padding: theme.spacing.lg,
+      flex: 1,
+      flexDirection: 'column',
+      backgroundColor: theme.colors.background,
+      padding: theme.spacing.lg,
     },
     title: {
-        ...theme.typography.h1,
-        color: theme.colors.text,
-        marginBottom: theme.spacing.xl,
+      ...theme.typography.h1,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.xl,
     },
     button: {
-        backgroundColor: theme.colors.primary,
-        paddingVertical: theme.spacing.md,
-        paddingHorizontal: theme.spacing.xl,
-        borderRadius: theme.borderRadius.md,
-        ...theme.shadows.sm,
+      backgroundColor: theme.colors.primary,
+      paddingVertical: theme.spacing.md,
+      paddingHorizontal: theme.spacing.xl,
+      borderRadius: theme.borderRadius.md,
+      ...theme.shadows.sm,
     },
     buttonText: {
-        ...theme.typography.button,
-        color: theme.colors.onPrimary,
+      ...theme.typography.button,
+      color: theme.colors.onPrimary,
     },
-});
+    safeArea: {
+      flex: 1,
+    },
+  });

@@ -2,14 +2,16 @@
 
 ## Project Overview
 
-React Native 0.82.1 restaurant management app with TypeScript 5.8.3, Firebase backend, and bilingual support (English/Vietnamese). Currently in Phase 1 (MVP complete) with auth, navigation, theme system, and i18n fully implemented.
+React Native 0.82.1 restaurant management app with TypeScript 5.8.3, Firebase backend, and bilingual
+support (English/Vietnamese). Currently in Phase 1 (MVP complete) with auth, navigation, theme
+system, and i18n fully implemented.
 
 ## Critical Path Aliases
 
 **Always use path aliases - they're configured in both `tsconfig.json` and `babel.config.js`:**
 
 ```typescript
-import { useTheme } from '@hooks/useTheme';           // ✅ Correct
+import { useTheme } from '@hooks/useTheme'; // ✅ Correct
 import { useTranslation } from '@hooks/useTranslation';
 import { HomeScreen } from '@screens/home';
 import { Theme } from '@styles/theme';
@@ -19,7 +21,8 @@ import { RootNavigator } from '@screens/RootNavigation';
 import { useTheme } from '../../../hooks/useTheme';
 ```
 
-Available aliases: `@/*`, `@components/*`, `@screens/*`, `@hooks/*`, `@services/*`, `@types/*`, `@utils/*`, `@constants/*`, `@assets/*`, `@styles/*`, `@navigation/*`, `@config/*`, `@i18n/*`
+Available aliases: `@/*`, `@components/*`, `@screens/*`, `@hooks/*`, `@services/*`, `@types/*`,
+`@utils/*`, `@constants/*`, `@assets/*`, `@styles/*`, `@navigation/*`, `@config/*`, `@i18n/*`
 
 ## Architecture Patterns
 
@@ -36,8 +39,8 @@ import { homeStyles } from './styles';
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
-  const styles = homeStyles(theme);  // Dynamic styles from theme
-  
+  const styles = homeStyles(theme); // Dynamic styles from theme
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t('home.title')}</Text>
@@ -49,16 +52,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 import { StyleSheet } from 'react-native';
 import { Theme } from '@styles/theme';
 
-export const homeStyles = (theme: Theme) => StyleSheet.create({
-  container: {
-    backgroundColor: theme.colors.background,
-    padding: theme.spacing.lg,
-  },
-  title: {
-    ...theme.typography.h2,
-    color: theme.colors.text,
-  },
-});
+export const homeStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.background,
+      padding: theme.spacing.lg,
+    },
+    title: {
+      ...theme.typography.h2,
+      color: theme.colors.text,
+    },
+  });
 
 // screens/home/types.ts (Type definitions)
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -73,21 +77,23 @@ export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 ```typescript
 // ✅ Use theme tokens
-const styles = (theme: Theme) => StyleSheet.create({
-  button: {
-    backgroundColor: theme.colors.primary,        // Not '#FF5555'
-    padding: theme.spacing.md,                    // Not 16
-    borderRadius: theme.borderRadius.md,          // Not 8
-    ...theme.shadows.md,                          // Platform-specific shadows
-  },
-  text: {
-    ...theme.typography.button,                   // Not fontSize: 16
-    color: theme.colors.onPrimary,
-  },
-});
+const styles = (theme: Theme) =>
+  StyleSheet.create({
+    button: {
+      backgroundColor: theme.colors.primary, // Not '#FF5555'
+      padding: theme.spacing.md, // Not 16
+      borderRadius: theme.borderRadius.md, // Not 8
+      ...theme.shadows.md, // Platform-specific shadows
+    },
+    text: {
+      ...theme.typography.button, // Not fontSize: 16
+      color: theme.colors.onPrimary,
+    },
+  });
 ```
 
-Color palette: Coral (#FF5555 primary), Peach (#FF937E secondary), Sage (#A3D78A accent), Mint (#C1E59F accent light). Full theme structure in `src/styles/theme.ts` with light/dark modes.
+Color palette: Coral (#FF5555 primary), Peach (#FF937E secondary), Sage (#A3D78A accent), Mint
+(#C1E59F accent light). Full theme structure in `src/styles/theme.ts` with light/dark modes.
 
 ### Internationalization (Required)
 
@@ -128,7 +134,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => 
 };
 ```
 
-Navigation state lives in `src/screens/RootNavigation.tsx`. New screens must update param list and add to navigator.
+Navigation state lives in `src/screens/RootNavigation.tsx`. New screens must update param list and
+add to navigator.
 
 ## Firebase Integration
 
@@ -142,7 +149,9 @@ import firestore from '@react-native-firebase/firestore';
 const menuRef = firestore().collection('menu_items');
 ```
 
-Firebase config files: `android/app/google-services.json` and `ios/MiniRestaurantPro/GoogleService-Info.plist`. Web config at `src/config/firebase.config.ts` is reference only.
+Firebase config files: `android/app/google-services.json` and
+`ios/MiniRestaurantPro/GoogleService-Info.plist`. Web config at `src/config/firebase.config.ts` is
+reference only.
 
 ## Development Workflows
 
@@ -182,7 +191,8 @@ npm run test:coverage # Coverage report
 
 ## State Management
 
-Currently using Context API (ThemeContext). See `src/context/ThemeContext.tsx` for persistence pattern with AsyncStorage. When adding new services:
+Currently using Context API (ThemeContext). See `src/context/ThemeContext.tsx` for persistence
+pattern with AsyncStorage. When adding new services:
 
 1. Create service in `src/services/api/`
 2. Create custom hook in `src/hooks/`
@@ -219,7 +229,8 @@ src/
 
 ## Platform Differences
 
-iOS shadows use `shadowColor`, `shadowOffset`, `shadowOpacity`, `shadowRadius`. Android uses `elevation`. Theme system handles this via `theme.shadows.sm/md/lg`.
+iOS shadows use `shadowColor`, `shadowOffset`, `shadowOpacity`, `shadowRadius`. Android uses
+`elevation`. Theme system handles this via `theme.shadows.sm/md/lg`.
 
 CocoaPods required for iOS: `cd ios && bundle install && bundle exec pod install`
 
@@ -233,6 +244,7 @@ CocoaPods required for iOS: `cd ios && bundle install && bundle exec pod install
 ## Documentation
 
 Critical files to read before major changes:
+
 - `ARCHITECTURE.md` - Full system architecture, current state, patterns
 - `THEME_GUIDE.md` - Complete theme system guide with examples
 - `documents/PROJECT_OVERVIEW.md` - Business requirements, feature roadmap
@@ -250,7 +262,7 @@ import { useTranslation } from '@hooks/useTranslation';
 
 const handleLogin = async (email: string, password: string) => {
   const { t } = useTranslation();
-  
+
   try {
     await auth().signInWithEmailAndPassword(email, password);
   } catch (error: any) {
@@ -261,10 +273,10 @@ const handleLogin = async (email: string, password: string) => {
       'auth/invalid-email': 'auth.errors.invalid_email',
       'auth/too-many-requests': 'auth.errors.too_many_requests',
     };
-    
+
     const errorKey = errorMap[error.code] || 'common.errors.unknown';
     showToast(t(errorKey));
-    
+
     // Log error for debugging (remove in production or use analytics)
     console.error('Login error:', error.code, error.message);
   }
@@ -287,19 +299,19 @@ const [errors, setErrors] = useState<FormErrors>({});
 
 const validateForm = (): boolean => {
   const newErrors: FormErrors = {};
-  
+
   if (!email) {
     newErrors.email = t('auth.errors.email_required');
   } else if (!/\S+@\S+\.\S+/.test(email)) {
     newErrors.email = t('auth.errors.email_invalid');
   }
-  
+
   if (!password) {
     newErrors.password = t('auth.errors.password_required');
   } else if (password.length < 6) {
     newErrors.password = t('auth.errors.password_too_short');
   }
-  
+
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
 };
@@ -321,11 +333,9 @@ const fetchData = async () => {
       showToast(t('common.errors.no_internet'));
       return;
     }
-    
-    const snapshot = await firestore()
-      .collection('menu_items')
-      .get();
-      
+
+    const snapshot = await firestore().collection('menu_items').get();
+
     // Process data...
   } catch (error) {
     if (error.code === 'unavailable') {
@@ -361,27 +371,25 @@ const mockNavigation = {
 const renderWithProviders = (component: React.ReactElement) => {
   return render(
     <ThemeProvider>
-      <NavigationContainer>
-        {component}
-      </NavigationContainer>
-    </ThemeProvider>
+      <NavigationContainer>{component}</NavigationContainer>
+    </ThemeProvider>,
   );
 };
 
 describe('HomeScreen', () => {
   it('renders correctly with theme', () => {
     const { getByText } = renderWithProviders(
-      <HomeScreen navigation={mockNavigation} route={{}} />
+      <HomeScreen navigation={mockNavigation} route={{}} />,
     );
-    
+
     expect(getByText(/home/i)).toBeTruthy();
   });
-  
+
   it('applies theme colors correctly', () => {
     const { getByTestId } = renderWithProviders(
-      <HomeScreen navigation={mockNavigation} route={{}} />
+      <HomeScreen navigation={mockNavigation} route={{}} />,
     );
-    
+
     const container = getByTestId('home-container');
     expect(container.props.style).toHaveProperty('backgroundColor');
   });
@@ -406,13 +414,13 @@ describe('useAuth', () => {
     (auth as jest.Mock).mockReturnValue({
       signInWithEmailAndPassword: mockSignIn,
     });
-    
+
     const { result } = renderHook(() => useAuth());
-    
+
     await act(async () => {
       await result.current.login('test@example.com', 'password');
     });
-    
+
     expect(mockSignIn).toHaveBeenCalledWith('test@example.com', 'password');
   });
 });
@@ -435,10 +443,10 @@ describe('Button Component', () => {
       .create(
         <ThemeProvider>
           <Button title="Test Button" onPress={() => {}} />
-        </ThemeProvider>
+        </ThemeProvider>,
       )
       .toJSON();
-    
+
     expect(tree).toMatchSnapshot();
   });
 });
@@ -470,7 +478,7 @@ import React, { useCallback, memo } from 'react';
 export const MenuItem = memo<MenuItemProps>(({ item, onPress }) => {
   const { theme } = useTheme();
   const styles = menuItemStyles(theme);
-  
+
   return (
     <TouchableOpacity onPress={() => onPress(item.id)}>
       <Text style={styles.name}>{item.name}</Text>
@@ -483,7 +491,7 @@ const ParentComponent = () => {
   const handleItemPress = useCallback((itemId: string) => {
     console.log('Item pressed:', itemId);
   }, []);
-  
+
   return <MenuItem item={item} onPress={handleItemPress} />;
 };
 ```
@@ -498,7 +506,7 @@ import { FlatList } from 'react-native';
 <FlatList
   data={items}
   renderItem={({ item }) => <MenuItem item={item} />}
-  keyExtractor={(item) => item.id}
+  keyExtractor={item => item.id}
   // Performance optimizations
   removeClippedSubviews={true}
   maxToRenderPerBatch={10}
@@ -508,7 +516,7 @@ import { FlatList } from 'react-native';
   // Memoize item separator and footer
   ItemSeparatorComponent={ItemSeparator}
   ListFooterComponent={ListFooter}
-/>
+/>;
 ```
 
 ### Image Optimization
@@ -525,7 +533,7 @@ import FastImage from 'react-native-fast-image';
   }}
   resizeMode={FastImage.resizeMode.cover}
   style={styles.image}
-/>
+/>;
 ```
 
 ## Security Best Practices
@@ -543,11 +551,11 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-    
+
     // Menu items are read-only for all authenticated users
     match /menu_items/{itemId} {
       allow read: if request.auth != null;
-      allow write: if request.auth != null && 
+      allow write: if request.auth != null &&
                    get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
   }
@@ -624,13 +632,15 @@ import { View, Text, TouchableOpacity } from 'react-native';
 ## Next Features (Phase 2)
 
 Immediate next implementations per roadmap:
+
 1. Auth forms with validation in Login/Register screens
 2. Firebase Auth service wrapper
 3. Main Tabs Navigator (Home, Menu, Orders, Settings)
 4. Common UI components using theme system
 5. Protected routes with auth state check
 
-When implementing these, maintain patterns: modular screen structure, theme integration, i18n support, TypeScript strict types.
+When implementing these, maintain patterns: modular screen structure, theme integration, i18n
+support, TypeScript strict types.
 
 ## CI/CD Integration
 

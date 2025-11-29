@@ -8,7 +8,9 @@ export const OrdersScreen: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       <Text style={[theme.typography.h1, { color: theme.colors.text }]}>
         {t('orders.title')}
       </Text>

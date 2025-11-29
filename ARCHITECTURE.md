@@ -260,12 +260,14 @@ import { APP_NAME } from '@constants';
 ### ✅ Đã hoàn thành (Foundation)
 
 1. **Project Setup**
+
    - ✅ React Native 0.82.1 với TypeScript 5.8.3
    - ✅ Strict TypeScript configuration
    - ✅ Path aliases configuration (tsconfig + babel)
    - ✅ ESLint + Prettier setup
 
 2. **Internationalization (i18n)**
+
    - ✅ i18next + react-i18next + react-native-localize
    - ✅ Auto device language detection
    - ✅ English & Vietnamese translations
@@ -273,22 +275,26 @@ import { APP_NAME } from '@constants';
    - ✅ Translation files: en.json, vi.json
 
 3. **Firebase Setup**
+
    - ✅ Firebase packages installed (@react-native-firebase/app, auth, firestore)
    - ✅ Firebase config file (firebase.config.ts - Web SDK reference)
    - ⚠️ Native configs need to be added (google-services.json, GoogleService-Info.plist)
 
 4. **Core Dependencies**
+
    - ✅ React Navigation v7 (native-stack, bottom-tabs)
    - ✅ AsyncStorage for local persistence
    - ✅ Safe Area Context
    - ✅ Gesture Handler
 
 5. **App Structure**
+
    - ✅ Root App.tsx with proper setup
    - ✅ Directory structure prepared
    - ✅ Constants file (APP_NAME)
 
 6. **Theme System**
+
    - ✅ Light & Dark theme definitions
    - ✅ ThemeProvider with AsyncStorage persistence
    - ✅ useTheme hook for components
@@ -297,6 +303,7 @@ import { APP_NAME } from '@constants';
    - ✅ Color palette: Coral, Peach, Sage, Mint
 
 7. **Navigation System**
+
    - ✅ RootNavigator implementation
    - ✅ Auth Stack (Native Stack Navigator)
    - ✅ Navigation types with TypeScript
@@ -312,6 +319,7 @@ import { APP_NAME } from '@constants';
 ### 🚧 Cần implement
 
 1. **Authentication Features**
+
    - [ ] Login/Register forms with validation
    - [ ] Firebase Auth service wrapper
    - [ ] Auth context/state management
@@ -319,6 +327,7 @@ import { APP_NAME } from '@constants';
    - [ ] Protected routes with auth check
 
 2. **Main Navigation**
+
    - [ ] Main Tabs (Bottom Tabs Navigator)
    - [ ] Home/Dashboard screen
    - [ ] Menu screen
@@ -327,22 +336,26 @@ import { APP_NAME } from '@constants';
    - [ ] Tab bar customization
 
 3. **UI Components**
+
    - [ ] Common components (Button, Input, Card)
    - [ ] Layout components (Header, Footer, Container)
    - [ ] Form components (TextInput with validation)
 
 4. **Services**
+
    - [ ] Firebase Auth service
    - [ ] Firestore service
    - [ ] AsyncStorage wrapper
    - [ ] API client (if using REST API)
 
 5. **State Management**
+
    - [ ] Choose solution (Context API / Redux / Zustand)
    - [ ] Auth state management
    - [ ] App state management
 
 6. **Types & Models**
+
    - [ ] User model
    - [ ] Menu item model
    - [ ] Order model
@@ -357,17 +370,20 @@ import { APP_NAME } from '@constants';
 ### 🎯 Next Steps
 
 **Phase 1: Navigation & Auth**
+
 1. Implement navigation system (RootNavigator, Auth Stack, Main Tabs)
 2. Create Firebase Auth service
 3. Build authentication screens
 4. Setup auth state management
 
 **Phase 2: Core UI**
+
 1. Build common UI components (Button, Input, Card) using theme system
 2. Create layout components (Header, Footer, Container)
 3. Design and implement screen templates
 
 **Phase 3: Features**
+
 1. Home/Dashboard screen
 2. Menu management
 3. Order management
@@ -688,6 +704,7 @@ const MyComponent = () => {
 ### Next Steps for Navigation
 
 **To implement:**
+
 1. Main Tabs Navigator (Bottom Tabs)
    - Home tab
    - Menu tab
@@ -699,6 +716,7 @@ const MyComponent = () => {
 5. Deep linking configuration
 
 **Structure for Main Tabs:**
+
 ```typescript
 export type MainTabsParamList = {
   Home: undefined;
@@ -929,11 +947,13 @@ export const useMenu = () => {
 ### Current Dependencies ✅
 
 **Core:**
+
 - react: 19.1.1
 - react-native: 0.82.1
 - typescript: 5.8.3
 
 **Navigation:**
+
 - @react-navigation/native: 7.1.21
 - @react-navigation/native-stack: 7.7.0
 - @react-navigation/bottom-tabs: 7.8.6
@@ -942,20 +962,24 @@ export const useMenu = () => {
 - react-native-gesture-handler: 2.29.1
 
 **Internationalization:**
+
 - i18next: 25.6.3
 - react-i18next: 16.3.5
 - react-native-localize: 3.6.0
 - i18next-http-backend: 3.0.2
 
 **Firebase:**
+
 - @react-native-firebase/app: 23.5.0
 - @react-native-firebase/auth: 23.5.0
 - @react-native-firebase/firestore: 23.5.0
 
 **Storage:**
+
 - @react-native-async-storage/async-storage: 2.2.0
 
 **Development:**
+
 - eslint: 8.19.0
 - prettier: 2.8.8
 - jest: 29.6.3
@@ -964,22 +988,27 @@ export const useMenu = () => {
 ### Recommended Future Dependencies
 
 **State Management:**
+
 - @reduxjs/toolkit + react-redux
 - zustand (alternative)
 
 **Data Fetching:**
+
 - @tanstack/react-query
 - axios
 
 **Forms & Validation:**
+
 - react-hook-form
 - yup or zod
 
 **UI & Styling:**
+
 - react-native-vector-icons
 - react-native-reanimated
 
 **Utilities:**
+
 - date-fns
 - lodash
 
@@ -989,7 +1018,8 @@ export const useMenu = () => {
 
 ### Overview
 
-MiniRestaurantPro có hệ thống theme hoàn chỉnh hỗ trợ cả **Light Mode** và **Dark Mode** với automatic theme persistence và system theme detection.
+MiniRestaurantPro có hệ thống theme hoàn chỉnh hỗ trợ cả **Light Mode** và **Dark Mode** với
+automatic theme persistence và system theme detection.
 
 ### Color Palette
 
@@ -1016,17 +1046,35 @@ export interface Theme {
     // ... more colors
   };
   spacing: {
-    xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48
+    xs: 4;
+    sm: 8;
+    md: 16;
+    lg: 24;
+    xl: 32;
+    xxl: 48;
   };
   borderRadius: {
-    sm: 4, md: 8, lg: 12, xl: 16, round: 9999
+    sm: 4;
+    md: 8;
+    lg: 12;
+    xl: 16;
+    round: 9999;
   };
   typography: {
-    h1, h2, h3, h4, h5, h6,
-    body1, body2,
-    button, caption, subtitle1, subtitle2
+    h1;
+    h2;
+    h3;
+    h4;
+    h5;
+    h6;
+    body1;
+    body2;
+    button;
+    caption;
+    subtitle1;
+    subtitle2;
   };
-  shadows: { sm, md, lg };
+  shadows: { sm; md; lg };
 }
 ```
 
@@ -1058,9 +1106,7 @@ const MyComponent = () => {
 
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
-      <Text style={[theme.typography.h1, { color: theme.colors.text }]}>
-        Hello World
-      </Text>
+      <Text style={[theme.typography.h1, { color: theme.colors.text }]}>Hello World</Text>
       <TouchableOpacity
         onPress={toggleTheme}
         style={{
@@ -1070,9 +1116,7 @@ const MyComponent = () => {
           ...theme.shadows.md,
         }}
       >
-        <Text style={{ color: theme.colors.onPrimary }}>
-          Toggle Theme
-        </Text>
+        <Text style={{ color: theme.colors.onPrimary }}>Toggle Theme</Text>
       </TouchableOpacity>
     </View>
   );
@@ -1093,18 +1137,19 @@ const MyComponent = () => {
   );
 };
 
-const createStyles = (theme: Theme) => StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-    padding: theme.spacing.lg,
-  },
-  title: {
-    ...theme.typography.h2,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.md,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      padding: theme.spacing.lg,
+    },
+    title: {
+      ...theme.typography.h2,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.md,
+    },
+  });
 ```
 
 ### Features
@@ -1119,6 +1164,7 @@ const createStyles = (theme: Theme) => StyleSheet.create({
 ### Theme Tokens
 
 **Colors:**
+
 - Semantic colors: primary, secondary, accent
 - Background colors: background, surface, card
 - Text colors: text, textSecondary, textDisabled
@@ -1126,17 +1172,21 @@ const createStyles = (theme: Theme) => StyleSheet.create({
 - UI colors: border, divider, ripple
 
 **Typography:**
+
 - Headings: h1 (32px) → h6 (16px)
 - Body: body1 (16px), body2 (14px)
 - Utility: button, caption, subtitle1, subtitle2
 
 **Spacing:**
+
 - xs (4px), sm (8px), md (16px), lg (24px), xl (32px), xxl (48px)
 
 **Border Radius:**
+
 - sm (4px), md (8px), lg (12px), xl (16px), round (9999px)
 
 **Shadows:**
+
 - sm, md, lg (platform-specific iOS/Android)
 
 ### Best Practices
@@ -1198,7 +1248,8 @@ const styles = StyleSheet.create({
 
 ### Setup
 
-Dự án sử dụng **i18next** với **react-native-localize** để hỗ trợ đa ngôn ngữ với auto device language detection.
+Dự án sử dụng **i18next** với **react-native-localize** để hỗ trợ đa ngôn ngữ với auto device
+language detection.
 
 #### Supported Languages
 
@@ -1340,8 +1391,7 @@ export const useTranslation = () => {
 
   const getCurrentLanguage = () => i18n.language;
   const getAvailableLanguages = () => Object.keys(LANGUAGES);
-  const getLanguageInfo = (code: string) =>
-    LANGUAGES[code as keyof typeof LANGUAGES];
+  const getLanguageInfo = (code: string) => LANGUAGES[code as keyof typeof LANGUAGES];
 
   return {
     t,
@@ -1364,6 +1414,7 @@ export const useTranslation = () => {
 ## 📚 Additional Resources
 
 ### Official Documentation
+
 - [React Native Documentation](https://reactnative.dev/docs/getting-started)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [React Navigation v7 Docs](https://reactnavigation.org/docs/getting-started)
@@ -1372,10 +1423,12 @@ export const useTranslation = () => {
 - [react-i18next Guide](https://react.i18next.com/)
 
 ### Project Documentation
+
 - [README.md](./README.md) - Project overview & quick start
 - [API_GUIDE.md](./API_GUIDE.md) - API documentation
 
 ### Useful Tools
+
 - [React Native Directory](https://reactnative.directory/) - Find React Native packages
 - [React Native Elements](https://reactnativeelements.com/) - UI component library
 - [React Native Paper](https://callstack.github.io/react-native-paper/) - Material Design
@@ -1387,6 +1440,7 @@ export const useTranslation = () => {
 **Current State:** Foundation Setup Complete ✅
 
 The project has been set up with a solid foundation including:
+
 - ✅ TypeScript with strict mode configuration
 - ✅ Path aliases for clean imports
 - ✅ i18n with auto device language detection (English & Vietnamese)
@@ -1397,6 +1451,7 @@ The project has been set up with a solid foundation including:
 - ✅ Code quality tools (ESLint + Prettier)
 
 **Features Completed:**
+
 1. **Internationalization** - Full i18n support with device detection (EN/VI)
 2. **Theme System** - Complete theming with persistence and system detection
 3. **Navigation System** - Auth Stack with type-safe navigation
@@ -1405,12 +1460,14 @@ The project has been set up with a solid foundation including:
 6. **Project Structure** - Clean architecture with modular organization
 
 **Current Capabilities:**
+
 - ✅ Navigate between Login and Register screens
 - ✅ Full theme support (light/dark mode)
 - ✅ i18n on all screens
 - ✅ Type-safe navigation throughout the app
 
 **Next Steps:**
+
 1. Add forms to Login/Register screens (inputs, validation)
 2. Implement Firebase Auth service and authentication flow
 3. Create Main Tabs Navigator (Home, Menu, Orders, Settings)
@@ -1418,6 +1475,7 @@ The project has been set up with a solid foundation including:
 5. Add auth state management and protected routes
 
 **Documentation:**
+
 - 📖 [ARCHITECTURE.md](./ARCHITECTURE.md) - This file
 - 🎨 [THEME_GUIDE.md](./THEME_GUIDE.md) - Complete theme system guide
 - 🧭 [src/navigation/README.md](./src/navigation/README.md) - Navigation guide
@@ -1426,6 +1484,5 @@ The project has been set up with a solid foundation including:
 
 ---
 
-**Last Updated**: November 25, 2025
-**Version**: 0.0.1
-**Status**: Foundation + Theme + Navigation ✅ - Ready for Forms & Features
+**Last Updated**: November 25, 2025 **Version**: 0.0.1 **Status**: Foundation + Theme + Navigation
+✅ - Ready for Forms & Features

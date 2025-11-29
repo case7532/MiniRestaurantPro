@@ -59,11 +59,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       </View>
       <TouchableOpacity
         onPress={handleNavigateToRegister}
-        style={{ marginTop: 16 }}
+        style={styles.registerLink}
       >
         <Text>Bạn chưa có tài khoản?</Text>
       </TouchableOpacity>
-      <View style={{ width: '100%', alignItems: 'flex-end' }}>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>{t('auth.login')}</Text>
         </TouchableOpacity>

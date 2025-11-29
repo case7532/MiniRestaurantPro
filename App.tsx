@@ -14,7 +14,6 @@ import { RootNavigator } from '@screens/RootNavigation';
 import './src/i18n'; // Initialize i18n
 
 function App(): React.JSX.Element {
-
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>

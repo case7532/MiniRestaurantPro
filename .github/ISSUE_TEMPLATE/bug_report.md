@@ -13,12 +13,14 @@ assignees: ''
 ## 📱 Environment
 
 **Device Information:**
+
 - Platform: [iOS / Android]
 - OS Version: [e.g., iOS 17.0, Android 14]
 - Device Model: [e.g., iPhone 15, Samsung Galaxy S23]
 - App Version: [e.g., 1.0.0]
 
 **Development Environment:**
+
 - Node Version: [e.g., 20.10.0]
 - React Native Version: [e.g., 0.82.1]
 - Build Type: [Debug / Release]
@@ -57,21 +59,24 @@ Paste error logs here
 <!-- Add any other context about the problem here -->
 
 ### Possible Related Areas
+
 - [ ] Authentication (`src/screens/auth/`)
 - [ ] Navigation (`src/screens/RootNavigation.tsx`)
 - [ ] Theme System (`src/styles/theme.ts`)
 - [ ] Internationalization (`src/i18n/`)
 - [ ] Firebase Integration (`src/services/`)
 - [ ] UI Components (`src/components/`)
-- [ ] Other (specify): ___
+- [ ] Other (specify): \_\_\_
 
 ### Frequency
+
 - [ ] Always happens
 - [ ] Happens sometimes
 - [ ] Happened once
 - [ ] Cannot reproduce consistently
 
 ### Workaround
+
 <!-- If you found a temporary workaround, describe it here -->
 
 ## 🔧 Possible Solution
@@ -81,6 +86,7 @@ Paste error logs here
 ---
 
 **For Maintainers:**
+
 - [ ] Bug confirmed
 - [ ] Severity: [Critical / High / Medium / Low]
 - [ ] Priority: [Urgent / High / Normal / Low]

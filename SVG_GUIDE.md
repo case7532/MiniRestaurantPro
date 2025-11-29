@@ -12,18 +12,21 @@
 ### 1. Import SVG như một component
 
 **Cách 1: Import trực tiếp (không khuyến khích)**
+
 ```tsx
 import HomeIcon from '@/assets/icons/home.svg';
 import MenuIcon from '@/assets/icons/menu.svg';
 ```
 
 **Cách 2: Import từ barrel export (Khuyên dùng ✅)**
+
 ```tsx
 // Import một hoặc nhiều icons cùng lúc
 import { HomeIcon, MenuIcon, OrdersIcon, SettingsIcon } from '@/assets/icons';
 ```
 
 Barrel export giúp:
+
 - ✅ Import ngắn gọn hơn
 - ✅ Dễ quản lý và maintain
 - ✅ Tự động complete trong IDE
@@ -92,16 +95,19 @@ src/
 ### Bước 2: Yêu cầu cho SVG file
 
 1. **Sử dụng `currentColor`**: Để SVG có thể thay đổi màu qua props
+
    ```svg
    <path stroke="currentColor" fill="currentColor" />
    ```
 
 2. **Set viewBox**: Để SVG scale đúng
+
    ```svg
    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
    ```
 
 3. **Loại bỏ width/height cố định**: Để có thể điều chỉnh qua props
+
    ```svg
    <!-- ❌ Không nên -->
    <svg width="24" height="24">
@@ -122,11 +128,9 @@ import { HomeIcon, MenuIcon, OrdersIcon, SettingsIcon } from '@/assets/icons';
   component={HomeScreen}
   options={{
     tabBarLabel: 'Home',
-    tabBarIcon: ({ color }) => (
-      <HomeIcon width={24} height={24} color={color} />
-    ),
+    tabBarIcon: ({ color }) => <HomeIcon width={24} height={24} color={color} />,
   }}
-/>
+/>;
 ```
 
 ### Trong Component thông thường
@@ -140,11 +144,7 @@ const MyComponent = () => {
 
   return (
     <TouchableOpacity>
-      <SettingsIcon
-        width={24}
-        height={24}
-        color={theme.colors.primary}
-      />
+      <SettingsIcon width={24} height={24} color={theme.colors.primary} />
       <Text>Settings</Text>
     </TouchableOpacity>
   );
@@ -172,13 +172,14 @@ const IconGrid = () => {
 
 ## 🔧 Troubleshooting
 
-### Lỗi: "Cannot find module '*.svg'"
+### Lỗi: "Cannot find module '\*.svg'"
 
 **Giải pháp**: Đảm bảo file `src/types/svg.d.ts` tồn tại và restart TypeScript server.
 
 ### Lỗi: SVG không hiển thị
 
 **Giải pháp**:
+
 1. Restart Metro bundler: `yarn start --reset-cache`
 2. Kiểm tra SVG file có đúng format không
 3. Đảm bảo đã cấu hình `metro.config.js` đúng
@@ -186,6 +187,7 @@ const IconGrid = () => {
 ### Lỗi: SVG không thay đổi màu
 
 **Giải pháp**: Đảm bảo SVG file sử dụng `currentColor`:
+
 ```svg
 <path stroke="currentColor" fill="currentColor" />
 ```

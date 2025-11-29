@@ -1,11 +1,13 @@
 # Hướng dẫn Refactor (Quy trình và Tiêu chí)
 
 ## 1) Xác định rõ đối tượng
+
 - Mô tả đối tượng cần refactor: module/screen/component/hook/service.
 - Liệt kê file liên quan bằng path aliases (ví dụ: `@screens/home`, `@hooks/useTheme`).
 - Nêu lý do refactor: nợ kỹ thuật, trùng lặp, khó bảo trì, vi phạm pattern (theme/i18n/navigation).
 
 ## 2) Xác định phạm vi ảnh hưởng
+
 - Phạm vi code: màn hình, components, hooks, services, navigation.
 - Ảnh hưởng đến:
   - UI/UX (theme tokens, i18n keys).
@@ -15,6 +17,7 @@
 - Rủi ro: thay đổi API, types, behavior, cấu hình (babel/tsconfig), performance.
 
 ## 3) Đánh giá tính khả thi
+
 - Tiêu chí:
   - Tuân thủ kiến trúc đã thiết lập (modular screen, theme, i18n, typed navigation).
   - Không dùng đường dẫn tương đối, chỉ dùng path aliases.
@@ -24,12 +27,14 @@
 - Kết luận: Khả thi / Không khả thi + lý do.
 
 ## 4) Xác nhận người dùng
+
 - Trình bày phương án (tối thiểu 2 lựa chọn nếu có):
   - Phương án A: Hotfix cục bộ, thay đổi nhỏ.
   - Phương án B: Tái cấu trúc bền vững, tách module/hook/service.
 - Người dùng đồng ý với phương án nào thì mới tiến hành refactor.
 
 ## 5) Quy tắc an toàn khi refactor
+
 - Không thay đổi giá trị ngoài phạm vi đối tượng đã xác định.
 - Không chạm vào dữ liệu/logic không có trong phương án được người dùng đồng ý.
 - Bảo toàn:
@@ -39,6 +44,7 @@
   - Hợp đồng API services (nếu không nằm trong đối tượng).
 
 ## 6) Quy trình thực hiện
+
 1. Tạo nhánh theo task: `refactor/<module-name>-<short-desc>`.
 2. Viết kế hoạch ngắn gọn (files, thay đổi dự kiến, rủi ro).
 3. Viết/ cập nhật tests mô tả behavior hiện tại.
@@ -53,15 +59,19 @@
    - Kết quả test và ảnh chụp màn hình nếu UI thay đổi.
 
 ## 7) Ghi chú rõ ràng (Logging & Docs)
+
 - Ghi commit theo chuẩn:
   - `refactor(screen/home): tách styles, bổ sung types, giữ nguyên behavior`
 - Cập nhật tài liệu nếu pattern thay đổi:
   - `ARCHITECTURE.md`, `THEME_GUIDE.md`, hoặc `documents/DEVELOPMENT_ROADMAP.md`.
 
 ## 8) Không thể refactor
-- Nếu không đủ thông tin, rủi ro quá lớn, hoặc vi phạm các bắt buộc (theme/i18n/types/Firebase), trả lời: “không” và nêu rõ lý do + thông tin cần bổ sung.
+
+- Nếu không đủ thông tin, rủi ro quá lớn, hoặc vi phạm các bắt buộc (theme/i18n/types/Firebase), trả
+  lời: “không” và nêu rõ lý do + thông tin cần bổ sung.
 
 ## Checklist trước khi merge
+
 - [ ] Đối tượng refactor rõ ràng
 - [ ] Phạm vi ảnh hưởng đã phân tích
 - [ ] Tính khả thi đã đánh giá và được người dùng đồng ý

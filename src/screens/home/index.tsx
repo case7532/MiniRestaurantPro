@@ -17,7 +17,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <Header logoUrl="" title="Home" />
       <View style={styles.container}>
         <TouchableOpacity

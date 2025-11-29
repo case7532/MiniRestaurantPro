@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useTheme } from '@hooks/useTheme';
 import { useTranslation } from '@hooks/useTranslation';
-import {registerStyles} from './styles';
+import { registerStyles } from './styles';
 import { RegisterScreenProps } from './type';
 
-export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
+export const RegisterScreen: React.FC<RegisterScreenProps> = ({
+  navigation,
+}) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const styles = registerStyles(theme);

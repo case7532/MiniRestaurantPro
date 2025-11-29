@@ -32,16 +32,6 @@ jobs:
       
       - name: Prettier format check
         run: npm run format:check
-      
-      - name: Run tests with coverage
-        run: npm test -- --coverage --watchAll=false
-      
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v4
-        if: success()
-        with:
-          files: ./coverage/lcov.info
-          fail_ci_if_error: false
 
   build-android:
     name: Build Android

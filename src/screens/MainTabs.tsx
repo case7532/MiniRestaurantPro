@@ -6,7 +6,7 @@ import { OrdersScreen } from '@screens/orders';
 import { SettingScreen } from '@screens/setting';
 import { useTheme } from '@hooks/useTheme';
 import { useTranslation } from '@hooks/useTranslation';
-import { icons, icons as Icons } from '@/assets/icon';
+import { icons } from '@/assets/icon';
 
 export type MainTabsParamList = {
   HomeTab: undefined;
@@ -16,6 +16,27 @@ export type MainTabsParamList = {
 };
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
+
+// Icon components moved outside render to avoid re-creation
+const HomeTabIcon = ({ color }: { color: string }) => {
+  const HomeIcon = icons.shop;
+  return <HomeIcon width={24} height={24} fill={color} />;
+};
+
+const MenuTabIcon = ({ color }: { color: string }) => {
+  const MenuIcon = icons.menuBurger;
+  return <MenuIcon width={24} height={24} fill={color} />;
+};
+
+const OrdersTabIcon = ({ color }: { color: string }) => {
+  const OrdersIcon = icons.shoppingCart;
+  return <OrdersIcon width={24} height={24} fill={color} />;
+};
+
+const SettingsTabIcon = ({ color }: { color: string }) => {
+  const SettingsIcon = icons.settings;
+  return <SettingsIcon width={24} height={24} fill={color} />;
+};
 
 export const MainTabs: React.FC = () => {
   const { theme } = useTheme();
@@ -46,10 +67,7 @@ export const MainTabs: React.FC = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: t('navigation.home'),
-          tabBarIcon: ({ color }) => {
-            const HomeIcon = icons.shop;
-            return <HomeIcon width={24} height={24} fill={color} />;
-          },
+          tabBarIcon: HomeTabIcon,
         }}
       />
       <Tab.Screen
@@ -57,10 +75,7 @@ export const MainTabs: React.FC = () => {
         component={MenuScreen}
         options={{
           tabBarLabel: t('navigation.menu'),
-          tabBarIcon: ({ color }) => {
-            const MenuIcon = Icons.menuBurger;
-            return <MenuIcon width={24} height={24} fill={color} />;
-          },
+          tabBarIcon: MenuTabIcon,
         }}
       />
       <Tab.Screen
@@ -68,10 +83,7 @@ export const MainTabs: React.FC = () => {
         component={OrdersScreen}
         options={{
           tabBarLabel: t('navigation.orders'),
-          tabBarIcon: ({ color }) => {
-            const OrdersIcon = icons.shoppingCart;
-            return <OrdersIcon width={24} height={24} fill={color} />;
-          },
+          tabBarIcon: OrdersTabIcon,
         }}
       />
       <Tab.Screen
@@ -79,10 +91,7 @@ export const MainTabs: React.FC = () => {
         component={SettingScreen}
         options={{
           tabBarLabel: t('navigation.settings'),
-          tabBarIcon: ({ color }) => {
-            const SettingsIcon = icons.settings;
-            return <SettingsIcon width={24} height={24} fill={color} />;
-          },
+          tabBarIcon: SettingsTabIcon,
         }}
       />
     </Tab.Navigator>

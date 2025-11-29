@@ -15,7 +15,8 @@ Hướng dẫn sử dụng hệ thống theme cho MiniRestaurantPro.
 
 ## 🎯 Tổng quan
 
-Hệ thống theme của MiniRestaurantPro hỗ trợ cả **Light Mode** và **Dark Mode** với bảng màu được thiết kế chuyên nghiệp dựa trên:
+Hệ thống theme của MiniRestaurantPro hỗ trợ cả **Light Mode** và **Dark Mode** với bảng màu được
+thiết kế chuyên nghiệp dựa trên:
 
 - 🎨 **Coral** (#FF5555) - Primary color (màu chủ đạo)
 - 🍑 **Peach** (#FF937E) - Secondary color (màu phụ)
@@ -39,33 +40,33 @@ Hệ thống theme của MiniRestaurantPro hỗ trợ cả **Light Mode** và **
 
 ### Light Mode
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Primary | `#FF5555` | Buttons, links, highlights |
-| Primary Light | `#FF7B7B` | Hover states |
-| Primary Dark | `#E63946` | Active states |
-| Secondary | `#FF937E` | Secondary actions |
-| Accent | `#A3D78A` | Success, confirmations |
-| Accent Light | `#C1E59F` | Light accents |
-| Background | `#FFFFFF` | Main background |
-| Surface | `#F8F9FA` | Card backgrounds |
-| Text | `#1A1A1A` | Primary text |
-| Text Secondary | `#6C757D` | Secondary text |
+| Color          | Hex       | Usage                      |
+| -------------- | --------- | -------------------------- |
+| Primary        | `#FF5555` | Buttons, links, highlights |
+| Primary Light  | `#FF7B7B` | Hover states               |
+| Primary Dark   | `#E63946` | Active states              |
+| Secondary      | `#FF937E` | Secondary actions          |
+| Accent         | `#A3D78A` | Success, confirmations     |
+| Accent Light   | `#C1E59F` | Light accents              |
+| Background     | `#FFFFFF` | Main background            |
+| Surface        | `#F8F9FA` | Card backgrounds           |
+| Text           | `#1A1A1A` | Primary text               |
+| Text Secondary | `#6C757D` | Secondary text             |
 
 ### Dark Mode
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Primary | `#FF7B7B` | Buttons, links, highlights |
-| Primary Light | `#FFA0A0` | Hover states |
-| Primary Dark | `#FF5555` | Active states |
-| Secondary | `#FFB09A` | Secondary actions |
-| Accent | `#B5E399` | Success, confirmations |
-| Accent Light | `#C9EDB3` | Light accents |
-| Background | `#121212` | Main background |
-| Surface | `#1E1E1E` | Card backgrounds |
-| Text | `#FFFFFF` | Primary text |
-| Text Secondary | `#B0B0B0` | Secondary text |
+| Color          | Hex       | Usage                      |
+| -------------- | --------- | -------------------------- |
+| Primary        | `#FF7B7B` | Buttons, links, highlights |
+| Primary Light  | `#FFA0A0` | Hover states               |
+| Primary Dark   | `#FF5555` | Active states              |
+| Secondary      | `#FFB09A` | Secondary actions          |
+| Accent         | `#B5E399` | Success, confirmations     |
+| Accent Light   | `#C9EDB3` | Light accents              |
+| Background     | `#121212` | Main background            |
+| Surface        | `#1E1E1E` | Card backgrounds           |
+| Text           | `#FFFFFF` | Primary text               |
+| Text Secondary | `#B0B0B0` | Secondary text             |
 
 ---
 
@@ -112,16 +113,17 @@ const MyComponent = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Text style={[theme.typography.h1, { color: theme.colors.text }]}>
-        Hello World
-      </Text>
+      <Text style={[theme.typography.h1, { color: theme.colors.text }]}>Hello World</Text>
 
       <TouchableOpacity
-        style={[styles.button, {
-          backgroundColor: theme.colors.primary,
-          borderRadius: theme.borderRadius.md,
-          ...theme.shadows.md,
-        }]}
+        style={[
+          styles.button,
+          {
+            backgroundColor: theme.colors.primary,
+            borderRadius: theme.borderRadius.md,
+            ...theme.shadows.md,
+          },
+        ]}
         onPress={toggleTheme}
       >
         <Text style={[theme.typography.button, { color: theme.colors.onPrimary }]}>
@@ -166,30 +168,31 @@ const MyComponent = () => {
   );
 };
 
-const createStyles = (theme: Theme) => StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-    padding: theme.spacing.lg,
-  },
-  title: {
-    ...theme.typography.h2,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.md,
-  },
-  card: {
-    backgroundColor: theme.colors.card,
-    padding: theme.spacing.lg,
-    borderRadius: theme.borderRadius.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    ...theme.shadows.md,
-  },
-  cardText: {
-    ...theme.typography.body1,
-    color: theme.colors.textSecondary,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      padding: theme.spacing.lg,
+    },
+    title: {
+      ...theme.typography.h2,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.md,
+    },
+    card: {
+      backgroundColor: theme.colors.card,
+      padding: theme.spacing.lg,
+      borderRadius: theme.borderRadius.lg,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      ...theme.shadows.md,
+    },
+    cardText: {
+      ...theme.typography.body1,
+      color: theme.colors.textSecondary,
+    },
+  });
 
 export default MyComponent;
 ```
@@ -201,61 +204,61 @@ export default MyComponent;
 ### Colors
 
 ```typescript
-theme.colors.primary          // Main brand color
-theme.colors.secondary        // Secondary brand color
-theme.colors.accent           // Accent/success color
-theme.colors.background       // Main background
-theme.colors.surface          // Card/surface background
-theme.colors.text             // Primary text
-theme.colors.textSecondary    // Secondary text
-theme.colors.error            // Error state
-theme.colors.warning          // Warning state
-theme.colors.success          // Success state
-theme.colors.border           // Border color
+theme.colors.primary; // Main brand color
+theme.colors.secondary; // Secondary brand color
+theme.colors.accent; // Accent/success color
+theme.colors.background; // Main background
+theme.colors.surface; // Card/surface background
+theme.colors.text; // Primary text
+theme.colors.textSecondary; // Secondary text
+theme.colors.error; // Error state
+theme.colors.warning; // Warning state
+theme.colors.success; // Success state
+theme.colors.border; // Border color
 ```
 
 ### Typography
 
 ```typescript
-theme.typography.h1           // 32px, bold
-theme.typography.h2           // 28px, bold
-theme.typography.h3           // 24px, semibold
-theme.typography.h4           // 20px, semibold
-theme.typography.h5           // 18px, semibold
-theme.typography.h6           // 16px, semibold
-theme.typography.body1        // 16px, regular
-theme.typography.body2        // 14px, regular
-theme.typography.button       // 16px, semibold
-theme.typography.caption      // 12px, regular
+theme.typography.h1; // 32px, bold
+theme.typography.h2; // 28px, bold
+theme.typography.h3; // 24px, semibold
+theme.typography.h4; // 20px, semibold
+theme.typography.h5; // 18px, semibold
+theme.typography.h6; // 16px, semibold
+theme.typography.body1; // 16px, regular
+theme.typography.body2; // 14px, regular
+theme.typography.button; // 16px, semibold
+theme.typography.caption; // 12px, regular
 ```
 
 ### Spacing
 
 ```typescript
-theme.spacing.xs              // 4px
-theme.spacing.sm              // 8px
-theme.spacing.md              // 16px
-theme.spacing.lg              // 24px
-theme.spacing.xl              // 32px
-theme.spacing.xxl             // 48px
+theme.spacing.xs; // 4px
+theme.spacing.sm; // 8px
+theme.spacing.md; // 16px
+theme.spacing.lg; // 24px
+theme.spacing.xl; // 32px
+theme.spacing.xxl; // 48px
 ```
 
 ### Border Radius
 
 ```typescript
-theme.borderRadius.sm         // 4px
-theme.borderRadius.md         // 8px
-theme.borderRadius.lg         // 12px
-theme.borderRadius.xl         // 16px
-theme.borderRadius.round      // 9999px (fully rounded)
+theme.borderRadius.sm; // 4px
+theme.borderRadius.md; // 8px
+theme.borderRadius.lg; // 12px
+theme.borderRadius.xl; // 16px
+theme.borderRadius.round; // 9999px (fully rounded)
 ```
 
 ### Shadows
 
 ```typescript
-theme.shadows.sm              // Small shadow
-theme.shadows.md              // Medium shadow
-theme.shadows.lg              // Large shadow
+theme.shadows.sm; // Small shadow
+theme.shadows.md; // Medium shadow
+theme.shadows.lg; // Large shadow
 ```
 
 ---
@@ -274,11 +277,12 @@ const styles = StyleSheet.create({
 
 // ✅ Good - Using theme
 const styles = createStyles(theme);
-const createStyles = (theme: Theme) => StyleSheet.create({
-  container: {
-    backgroundColor: theme.colors.background,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.background,
+    },
+  });
 ```
 
 ### 2. Use Typography Tokens
@@ -305,12 +309,13 @@ const styles = StyleSheet.create({
 });
 
 // ✅ Good - Using spacing tokens
-const createStyles = (theme: Theme) => StyleSheet.create({
-  container: {
-    padding: theme.spacing.md,
-    marginBottom: theme.spacing.lg,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      padding: theme.spacing.md,
+      marginBottom: theme.spacing.lg,
+    },
+  });
 ```
 
 ### 4. Semantic Color Usage
@@ -330,9 +335,10 @@ const createStyles = (theme: Theme) => StyleSheet.create({
 
 ```tsx
 // ✅ Best practice - Create styles function that accepts theme
-const createStyles = (theme: Theme) => StyleSheet.create({
-  // styles here
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    // styles here
+  });
 
 // In component
 const MyComponent = () => {
@@ -350,10 +356,10 @@ const MyComponent = () => {
 
 ```typescript
 const {
-  theme,        // Current theme object
-  themeMode,    // 'light' | 'dark'
-  isDark,       // boolean
-  toggleTheme,  // () => void
+  theme, // Current theme object
+  themeMode, // 'light' | 'dark'
+  isDark, // boolean
+  toggleTheme, // () => void
   setThemeMode, // (mode: 'light' | 'dark') => void
 } = useTheme();
 ```
@@ -363,11 +369,21 @@ const {
 ```typescript
 interface Theme {
   mode: 'light' | 'dark';
-  colors: { /* ... */ };
-  spacing: { /* ... */ };
-  borderRadius: { /* ... */ };
-  typography: { /* ... */ };
-  shadows: { /* ... */ };
+  colors: {
+    /* ... */
+  };
+  spacing: {
+    /* ... */
+  };
+  borderRadius: {
+    /* ... */
+  };
+  typography: {
+    /* ... */
+  };
+  shadows: {
+    /* ... */
+  };
 }
 ```
 
@@ -389,11 +405,7 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline';
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  title,
-  onPress,
-  variant = 'primary',
-}) => {
+export const Button: React.FC<ButtonProps> = ({ title, onPress, variant = 'primary' }) => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
@@ -416,42 +428,43 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-const createStyles = (theme: Theme) => StyleSheet.create({
-  primaryButton: {
-    backgroundColor: theme.colors.primary,
-    padding: theme.spacing.md,
-    borderRadius: theme.borderRadius.md,
-    alignItems: 'center',
-    ...theme.shadows.sm,
-  },
-  secondaryButton: {
-    backgroundColor: theme.colors.secondary,
-    padding: theme.spacing.md,
-    borderRadius: theme.borderRadius.md,
-    alignItems: 'center',
-    ...theme.shadows.sm,
-  },
-  outlineButton: {
-    backgroundColor: 'transparent',
-    padding: theme.spacing.md,
-    borderRadius: theme.borderRadius.md,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: theme.colors.primary,
-  },
-  primaryText: {
-    ...theme.typography.button,
-    color: theme.colors.onPrimary,
-  },
-  secondaryText: {
-    ...theme.typography.button,
-    color: theme.colors.onSecondary,
-  },
-  outlineText: {
-    ...theme.typography.button,
-    color: theme.colors.primary,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    primaryButton: {
+      backgroundColor: theme.colors.primary,
+      padding: theme.spacing.md,
+      borderRadius: theme.borderRadius.md,
+      alignItems: 'center',
+      ...theme.shadows.sm,
+    },
+    secondaryButton: {
+      backgroundColor: theme.colors.secondary,
+      padding: theme.spacing.md,
+      borderRadius: theme.borderRadius.md,
+      alignItems: 'center',
+      ...theme.shadows.sm,
+    },
+    outlineButton: {
+      backgroundColor: 'transparent',
+      padding: theme.spacing.md,
+      borderRadius: theme.borderRadius.md,
+      alignItems: 'center',
+      borderWidth: 2,
+      borderColor: theme.colors.primary,
+    },
+    primaryText: {
+      ...theme.typography.button,
+      color: theme.colors.onPrimary,
+    },
+    secondaryText: {
+      ...theme.typography.button,
+      color: theme.colors.onSecondary,
+    },
+    outlineText: {
+      ...theme.typography.button,
+      color: theme.colors.primary,
+    },
+  });
 ```
 
 ### Card Component
@@ -481,26 +494,27 @@ export const Card: React.FC<CardProps> = ({ title, description, children }) => {
   );
 };
 
-const createStyles = (theme: Theme) => StyleSheet.create({
-  card: {
-    backgroundColor: theme.colors.card,
-    padding: theme.spacing.lg,
-    borderRadius: theme.borderRadius.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    marginBottom: theme.spacing.md,
-    ...theme.shadows.md,
-  },
-  title: {
-    ...theme.typography.h4,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.xs,
-  },
-  description: {
-    ...theme.typography.body2,
-    color: theme.colors.textSecondary,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    card: {
+      backgroundColor: theme.colors.card,
+      padding: theme.spacing.lg,
+      borderRadius: theme.borderRadius.lg,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      marginBottom: theme.spacing.md,
+      ...theme.shadows.md,
+    },
+    title: {
+      ...theme.typography.h4,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.xs,
+    },
+    description: {
+      ...theme.typography.body2,
+      color: theme.colors.textSecondary,
+    },
+  });
 ```
 
 ---
@@ -516,6 +530,7 @@ npm run ios
 ```
 
 The demo screen shows:
+
 - Color palette
 - Typography variants
 - Shadow elevations
@@ -533,5 +548,4 @@ The demo screen shows:
 
 ---
 
-**Created**: November 25, 2025
-**Version**: 1.0.0
+**Created**: November 25, 2025 **Version**: 1.0.0

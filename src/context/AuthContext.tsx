@@ -5,8 +5,8 @@
 
 import React, { createContext, useState, useCallback, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { 
-  getAuth, 
+import {
+  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
@@ -53,7 +53,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = useCallback(async (userName: string, password: string) => {
     try {
       const authInstance = getAuth();
-      const userCredential = await signInWithEmailAndPassword(authInstance, userName, password);
+      const userCredential = await signInWithEmailAndPassword(
+        authInstance,
+        userName,
+        password,
+      );
       if (userCredential.user) {
         setIsAuthenticated(true);
       }
@@ -78,7 +82,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const register = useCallback(async (userName: string, password: string) => {
     try {
       const authInstance = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(authInstance, userName, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        authInstance,
+        userName,
+        password,
+      );
       if (userCredential.user) {
         setIsAuthenticated(true);
       }

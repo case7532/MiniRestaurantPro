@@ -15,6 +15,7 @@ assignees: ''
 <!-- Describe the problem this feature would solve or the need it addresses -->
 
 **Is your feature request related to a problem? Please describe:**
+
 <!-- e.g., "I'm always frustrated when..." -->
 
 ## 🎯 Proposed Solution
@@ -22,6 +23,7 @@ assignees: ''
 <!-- Describe how you envision this feature working -->
 
 ### User Flow
+
 <!-- Describe the user journey for this feature -->
 
 1. User navigates to...
@@ -29,6 +31,7 @@ assignees: ''
 3. System displays...
 
 ### UI/UX Considerations
+
 <!-- If applicable, describe the visual design or user experience -->
 
 ## 🔄 Alternative Solutions
@@ -40,24 +43,27 @@ assignees: ''
 <!-- Provide specific use cases where this feature would be valuable -->
 
 ### Example Scenario 1
+
 <!-- Describe a real-world scenario -->
 
 ### Example Scenario 2
+
 <!-- Optional: Another scenario -->
 
 ## 📋 Acceptance Criteria
 
 <!-- What would make this feature complete? List specific requirements -->
 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ]
+- [ ]
+- [ ]
 
 ## 🏗️ Implementation Considerations
 
 <!-- Optional: If you have technical insights, share them here -->
 
 ### Affected Components
+
 - [ ] Authentication System
 - [ ] Navigation
 - [ ] POS System
@@ -66,12 +72,14 @@ assignees: ''
 - [ ] Inventory
 - [ ] Sales Reports
 - [ ] Settings
-- [ ] Other: ___
+- [ ] Other: \_\_\_
 
 ### Technical Approach
+
 <!-- Optional: Suggest implementation approach -->
 
 ### Dependencies
+
 <!-- List any dependencies on other features or external services -->
 
 ## 📱 Platform Considerations
@@ -107,18 +115,20 @@ assignees: ''
 
 <!-- Links to similar features, documentation, or resources -->
 
-- 
-- 
+-
+-
 
 ## 🔢 Priority Assessment
 
 ### Business Value
+
 - [ ] Critical for restaurant operations
 - [ ] Significant improvement
 - [ ] Nice to have
 - [ ] Future consideration
 
 ### Estimated Impact
+
 - [ ] High - Major feature addition
 - [ ] Medium - Moderate improvement
 - [ ] Low - Minor enhancement
@@ -130,6 +140,7 @@ assignees: ''
 ---
 
 **For Maintainers:**
+
 - [ ] Feature approved
 - [ ] Priority: [Critical / High / Normal / Low]
 - [ ] Effort Estimate: [S / M / L / XL]
