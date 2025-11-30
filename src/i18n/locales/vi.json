@@ -6,6 +6,7 @@
     "error": "Lỗi",
     "success": "Thành công",
     "optional": "Tùy chọn",
+    "all": "Tất cả",
     "confirm": "Xác nhận",
     "cancel": "Hủy",
     "save": "Lưu",
@@ -46,7 +47,18 @@
     "name_required": "Vui lòng nhập họ tên",
     "password_min_length": "Mật khẩu phải có ít nhất 8 ký tự",
     "password_mismatch": "Mật khẩu không khớp",
-    "invalid_email": "Email không hợp lệ"
+    "invalid_email": "Email không hợp lệ",
+    "no_account": "Chưa có tài khoản?",
+    "have_account": "Đã có tài khoản?",
+    "create_account": "Tạo tài khoản của bạn",
+    "forgot_password_title": "Quên mật khẩu?",
+    "forgot_password_subtitle": "Nhập địa chỉ email và chúng tôi sẽ gửi link đặt lại mật khẩu",
+    "send_reset_link": "Gửi link đặt lại",
+    "reset_link_sent": "Link đặt lại mật khẩu đã được gửi đến email của bạn",
+    "check_email": "Kiểm tra email của bạn",
+    "back_to_login": "Quay lại đăng nhập",
+    "go_to_register": "Đến trang đăng ký",
+    "go_to_login": "Đến trang đăng nhập"
   },
   "home": {
     "good_morning": "Chào buổi sáng",

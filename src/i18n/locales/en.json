@@ -6,6 +6,7 @@
     "error": "Error",
     "success": "Success",
     "optional": "Optional",
+    "all": "All",
     "confirm": "Confirm",
     "cancel": "Cancel",
     "save": "Save",
@@ -55,7 +56,9 @@
     "send_reset_link": "Send Reset Link",
     "reset_link_sent": "Password reset link has been sent to your email",
     "check_email": "Check your email",
-    "back_to_login": "Back to Login"
+    "back_to_login": "Back to Login",
+    "go_to_register": "Go to Register",
+    "go_to_login": "Go to Login"
   },
   "home": {
     "good_morning": "Good Morning",

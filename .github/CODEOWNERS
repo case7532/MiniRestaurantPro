@@ -1,0 +1,55 @@
+# Code Owners for MiniRestaurantPro
+# These owners will be automatically requested for review when someone opens a pull request.
+# More info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repo
+* @Stick1356
+
+# Documentation
+*.md @Stick1356
+documents/ @Stick1356
+.github/ @Stick1356
+
+# Configuration Files (Critical - require careful review)
+package.json @Stick1356
+tsconfig.json @Stick1356
+babel.config.js @Stick1356
+metro.config.js @Stick1356
+jest.config.js @Stick1356
+
+# Firebase Configuration (Sensitive - should be reviewed carefully)
+# Note: These files are .gitignored but defined here for reference
+android/app/google-services.json @Stick1356
+ios/MiniRestaurantPro/GoogleService-Info.plist @Stick1356
+src/config/firebase.config.ts @Stick1356
+
+# Android Build Configuration
+android/build.gradle @Stick1356
+android/app/build.gradle @Stick1356
+android/gradle.properties @Stick1356
+
+# iOS Build Configuration
+ios/Podfile @Stick1356
+ios/MiniRestaurantPro/Info.plist @Stick1356
+ios/MiniRestaurantPro/AppDelegate.swift @Stick1356
+
+# Core Architecture Files (Require architecture review)
+src/screens/RootNavigation.tsx @Stick1356
+src/screens/MainStack.tsx @Stick1356
+src/screens/MainTabs.tsx @Stick1356
+src/styles/theme.ts @Stick1356
+
+# Context & State Management
+src/context/ @Stick1356
+
+# Internationalization
+src/i18n/ @Stick1356
+
+# Services (Business logic - requires careful review)
+src/services/ @Stick1356
+
+# Type Definitions
+src/types/ @Stick1356
+
+# Hooks
+src/hooks/ @Stick1356

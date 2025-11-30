@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+vendor/
+Pods/
+
+# Build output
+build/
+dist/
+*.log
+.expo/
+.expo-shared/
+
+# Native
+android/
+ios/
+
+# Coverage
+coverage/
+
+# Generated files
+*.config.js
+.eslintrc.js
+.prettierrc.js
+
+# OS
+.DS_Store
+
+# Other
+*.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
