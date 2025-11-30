@@ -1,7 +1,20 @@
 import { SvgProps } from 'react-native-svg';
 
 // Import SVG icons
+import AddIcon from './icons/fi-rr-add.svg';
+import AngleDownIcon from './icons/fi-rr-angle-down.svg';
+import AngleLeftIcon from './icons/fi-rr-angle-left.svg';
+import AngleRightIcon from './icons/fi-rr-angle-right.svg';
+import AngleSmallDownIcon from './icons/fi-rr-angle-small-down.svg';
+import AngleSmallLeftIcon from './icons/fi-rr-angle-small-left.svg';
+import AngleSmallRightIcon from './icons/fi-rr-angle-small-right.svg';
+import AngleSmallUpIcon from './icons/fi-rr-angle-small-up.svg';
+import AngleUpIcon from './icons/fi-rr-angle-up.svg';
 import ArrowLeftIcon from './icons/fi-rr-arrow-left.svg';
+import ArrowSmallDownIcon from './icons/fi-rr-arrow-small-down.svg';
+import ArrowSmallLeftIcon from './icons/fi-rr-arrow-small-left.svg';
+import ArrowSmallRightIcon from './icons/fi-rr-arrow-small-right.svg';
+import ArrowSmallUpIcon from './icons/fi-rr-arrow-small-up.svg';
 import CaretDownIcon from './icons/fi-rr-caret-down.svg';
 import CaretRightIcon from './icons/fi-rr-caret-right.svg';
 import CaretUpIcon from './icons/fi-rr-caret-up.svg';
@@ -35,7 +48,20 @@ import UnlockIcon from './icons/fi-rs-unlock.svg';
 
 // Export icon map with consistent naming
 export const icons = {
+  add: AddIcon,
+  angleDown: AngleDownIcon,
+  angleLeft: AngleLeftIcon,
+  angleRight: AngleRightIcon,
+  angleSmallDown: AngleSmallDownIcon,
+  angleSmallLeft: AngleSmallLeftIcon,
+  angleSmallRight: AngleSmallRightIcon,
+  angleSmallUp: AngleSmallUpIcon,
+  angleUp: AngleUpIcon,
   arrowLeft: ArrowLeftIcon,
+  arrowSmallDown: ArrowSmallDownIcon,
+  arrowSmallLeft: ArrowSmallLeftIcon,
+  arrowSmallRight: ArrowSmallRightIcon,
+  arrowSmallUp: ArrowSmallUpIcon,
   caretDown: CaretDownIcon,
   caretRight: CaretRightIcon,
   caretUp: CaretUpIcon,
@@ -76,7 +102,20 @@ export type IconComponent = React.FC<SvgProps>;
 
 // Export individual icons for direct import
 export {
+  AddIcon,
+  AngleDownIcon,
+  AngleLeftIcon,
+  AngleRightIcon,
+  AngleSmallDownIcon,
+  AngleSmallLeftIcon,
+  AngleSmallRightIcon,
+  AngleSmallUpIcon,
+  AngleUpIcon,
   ArrowLeftIcon,
+  ArrowSmallDownIcon,
+  ArrowSmallLeftIcon,
+  ArrowSmallRightIcon,
+  ArrowSmallUpIcon,
   CaretDownIcon,
   CaretRightIcon,
   CaretUpIcon,

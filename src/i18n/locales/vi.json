@@ -34,6 +34,9 @@
     "register": "Đăng ký",
     "email": "Email",
     "password": "Mật khẩu",
+      "full_name": "Họ tên",
+      "birth_date": "Ngày sinh",
+      "gender": "Giới tính",
     "confirm_password": "Xác nhận mật khẩu",
     "forgot_password": "Quên mật khẩu?",
     "name": "Họ tên",
@@ -80,6 +83,14 @@
     "orders": "Đơn hàng",
     "settings": "Cài đặt",
     "profile": "Hồ sơ"
+  },
+  "menu_admin": {
+    "title": "Quản trị",
+    "staff": "Quản lý nhân sự",
+    "inventory": "Quản lý tồn kho",
+    "sales": "Quản lý bán hàng",
+    "report": "Báo cáo",
+    "settings": "Cài đặt"
   },
   "menu": {
     "title": "Thực đơn",

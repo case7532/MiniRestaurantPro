@@ -1,14 +1,23 @@
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { AuthStack } from '../screens/auth/AuthStack';
-import { MainStack } from './MainStack';
 import { useAuth } from '@hooks/useAuth';
+import { AdminStack } from './AdminStack';
+
+export type RootStackParamList = {
+  MenuAdmin: undefined;
+  StaffManagement: undefined;
+  InventoryManagement: undefined;
+  SalesManagement: undefined;
+  ReportScreen: undefined;
+  SettingsScreen: undefined;
+};
 
 export const RootNavigator: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
-  // Show loading indicator while checking auth status
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -19,7 +28,7 @@ export const RootNavigator: React.FC = () => {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <MainStack /> : <AuthStack />}
+      {isAuthenticated ? <AdminStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

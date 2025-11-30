@@ -16,19 +16,22 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleNavigateToRegister = () => {
     navigation.navigate('Register');
   };
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
-      // TODO: Implement actual login logic with form validation
       await login(email, password);
       // Navigation will happen automatically via AuthContext
     } catch (error) {
       console.error('Login failed:', error);
       // TODO: Show error message to user
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,8 +67,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         <Text>Bạn chưa có tài khoản?</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>{t('auth.login')}</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+          <Text style={styles.buttonText}>{loading ? t('common.loading') : t('auth.login')}</Text>
         </TouchableOpacity>
       </View>
     </View>

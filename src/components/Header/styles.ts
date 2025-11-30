@@ -28,6 +28,11 @@ export const headerStyles = (theme: Theme) =>
     },
     backButton: {
       padding: theme.spacing.sm,
+      width: 24,
+      height: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: theme.spacing.md
     },
     logo: {
       width: 50,

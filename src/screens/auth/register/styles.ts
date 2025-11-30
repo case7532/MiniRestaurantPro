@@ -26,4 +26,13 @@ export const registerStyles = (theme: Theme) =>
       ...theme.typography.button,
       color: theme.colors.onPrimary,
     },
+    input: {
+      width: '100%',
+      backgroundColor: theme.colors.surface,
+      color: theme.colors.text,
+      padding: theme.spacing.md,
+      borderRadius: theme.borderRadius.sm,
+      marginBottom: theme.spacing.md,
+      ...theme.typography.body,
+    },
   });
